@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
@@ -6,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -28,9 +28,8 @@ kotlin {
         }
         binaries.executable()
     }
-    
+
     sourceSets {
-        
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -40,8 +39,22 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
+            // Ktor for HTTP requests
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+
+            // Kotlinx Serialization
+            implementation(libs.kotlinx.serialization.json)
+
+            // Kotlinx Coroutines
+            runtimeOnly(libs.kotlinx.coroutines.core)
+        }
+
+        wasmJsMain.dependencies {
+            // Ktor for Js
+            implementation(libs.ktor.client.js)
         }
     }
 }
-
-
