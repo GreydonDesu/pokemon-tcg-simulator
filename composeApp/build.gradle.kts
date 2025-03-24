@@ -40,13 +40,17 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
+            // Coil Image Compose
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
+
+            // Kotlinx Serialization
+            implementation(libs.kotlinx.serialization.json)
+
             // Ktor for HTTP requests
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
-
-            // Kotlinx Serialization
-            implementation(libs.kotlinx.serialization.json)
 
             // Kotlinx Coroutines
             runtimeOnly(libs.kotlinx.coroutines.core)

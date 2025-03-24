@@ -3,7 +3,7 @@ package de.thro.packsimulator.cardset.data
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CardSet(
+data class SetBase(
     val id: String,
     val name: String,
     val symbol: String? = null, // Base URL for symbol
