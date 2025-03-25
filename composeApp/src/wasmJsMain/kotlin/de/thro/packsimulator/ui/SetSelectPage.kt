@@ -34,7 +34,7 @@ import de.thro.packsimulator.set.ui.SetBriefItem
 import kotlinx.coroutines.launch
 
 @Composable
-fun SetBriefOverview() {
+fun SetSelectPage() {
     LaunchedEffect(Unit) {
         SetBriefManager.fetchSetBriefs()
     }
