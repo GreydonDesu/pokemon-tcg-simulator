@@ -28,29 +28,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import de.thro.packsimulator.cardset.CardSetManager
-import de.thro.packsimulator.cardset.data.SetBase
-import de.thro.packsimulator.cardset.ui.CardSetItem
+import de.thro.packsimulator.set.SetBriefManager
+import de.thro.packsimulator.set.data.SetBrief
+import de.thro.packsimulator.set.ui.SetBriefItem
 import kotlinx.coroutines.launch
 
 @Composable
-fun CardSetOverview() {
-    // Trigger data fetching when the app launches
+fun SetBriefOverview() {
     LaunchedEffect(Unit) {
-        CardSetManager.fetchCardSets()
+        SetBriefManager.fetchSetBriefs()
     }
 
-    // Observe the cardSets state
-    val cardSets by remember { derivedStateOf { CardSetManager.cardSets } }
+    val setBriefs by remember { derivedStateOf { SetBriefManager.setBriefs } }
 
-    // UI
     MaterialTheme {
         Scaffold(
             topBar = {
                 TopAppBar(title = { Text("Pokemon Card Sets") })
             }
         ) {
-            if (cardSets.isEmpty()) {
+            if (setBriefs.isEmpty()) {
                 // Show loading indicator while data is being fetched
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -60,14 +57,14 @@ fun CardSetOverview() {
                 }
             } else {
                 // Show card sets once data is loaded
-                CardSetList(cardSets)
+                SetBriefList(setBriefs)
             }
         }
     }
 }
 
 @Composable
-fun CardSetList(cardSets: List<SetBase>) {
+fun SetBriefList(setBriefList: List<SetBrief>) {
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -94,8 +91,8 @@ fun CardSetList(cardSets: List<SetBase>) {
                         .horizontalScroll(scrollState)
                         .wrapContentWidth()
                 ) {
-                    cardSets.forEach { cardSet ->
-                        CardSetItem(cardSet)
+                    setBriefList.forEach { setBrief ->
+                        SetBriefItem(setBrief)
                     }
                 }
             }

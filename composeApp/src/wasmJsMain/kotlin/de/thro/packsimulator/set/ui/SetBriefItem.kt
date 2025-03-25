@@ -1,4 +1,4 @@
-package de.thro.packsimulator.cardset.ui
+package de.thro.packsimulator.set.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,42 +16,42 @@ import androidx.compose.ui.unit.dp
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import de.thro.packsimulator.cardset.data.SetBase
+import de.thro.packsimulator.set.data.SetBrief
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CardSetItem(cardSet: SetBase) {
-    Card(modifier = Modifier.padding(8.dp), onClick = { println("onClick: Set ID ${cardSet.id}") }) {
+fun SetBriefItem(setBrief: SetBrief) {
+    Card(modifier = Modifier.padding(8.dp), onClick = { println("onClick: Set ID ${setBrief.id}") }) {
         Column(
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column {
                 Row {
-                    if (cardSet.getSymbolUrl("png") != "null.png") {
+                    if (setBrief.getSymbolUrl("png") != "null.png") {
                         AsyncImage(
                             model = ImageRequest.Builder(PlatformContext.INSTANCE)
-                                .data(cardSet.getSymbolUrl("png")).build(),
-                            contentDescription = "Symbol for ${cardSet.name}",
+                                .data(setBrief.getSymbolUrl("png")).build(),
+                            contentDescription = "Symbol for ${setBrief.name}",
                             modifier = Modifier.size(24.dp)
                         )
                     }
                     Spacer(Modifier.size(2.dp))
-                    Text(text = cardSet.name, style = MaterialTheme.typography.h6)
+                    Text(text = setBrief.name, style = MaterialTheme.typography.h6)
                     Spacer(Modifier.size(2.dp))
-                    Text(text = "[${cardSet.id}]", style = MaterialTheme.typography.body2)
+                    Text(text = "[${setBrief.id}]", style = MaterialTheme.typography.body2)
                 }
                 Text(
-                    text = "Total Cards: ${cardSet.cardCount.total}",
+                    text = "Total Cards: ${setBrief.cardCount.total}",
                     style = MaterialTheme.typography.body2
                 )
             }
             Spacer(Modifier.size(16.dp))
-            if (cardSet.getLogoUrl("png") != "null.png") {
+            if (setBrief.getLogoUrl("png") != "null.png") {
                 AsyncImage(
                     model = ImageRequest.Builder(PlatformContext.INSTANCE)
-                        .data(cardSet.getLogoUrl("png")).build(),
-                    contentDescription = "Logo for ${cardSet.name}",
+                        .data(setBrief.getLogoUrl("png")).build(),
+                    contentDescription = "Logo for ${setBrief.name}",
                     modifier = Modifier.size(128.dp)
                 )
             }

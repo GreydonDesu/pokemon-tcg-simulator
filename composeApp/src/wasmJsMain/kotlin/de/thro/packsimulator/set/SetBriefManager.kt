@@ -1,9 +1,9 @@
-package de.thro.packsimulator.cardset
+package de.thro.packsimulator.set
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import de.thro.packsimulator.cardset.data.SetBase
+import de.thro.packsimulator.set.data.SetBrief
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
-object CardSetManager {
+object SetBriefManager {
 
     val baseUrl = "https://api.tcgdex.net/v2/en"
     val setsExtension = "/sets"
@@ -28,23 +28,23 @@ object CardSetManager {
     }
 
     // Observable state for the card sets
-    var cardSets by mutableStateOf<List<SetBase>>(emptyList())
+    var setBriefs by mutableStateOf<List<SetBrief>>(emptyList())
         private set // Make the setter private to restrict external modifications
 
     // Fetches the card sets and updates the state
-    fun fetchCardSets() {
+    fun fetchSetBriefs() {
         CoroutineScope(Dispatchers.Default).launch {
             try {
-                val fetchedCardSets: List<SetBase> = client.get(baseUrl+ setsExtension).body()
-                println("Card sets fetched successfully: ${fetchedCardSets.size} sets pulled.")
-                for (cardSet in fetchedCardSets) {
-                    if (cardSet.logo != null && cardSet.symbol != null) {
-                        cardSets += cardSet
+                val fetchedSetBriefs: List<SetBrief> = client.get(baseUrl+ setsExtension).body()
+                println("Sets fetched successfully: ${fetchedSetBriefs.size} sets pulled.")
+                for (setBrief in fetchedSetBriefs) {
+                    if (setBrief.logo != null && setBrief.symbol != null) {
+                        setBriefs += setBrief
                     }
                 }
-                println("Valid card sets filtered successfully: ${cardSets.size}/${fetchedCardSets.size} sets pulled.")
+                println("Valid sets filtered successfully: ${setBriefs.size}/${fetchedSetBriefs.size} sets pulled.")
             } catch (e: Exception) {
-                println("Error fetching card sets: ${e.message}")
+                println("Error fetching sets: ${e.message}")
             }
         }
     }
