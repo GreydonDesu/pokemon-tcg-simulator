@@ -27,11 +27,15 @@ object SetBriefManager {
         }
     }
 
-    // Observable state for the card sets
+    /**
+     * Observable state for the card sets
+      */
     var setBriefs by mutableStateOf<List<SetBrief>>(emptyList())
         private set // Make the setter private to restrict external modifications
 
-    // Fetches the card sets and updates the state
+    /**
+     * Fetches the card sets and updates the state
+     */
     fun fetchSetBriefs() {
         CoroutineScope(Dispatchers.Default).launch {
             try {
@@ -43,7 +47,7 @@ object SetBriefManager {
                     }
                 }
                 println("Valid sets filtered successfully: ${setBriefs.size}/${fetchedSetBriefs.size} sets pulled.")
-            } catch (e: Exception) {
+            } catch (e: NullPointerException) {
                 println("Error fetching sets: ${e.message}")
             }
         }

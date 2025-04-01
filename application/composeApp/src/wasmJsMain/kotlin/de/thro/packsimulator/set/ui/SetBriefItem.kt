@@ -21,7 +21,9 @@ import de.thro.packsimulator.set.data.SetBrief
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SetBriefItem(setBrief: SetBrief) {
-    Card(modifier = Modifier.padding(8.dp), onClick = { println("onClick: Set ID ${setBrief.id}") }) {
+    Card(
+        modifier = Modifier.padding(8.dp),
+        onClick = { println("onClick: Set ID ${setBrief.id}") }) {
         Column(
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
