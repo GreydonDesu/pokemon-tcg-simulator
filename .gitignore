@@ -465,6 +465,6 @@ obj/
 
 ### AndroidStudio Patch ###
 
-!/gradle/wrapper/gradle-wrapper.jar
+!*/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/kotlin,android,git,jetbrains+all,androidstudio,visualstudiocode,node,xcode,java
