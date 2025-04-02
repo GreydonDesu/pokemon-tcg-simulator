@@ -5,7 +5,9 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.kover)
 }
 
 kotlin {
@@ -61,4 +63,8 @@ kotlin {
             implementation(libs.ktor.client.js)
         }
     }
+}
+
+tasks.named("check") {
+    dependsOn("koverXmlReport") // Ensure XML report is generated during `check`
 }

@@ -641,6 +641,50 @@ clone-deep@^4.0.1:
     kind-of "^6.0.2"
     shallow-clone "^3.0.0"
 
+"coil-core-wasm-js@file:packages/composeApp", "coil-network-core-wasm-js@file:packages/composeApp", "coil-network-ktor3-wasm-js@file:packages/composeApp", "coil-wasm-js@file:packages/composeApp", "ktor-ktor-client-ktor-client-core-wasm-js@file:packages/composeApp", "skiko-js-wasm-runtime@file:packages/composeApp", "skiko-wasm-js@file:packages/composeApp":
+  version "0.0.0-unspecified"
+  dependencies:
+    coil-core-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-aaa84084-6f2b-4379-b321-fdf9098b3781-1743621588804/node_modules/coil-core-wasm-js"
+    coil-network-core-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-aaa84084-6f2b-4379-b321-fdf9098b3781-1743621588804/node_modules/coil-core-wasm-js"
+    coil-network-ktor3-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-aaa84084-6f2b-4379-b321-fdf9098b3781-1743621588804/node_modules/coil-core-wasm-js"
+    coil-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-aaa84084-6f2b-4379-b321-fdf9098b3781-1743621588804/node_modules/coil-core-wasm-js"
+    ktor-ktor-client-ktor-client-core-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-aaa84084-6f2b-4379-b321-fdf9098b3781-1743621588804/node_modules/coil-core-wasm-js"
+    skiko-js-wasm-runtime "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-aaa84084-6f2b-4379-b321-fdf9098b3781-1743621588804/node_modules/coil-core-wasm-js"
+    skiko-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-aaa84084-6f2b-4379-b321-fdf9098b3781-1743621588804/node_modules/coil-core-wasm-js"
+    ws "8.18.0"
+
+"coil-core-wasm-js@file:packages/composeApp-test", "coil-network-core-wasm-js@file:packages/composeApp-test", "coil-network-ktor3-wasm-js@file:packages/composeApp-test", "coil-wasm-js@file:packages/composeApp-test", "ktor-ktor-client-ktor-client-core-wasm-js@file:packages/composeApp-test", "skiko-js-wasm-runtime@file:packages/composeApp-test", "skiko-wasm-js@file:packages/composeApp-test":
+  version "0.0.0-unspecified"
+  dependencies:
+    coil-core-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-460fa34d-ca36-411e-93b4-7df72585c6dd-1743621588808/node_modules/coil-core-wasm-js"
+    coil-network-core-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-460fa34d-ca36-411e-93b4-7df72585c6dd-1743621588808/node_modules/coil-core-wasm-js"
+    coil-network-ktor3-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-460fa34d-ca36-411e-93b4-7df72585c6dd-1743621588808/node_modules/coil-core-wasm-js"
+    coil-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-460fa34d-ca36-411e-93b4-7df72585c6dd-1743621588808/node_modules/coil-core-wasm-js"
+    ktor-ktor-client-ktor-client-core-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-460fa34d-ca36-411e-93b4-7df72585c6dd-1743621588808/node_modules/coil-core-wasm-js"
+    skiko-js-wasm-runtime "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-460fa34d-ca36-411e-93b4-7df72585c6dd-1743621588808/node_modules/coil-core-wasm-js"
+    skiko-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-0.0.0-unspecified-460fa34d-ca36-411e-93b4-7df72585c6dd-1743621588808/node_modules/coil-core-wasm-js"
+    ws "8.18.0"
+
+"coil-core-wasm-js@file:packages_imported/coil-core-wasm-js/3.1.0":
+  version "3.1.0"
+  dependencies:
+    coil-core-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-core-wasm-js-3.1.0-e0006b88-0945-4eef-8bb1-514e647b8f85-1743621588816/node_modules/coil-core-wasm-js"
+
+"coil-network-core-wasm-js@file:packages_imported/coil-network-core-wasm-js/3.1.0":
+  version "3.1.0"
+  dependencies:
+    coil-network-core-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-network-core-wasm-js-3.1.0-574d2042-8915-47f8-8fa4-f6796bb74144-1743621588817/node_modules/coil-network-core-wasm-js"
+
+"coil-network-ktor3-wasm-js@file:packages_imported/coil-network-ktor3-wasm-js/3.1.0":
+  version "3.1.0"
+  dependencies:
+    coil-network-ktor3-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-network-ktor3-wasm-js-3.1.0-ddbd741d-b1f9-4e78-8fa7-c9cfc6eae015-1743621588816/node_modules/coil-network-ktor3-wasm-js"
+
+"coil-wasm-js@file:packages_imported/coil-wasm-js/3.1.0":
+  version "3.1.0"
+  dependencies:
+    coil-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-coil-wasm-js-3.1.0-a8ea131d-2566-4a9c-a0ce-7b16eeef1837-1743621588816/node_modules/coil-wasm-js"
+
 color-convert@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-2.0.1.tgz#72d3a68d598c9bdb3af2ad1e84f21d896abd4de3"
@@ -1652,6 +1696,12 @@ kotlin-web-helpers@2.0.0:
   dependencies:
     format-util "^1.0.5"
 
+"ktor-ktor-client-ktor-client-core-wasm-js@file:packages_imported/ktor-ktor-client-ktor-client-core-wasm-js/3.1.1":
+  version "3.1.1"
+  dependencies:
+    ktor-ktor-client-ktor-client-core-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-ktor-ktor-client-ktor-client-core-wasm-js-3.1.1-0842fa00-7772-458d-adea-66e82ca43c88-1743621588817/node_modules/ktor-ktor-client-ktor-client-core-wasm-js"
+    ws "8.18.0"
+
 launch-editor@^2.6.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/launch-editor/-/launch-editor-2.10.0.tgz#5ca3edfcb9667df1e8721310f3a40f1127d4bc42"
@@ -2368,6 +2418,16 @@ signal-exit@^3.0.3:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
+
+"skiko-js-wasm-runtime@file:packages_imported/skiko-js-wasm-runtime/0.8.18":
+  version "0.8.18"
+  dependencies:
+    skiko-js-wasm-runtime "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-skiko-js-wasm-runtime-0.8.18-0d670d37-bef7-40ff-9018-15170cb0eae6-1743621588816/node_modules/skiko-js-wasm-runtime"
+
+"skiko-wasm-js@file:packages_imported/skiko-wasm-js/0.8.18":
+  version "0.8.18"
+  dependencies:
+    skiko-wasm-js "file:C:/Users/Grey/AppData/Local/Yarn/Cache/v6/npm-skiko-wasm-js-0.8.18-443bbb38-c2b4-48cb-96e4-a23256f5e92d-1743621588813/node_modules/skiko-wasm-js"
 
 socket.io-adapter@~2.5.2:
   version "2.5.5"

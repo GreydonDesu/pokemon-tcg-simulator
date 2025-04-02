@@ -1,0 +1,43 @@
+name: Upload Coverage to Codacy
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Ensure Gradle Wrapper is Executable
+        run: chmod +x application/gradlew
+
+      - name: Build and Generate Coverage Report
+        working-directory: application # Navigate into the application directory
+        run: |
+          ./gradlew koverXmlReport
+
+      - name: Install Codacy Coverage Reporter
+        run: |
+          curl -Ls https://coverage.codacy.com/get.sh | bash
+
+      - name: Upload Coverage Report to Codacy
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        run: |
+          ./codacy-coverage-reporter report \
+            --project-token $CODACY_PROJECT_TOKEN \
+            --commit-uuid $(git rev-parse HEAD) \
+            --coverage-reports application/build/reports/kover/report.xml
