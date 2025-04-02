@@ -14,10 +14,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
-object SetBriefManager {
+// cURL of API
+const val baseUrl = "https://api.tcgdex.net/v2/en"
+const val setsExtension = "/sets"
 
-    val baseUrl = "https://api.tcgdex.net/v2/en"
-    val setsExtension = "/sets"
+// Focus on a determined set of Card Sets for better understanding
+val testSets = listOf("A1", "A2a", "A2b")
+
+object SetBriefManager {
 
     private val client = HttpClient {
         install(ContentNegotiation) {
@@ -29,7 +33,7 @@ object SetBriefManager {
 
     /**
      * Observable state for the card sets
-      */
+     */
     var setBriefs by mutableStateOf<List<SetBrief>>(emptyList())
         private set // Make the setter private to restrict external modifications
 
@@ -39,10 +43,13 @@ object SetBriefManager {
     fun fetchSetBriefs() {
         CoroutineScope(Dispatchers.Default).launch {
             try {
-                val fetchedSetBriefs: List<SetBrief> = client.get(baseUrl+ setsExtension).body()
+                val fetchedSetBriefs: List<SetBrief> = client.get(baseUrl + setsExtension).body()
                 println("Sets fetched successfully: ${fetchedSetBriefs.size} sets pulled.")
                 for (setBrief in fetchedSetBriefs) {
-                    if (setBrief.logo != null && setBrief.symbol != null) {
+                    if (setBrief.logo != null
+                        && setBrief.symbol != null
+                        && testSets.contains(setBrief.id)
+                    ) {
                         setBriefs += setBrief
                     }
                 }

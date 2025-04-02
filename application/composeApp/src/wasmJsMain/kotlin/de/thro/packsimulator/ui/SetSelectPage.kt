@@ -13,10 +13,6 @@ import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -35,31 +31,26 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SetSelectPage() {
-    LaunchedEffect(Unit) {
-        SetBriefManager.fetchSetBriefs()
-    }
 
     val setBriefs by remember { derivedStateOf { SetBriefManager.setBriefs } }
 
-    MaterialTheme {
-        Scaffold(
-            topBar = {
-                TopAppBar(title = { Text("Pokemon Card Sets") })
-            }
-        ) {
-            if (setBriefs.isEmpty()) {
-                // Show loading indicator while data is being fetched
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            } else {
-                // Show card sets once data is loaded
-                SetBriefList(setBriefs)
-            }
+    LaunchedEffect(Unit) {
+        if (setBriefs.isEmpty()) {
+            SetBriefManager.fetchSetBriefs()
         }
+    }
+
+    if (setBriefs.isEmpty()) {
+        // Show loading indicator while data is being fetched
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator()
+        }
+    } else {
+        // Show card sets once data is loaded
+        SetBriefList(setBriefs)
     }
 }
 
@@ -68,7 +59,7 @@ fun SetBriefList(setBriefList: List<SetBrief>) {
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
 
-    val scrollAmount = 1000
+    val scrollAmount = 1200
 
     Column {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -90,6 +81,7 @@ fun SetBriefList(setBriefList: List<SetBrief>) {
                     modifier = Modifier
                         .horizontalScroll(scrollState)
                         .wrapContentWidth()
+                        .align(Alignment.Center)
                 ) {
                     setBriefList.forEach { setBrief ->
                         SetBriefItem(setBrief)
