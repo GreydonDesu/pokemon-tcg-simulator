@@ -30,6 +30,8 @@ jobs:
           ./gradlew koverXmlReport
 
       - name: Install Codacy Coverage Reporter
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         run: |
           curl -Ls https://coverage.codacy.com/get.sh | bash
 
