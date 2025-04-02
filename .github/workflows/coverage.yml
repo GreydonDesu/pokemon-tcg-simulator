@@ -34,13 +34,13 @@ jobs:
         run: |
           ./gradlew koverXmlReport
 
-      # Step 4: Install Codacy Coverage Reporter and Upload Coverage Report
-      - name: Upload coverage report to Codacy
-        env:
-          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }} # Ensure the token is securely passed
-        run: |
-          curl -Ls https://coverage.codacy.com/get.sh | bash
-          ./codacy-coverage-reporter report \
-            --project-token $CODACY_PROJECT_TOKEN \
-            --commit-uuid $(git rev-parse HEAD) \
-            --coverage-reports application/build/reports/kover/report.xml
+      # Step 4: Run Codacy Coverage Reporter GitHub Action
+      - name: Run codacy-coverage-reporter
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          # or
+          # api-token: ${{ secrets.CODACY_API_TOKEN }}
+          coverage-reports: application/build/reports/kover/report.xml
+          # or a comma-separated list for multiple reports
+          # coverage-reports: <PATH_TO_REPORT>, <PATH_TO_REPORT>
