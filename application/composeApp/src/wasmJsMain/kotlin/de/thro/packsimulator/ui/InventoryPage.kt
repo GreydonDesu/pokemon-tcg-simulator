@@ -6,15 +6,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun InventoryPage(onBackClick: () -> Unit) {
+fun InventoryPage(
+    username: String, // Pass the username as a parameter
+    onLogoutClick: () -> Unit // Callback for logout action
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -23,10 +30,18 @@ fun InventoryPage(onBackClick: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("This is the InventoryPage")
+            // Display the username
+            Text("Welcome, $username!") // Display the passed username
             Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = onBackClick) {
-                Text("Back")
+
+            // Logout button with an icon
+            Button(onClick = onLogoutClick) {
+                Icon(
+                    imageVector = Icons.Filled.Close, // Logout icon
+                    contentDescription = "Logout",
+                    modifier = Modifier.padding(end = 8.dp) // Add spacing between icon and text
+                )
+                Text("Logout")
             }
         }
     }

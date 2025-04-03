@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,9 +20,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
-import de.thro.packsimulator.ui.SetSelectPage
-import de.thro.packsimulator.ui.LoginPage
 import de.thro.packsimulator.ui.InventoryPage
+import de.thro.packsimulator.ui.LoginPage
+import de.thro.packsimulator.ui.SetSelectPage
 import de.thro.packsimulator.ui.item.TopBarContentItem
 import kotlinx.browser.document
 
@@ -39,8 +41,18 @@ fun App() {
     var currentPage by remember { mutableStateOf("SetSelectPage") }
     var isLoggedIn by remember { mutableStateOf(false) }
 
+    // Track the logged-in username
+    var loggedInUsername by remember { mutableStateOf("") }
+
+    // State for error messages
+    var errorMessage by remember { mutableStateOf("") }
+
+    // ScaffoldState for managing the snackbar
+    val scaffoldState = rememberScaffoldState()
+
     MaterialTheme {
         Scaffold(
+            scaffoldState = scaffoldState, // Attach the ScaffoldState
             topBar = {
                 TopBarContentItem(
                     onAddCardsClick = { currentPage = "SetSelectPage" },
@@ -55,25 +67,42 @@ fun App() {
                 "SetSelectPage" -> SetSelectPage()
                 "LoginPage" -> {
                     LoginPage(
-                        onLoginSuccess = {
-                            isLoggedIn = true // Mark the user as logged in
+                        onLoginSuccess = { username ->
+                            isLoggedIn = true
+                            loggedInUsername = username // Store the logged-in username
                             currentPage = "InventoryPage" // Navigate to InventoryPage after login
                         },
-                        onBackClick = {
-                            currentPage = "SetSelectPage" // Go back to SetSelectPage
+                        showError = { message ->
+                            errorMessage = message
                         }
                     )
                 }
 
                 "InventoryPage" -> InventoryPage(
-                    onBackClick = {
-                        currentPage = "SetSelectPage" // Go back to SetSelectPage
+                    username = loggedInUsername, // Pass the logged-in username
+                    onLogoutClick = {
+                        isLoggedIn = false
+                        loggedInUsername = "" // Clear the username
+                        currentPage = "LoginPage" // Navigate back to LoginPage after logout
                     }
                 )
+            }
+
+            // Show the snackbar if there’s an error message
+            if (errorMessage.isNotEmpty()) {
+                // Trigger the snackbar
+                LaunchedEffect(errorMessage) {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = errorMessage,
+                        actionLabel = "Dismiss"
+                    )
+                    errorMessage = "" // Reset the error message after the snackbar is shown
+                }
             }
         }
     }
 }
+
 
 @Composable
 fun ResponsiveLayout(content: @Composable () -> Unit) {
