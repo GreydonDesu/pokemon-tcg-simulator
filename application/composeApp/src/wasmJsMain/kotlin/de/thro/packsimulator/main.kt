@@ -20,10 +20,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
-import de.thro.packsimulator.view.account.InventoryPage
-import de.thro.packsimulator.view.login.LoginPage
-import de.thro.packsimulator.view.set.SetSelectPage
+import de.thro.packsimulator.view.account.AccountView
+import de.thro.packsimulator.view.login.LoginView
 import de.thro.packsimulator.view.miscellaneous.TopBarContentItem
+import de.thro.packsimulator.view.set.SetView
 import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -55,22 +55,22 @@ fun App() {
             scaffoldState = scaffoldState, // Attach the ScaffoldState
             topBar = {
                 TopBarContentItem(
-                    onAddCardsClick = { currentPage = "SetSelectPage" },
+                    onAddCardsClick = { currentPage = "SetPage" },
                     onInventoryClick = {
-                        currentPage = if (isLoggedIn) "InventoryPage" else "LoginPage"
+                        currentPage = if (isLoggedIn) "AccountPage" else "LoginPage"
                     }
                 )
             }
         ) {
             // Render the appropriate page based on the current state
             when (currentPage) {
-                "SetSelectPage" -> SetSelectPage()
+                "SetPage" -> SetView()
                 "LoginPage" -> {
-                    LoginPage(
+                    LoginView(
                         onLoginSuccess = { username ->
                             isLoggedIn = true
                             loggedInUsername = username // Store the logged-in username
-                            currentPage = "InventoryPage" // Navigate to InventoryPage after login
+                            currentPage = "AccountPage" // Navigate to AccountPage after login
                         },
                         showError = { message ->
                             errorMessage = message
@@ -78,7 +78,7 @@ fun App() {
                     )
                 }
 
-                "InventoryPage" -> InventoryPage(
+                "AccountPage" -> AccountView(
                     username = loggedInUsername, // Pass the logged-in username
                     onLogoutClick = {
                         isLoggedIn = false

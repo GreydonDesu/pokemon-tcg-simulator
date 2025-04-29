@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import de.thro.packsimulator.viewmodel.account.AccountViewModel
 
 @Composable
-fun LoginPage(
+fun LoginView(
     onLoginSuccess: (String) -> Unit, // Callback for navigating to the inventory page
     showError: (String) -> Unit // Callback to show error messages
 ) {

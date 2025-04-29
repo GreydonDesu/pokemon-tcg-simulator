@@ -14,26 +14,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import de.thro.packsimulator.viewmodel.set.SetBriefManager
 import de.thro.packsimulator.data.set.SetBrief
+import de.thro.packsimulator.viewmodel.set.SetBriefViewModel
 
 // Scroll amount
 const val SCROLL_VALUE = 1200
 
 @Composable
-fun SetSelectPage() {
-
-    val setBriefs by remember { derivedStateOf { SetBriefManager.setBriefs } }
+fun SetView() {
+    val setBriefs by remember { derivedStateOf { SetBriefViewModel.setBriefs } }
     var selectedSetBrief by remember { mutableStateOf<SetBrief?>(null) } // Track the selected SetBrief
 
     LaunchedEffect(Unit) {
-        if (setBriefs.isEmpty()) {
-            println("Fetched Sets are 0. Searching for Sets...")
-            SetBriefManager.fetchSetBriefs()
-        }
+        SetBriefViewModel.fetchSetBriefs()
     }
 
-    if (setBriefs.isEmpty()) {
+    val fetchedSetBriefs = setBriefs.value
+
+    if (fetchedSetBriefs.isEmpty()) {
         // Show loading indicator while data is being fetched
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -42,22 +40,22 @@ fun SetSelectPage() {
             CircularProgressIndicator()
         }
     } else {
-        // Layout with the top card list and the bottom dynamic card
+        // Layout with top list and bottom details
         Column(modifier = Modifier.fillMaxSize()) {
-            // Top card list
+            // Top list of set briefs
             SetBriefList(
-                setBriefList = setBriefs,
-                onItemClick = { selectedSetBrief = it } // Set the selected SetBrief on click
+                setBriefList = fetchedSetBriefs,
+                onItemClick = { selectedSetBrief = it }
             )
 
-            // Bottom dynamic card (takes the rest of the page)
+            // Bottom details section
             if (selectedSetBrief != null) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .weight(1f) // Take up the remaining vertical space
+                        .weight(1f) // Take remaining vertical space
                 ) {
-                    SetDetails(selectedSetBrief!!.name)
+                    SetDetails(selectedSetBrief!!.id)
                 }
             }
         }

@@ -13,7 +13,7 @@ plugins {
 kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
+        outputModuleName = "composeApp"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
@@ -33,12 +33,15 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Kotlin Compose
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            // Android
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
@@ -59,6 +62,9 @@ kotlin {
         }
 
         wasmJsMain.dependencies {
+            // Compose
+            implementation(compose.runtime)
+
             // Ktor for Js
             implementation(libs.ktor.client.js)
         }

@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun InventoryPage(
+fun AccountView(
     username: String, // Pass the username as a parameter
     onLogoutClick: () -> Unit // Callback for logout action
 ) {
