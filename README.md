@@ -6,7 +6,12 @@ This project is a required project for the module `Software Quality Assurance` (
 
 ## License
 
-The project and its content is licensed under [MIT](https://github.com/GreydonDesu/pokemon-tcg-simulator/blob/master/LICENSE).
+This project is not produced, endorsed, supported or affiliated with Nintendo, Game Freak or The Pokémon Company\
+All assets used in this project are owned by their respectful owners and creators.
+
+This project is solely created for educational purposes.
+
+This project is licensed under [MIT](https://github.com/GreydonDesu/pokemon-tcg-simulator/blob/master/LICENSE).
 
 ## Author
 
