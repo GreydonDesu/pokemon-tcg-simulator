@@ -1,4 +1,4 @@
-package de.thro.packsimulator.ui
+package de.thro.packsimulator.view.account
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

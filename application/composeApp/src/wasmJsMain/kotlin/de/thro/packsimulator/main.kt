@@ -20,10 +20,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
-import de.thro.packsimulator.ui.InventoryPage
-import de.thro.packsimulator.ui.LoginPage
-import de.thro.packsimulator.ui.SetSelectPage
-import de.thro.packsimulator.ui.item.TopBarContentItem
+import de.thro.packsimulator.view.account.InventoryPage
+import de.thro.packsimulator.view.login.LoginPage
+import de.thro.packsimulator.view.set.SetSelectPage
+import de.thro.packsimulator.view.miscellaneous.TopBarContentItem
 import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)

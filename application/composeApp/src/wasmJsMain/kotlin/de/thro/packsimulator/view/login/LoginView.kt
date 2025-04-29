@@ -1,4 +1,4 @@
-package de.thro.packsimulator.ui
+package de.thro.packsimulator.view.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,7 +25,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import de.thro.packsimulator.account.data.UserAccountManager
+import de.thro.packsimulator.viewmodel.account.AccountViewModel
 
 @Composable
 fun LoginPage(
@@ -67,7 +67,7 @@ fun LoginPage(
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
-                    if (UserAccountManager.loginUser(loginUsername, loginPassword)) {
+                    if (AccountViewModel.loginUser(loginUsername, loginPassword)) {
                         onLoginSuccess(loginUsername) // Pass the username to the callback
                     } else {
                         showError("Invalid username or password!")
@@ -111,7 +111,7 @@ fun LoginPage(
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
-                    val result = UserAccountManager.registerUser(registerUsername, registerPassword)
+                    val result = AccountViewModel.registerUser(registerUsername, registerPassword)
                     if (result == "Registration successful") {
                         showError(result) // Show success message
                     } else {

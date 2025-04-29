@@ -1,4 +1,4 @@
-package de.thro.packsimulator.set.ui
+package de.thro.packsimulator.view.set
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,14 +16,15 @@ import androidx.compose.ui.unit.dp
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import de.thro.packsimulator.set.data.SetBrief
+import de.thro.packsimulator.data.set.SetBrief
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SetBriefItem(setBrief: SetBrief) {
+fun SetBriefItem(setBrief: SetBrief, onClick: () -> Unit) {
     Card(
         modifier = Modifier.padding(8.dp),
-        onClick = { println("onClick: Set ID ${setBrief.id}") }) {
+        onClick = onClick // Trigger the passed onClick callback
+    ) {
         Column(
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally

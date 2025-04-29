@@ -1,4 +1,4 @@
-package de.thro.packsimulator.set.data
+package de.thro.packsimulator.data.set
 
 import kotlinx.serialization.Serializable
 
@@ -10,8 +10,6 @@ import kotlinx.serialization.Serializable
  * logo                 Set logo (you can add .(webp|png|jpg) to customize the format)
  * symbol               Set Symbol (you can add .(webp|png|jpg) to customize the format
  * cardCount            Contain information about the number of cards in the set
- * cardCount.total      The total amount of cards in this set (including hidden)
- * cardCount.official   The amount of cards in this set (displayed on the bottom left/right of the card)
  */
 @Serializable
 data class SetBrief(
@@ -19,7 +17,7 @@ data class SetBrief(
     val name: String,
     val logo: String? = null,
     val symbol: String? = null,
-    val cardCount: CardCount
+    val cardCount: CardCountBrief
 ) {
     /**
      * Sets file extension for Logo URL
@@ -38,8 +36,14 @@ data class SetBrief(
     }
 }
 
+/**
+ * Data class is based on the GraphQL entry
+ * https://tcgdex.dev/reference/set-brief
+ * cardCount.total      The total amount of cards in this set (including hidden)
+ * cardCount.official   The amount of cards in this set (displayed on the bottom left/right of the card)
+ */
 @Serializable
-data class CardCount(
+data class CardCountBrief(
     val total: Int,
     val official: Int
 )

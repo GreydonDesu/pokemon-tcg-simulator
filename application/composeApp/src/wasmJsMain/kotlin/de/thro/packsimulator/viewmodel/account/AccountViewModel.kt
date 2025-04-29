@@ -1,8 +1,10 @@
-package de.thro.packsimulator.account.data
+package de.thro.packsimulator.viewmodel.account
 
-object UserAccountManager {
+import de.thro.packsimulator.data.account.Account
+
+object AccountViewModel {
     // A mutable list to store registered users
-    private val registeredUsers = mutableListOf<UserAccount>()
+    private val registeredUsers = mutableListOf<Account>()
 
     /**
      * Registers a new user.
@@ -27,7 +29,7 @@ object UserAccountManager {
         }
 
         // Add the new user to the list
-        registeredUsers.add(UserAccount(username, password))
+        registeredUsers.add(Account(username, password))
         return "Registration successful"
     }
 

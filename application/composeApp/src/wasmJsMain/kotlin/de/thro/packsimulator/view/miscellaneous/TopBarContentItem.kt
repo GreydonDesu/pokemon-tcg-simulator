@@ -1,4 +1,4 @@
-package de.thro.packsimulator.ui.item
+package de.thro.packsimulator.view.miscellaneous
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -50,11 +50,11 @@ fun TopBarContentItem(
                 icon = {
                     Icon(
                         Icons.Filled.AccountCircle,
-                        contentDescription = "Inventory",
+                        contentDescription = "Account",
                         tint = Color.White
                     )
                 },
-                text = "Inventory",
+                text = "Account",
                 onClick = onInventoryClick
             )
         }
