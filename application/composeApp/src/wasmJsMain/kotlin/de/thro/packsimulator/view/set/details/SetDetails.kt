@@ -1,4 +1,4 @@
-package de.thro.packsimulator.view.set
+package de.thro.packsimulator.view.set.details
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -169,6 +169,13 @@ fun SetDetails(setId: String) {
                                 style = MaterialTheme.typography.body2
                             )
                         }
+                    }
+
+                    // Render CardBrief List
+                    if (setData!!.cards.isNotEmpty()) {
+                        SetDetailsCardList(cards = setData!!.cards)
+                    } else {
+                        Text(text = "No cards available.", style = MaterialTheme.typography.body2)
                     }
                 }
             }

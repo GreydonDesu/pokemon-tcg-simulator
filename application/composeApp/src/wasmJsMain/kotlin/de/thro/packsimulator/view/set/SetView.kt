@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import de.thro.packsimulator.data.set.SetBrief
+import de.thro.packsimulator.view.set.details.SetDetails
 import de.thro.packsimulator.viewmodel.set.SetBriefViewModel
 
 // Scroll amount

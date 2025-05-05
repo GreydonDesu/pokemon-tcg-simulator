@@ -37,7 +37,6 @@ object SetBriefViewModel {
                     setBrief.symbol != null &&
                     testSets.contains(setBrief.id)
                 }
-                println("Valid Sets: $validSets") // Debugging
                 _setBriefs.value = validSets
             }
         }
