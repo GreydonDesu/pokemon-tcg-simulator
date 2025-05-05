@@ -15,10 +15,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import de.thro.packsimulator.data.set.SetBrief
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @Composable

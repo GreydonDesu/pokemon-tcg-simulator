@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,16 +22,18 @@ const val SCROLL_VALUE = 1200
 
 @Composable
 fun SetView() {
-    val setBriefs by remember { derivedStateOf { SetBriefViewModel.setBriefs } }
-    var selectedSetBrief by remember { mutableStateOf<SetBrief?>(null) } // Track the selected SetBrief
+    // Collect the StateFlow from the ViewModel
+    val setBriefs by SetBriefViewModel.setBriefs.collectAsState()
 
+    // Mutable state for tracking the selected SetBrief
+    var selectedSetBrief by remember { mutableStateOf<SetBrief?>(null) }
+
+    // Fetch data when the composable is first composed
     LaunchedEffect(Unit) {
         SetBriefViewModel.fetchSetBriefs()
     }
 
-    val fetchedSetBriefs = setBriefs.value
-
-    if (fetchedSetBriefs.isEmpty()) {
+    if (setBriefs.isEmpty()) {
         // Show loading indicator while data is being fetched
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -44,18 +46,18 @@ fun SetView() {
         Column(modifier = Modifier.fillMaxSize()) {
             // Top list of set briefs
             SetBriefList(
-                setBriefList = fetchedSetBriefs,
+                setBriefList = setBriefs,
                 onItemClick = { selectedSetBrief = it }
             )
 
             // Bottom details section
-            if (selectedSetBrief != null) {
+            selectedSetBrief?.let { brief ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f) // Take remaining vertical space
                 ) {
-                    SetDetails(selectedSetBrief!!.id)
+                    SetDetails(brief.id)
                 }
             }
         }

@@ -16,7 +16,6 @@ private const val TIME_OUT = 5000L
 private val testSets = listOf("A1", "A2a", "A2b")
 
 object SetBriefViewModel {
-
     /*
     * Observable state for List of SetBrief.
     */
@@ -35,9 +34,10 @@ object SetBriefViewModel {
             if (fetchedSetBriefs != null) {
                 val validSets = fetchedSetBriefs.filter { setBrief ->
                     setBrief.logo != null &&
-                            setBrief.symbol != null &&
-                            testSets.contains(setBrief.id)
+                    setBrief.symbol != null &&
+                    testSets.contains(setBrief.id)
                 }
+                println("Valid Sets: $validSets") // Debugging
                 _setBriefs.value = validSets
             }
         }

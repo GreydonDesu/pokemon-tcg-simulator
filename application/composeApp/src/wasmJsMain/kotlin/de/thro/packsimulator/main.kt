@@ -86,6 +86,7 @@ fun App() {
                         currentPage = "LoginPage" // Navigate back to LoginPage after logout
                     }
                 )
+                else -> SetView()
             }
 
             // Show the snackbar if there’s an error message
