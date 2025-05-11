@@ -24,8 +24,8 @@ import de.thro.packsimulator.view.miscellaneous.card.CardBriefItem
 const val ROW_NUMBERS = 5
 
 @Composable
-fun SetDetailsCardList(cards: List<CardBrief>) {
-    var isExpanded by remember { mutableStateOf(false) } // Tracks whether the grid is expanded
+fun SetDetailsCardList(cards: List<CardBrief>, startExpanded: Boolean = false) {
+    var isExpanded by remember { mutableStateOf(startExpanded) } // Tracks whether the grid is expanded
 
     Column(modifier = Modifier.fillMaxWidth()) {
         // Expand/Collapse button

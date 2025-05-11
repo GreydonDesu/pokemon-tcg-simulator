@@ -8,15 +8,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,12 +29,21 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import de.thro.packsimulator.data.set.Set
 import de.thro.packsimulator.manager.APIManager
+import de.thro.packsimulator.manager.AccountManager
+import de.thro.packsimulator.viewmodel.set.SetDetailsViewModel
+import kotlinx.coroutines.launch
 
 @Composable
-fun SetDetails(setId: String) {
+fun SetDetails(
+    setId: String,
+    scaffoldState: ScaffoldState // Accept ScaffoldState from the parent
+) {
     var setData by remember { mutableStateOf<Set?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+
+    val scope = rememberCoroutineScope()
+    val currentAccount = AccountManager.getCurrentAccount() // Fetch the currently logged-in account
 
     // Fetch data when the composable is displayed
     LaunchedEffect(setId) {
@@ -169,6 +181,21 @@ fun SetDetails(setId: String) {
                                 style = MaterialTheme.typography.body2
                             )
                         }
+                    }
+
+                    Button(
+                        onClick = {
+                            // Delegate the logic to SetDetailsViewModel
+                            SetDetailsViewModel.openPack(
+                                account = currentAccount,
+                                cards = setData!!.cards,
+                                scaffoldState = scaffoldState,
+                                scope = scope
+                            )
+                        },
+                        modifier = Modifier.padding(top = 16.dp)
+                    ) {
+                        Text(text = "Open Pack")
                     }
 
                     // Render CardBrief List

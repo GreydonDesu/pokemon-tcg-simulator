@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -22,7 +23,7 @@ import de.thro.packsimulator.viewmodel.set.SetBriefViewModel
 const val SCROLL_VALUE = 1200
 
 @Composable
-fun SetView() {
+fun SetView(scaffoldState: ScaffoldState) {
     // Collect the StateFlow from the ViewModel
     val setBriefs by SetBriefViewModel.setBriefs.collectAsState()
 
@@ -58,7 +59,7 @@ fun SetView() {
                         .fillMaxWidth()
                         .weight(1f) // Take remaining vertical space
                 ) {
-                    SetDetails(brief.id)
+                    SetDetails(brief.id, scaffoldState= scaffoldState)
                 }
             }
         }

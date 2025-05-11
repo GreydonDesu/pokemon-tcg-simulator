@@ -20,6 +20,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
+import de.thro.packsimulator.data.account.Account
+import de.thro.packsimulator.manager.AccountManager
 import de.thro.packsimulator.view.account.AccountView
 import de.thro.packsimulator.view.login.LoginView
 import de.thro.packsimulator.view.miscellaneous.TopBarContentItem
@@ -41,9 +43,6 @@ fun App() {
     var currentPage by remember { mutableStateOf("SetSelectPage") }
     var isLoggedIn by remember { mutableStateOf(false) }
 
-    // Track the logged-in username
-    var loggedInUsername by remember { mutableStateOf("") }
-
     // State for error messages
     var errorMessage by remember { mutableStateOf("") }
 
@@ -64,12 +63,15 @@ fun App() {
         ) {
             // Render the appropriate page based on the current state
             when (currentPage) {
-                "SetPage" -> SetView()
+                "SetPage" -> SetView(scaffoldState = scaffoldState)
                 "LoginPage" -> {
                     LoginView(
                         onLoginSuccess = { username ->
+                            // Initialize the AccountManager with the logged-in account
+                            AccountManager.setCurrentAccount(
+                                Account(username = username, password = "")
+                            )
                             isLoggedIn = true
-                            loggedInUsername = username // Store the logged-in username
                             currentPage = "AccountPage" // Navigate to AccountPage after login
                         },
                         showError = { message ->
@@ -78,15 +80,23 @@ fun App() {
                     )
                 }
 
-                "AccountPage" -> AccountView(
-                    username = loggedInUsername, // Pass the logged-in username
-                    onLogoutClick = {
-                        isLoggedIn = false
-                        loggedInUsername = "" // Clear the username
-                        currentPage = "LoginPage" // Navigate back to LoginPage after logout
+                "AccountPage" -> {
+                    val account = AccountManager.getCurrentAccount()
+                    if (account != null) {
+                        AccountView(
+                            onLogoutClick = {
+                                isLoggedIn = false
+                                AccountManager.setCurrentAccount(null) // Clear the current account
+                                currentPage = "LoginPage" // Navigate back to LoginPage after logout
+                            }
+                        )
+                    } else {
+                        // If no account is found (edge case), redirect to login
+                        currentPage = "LoginPage"
                     }
-                )
-                else -> SetView()
+                }
+
+                else -> SetView(scaffoldState = scaffoldState)
             }
 
             // Show the snackbar if there’s an error message

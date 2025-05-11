@@ -25,7 +25,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.thro.packsimulator.manager.AccountManager
 import de.thro.packsimulator.viewmodel.account.AccountViewModel
+import de.thro.packsimulator.viewmodel.login.LoginViewModel
 
 @Composable
 fun LoginView(
@@ -67,10 +69,11 @@ fun LoginView(
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
-                    if (AccountViewModel.loginUser(loginUsername, loginPassword)) {
-                        onLoginSuccess(loginUsername) // Pass the username to the callback
+                    val (success, error) = LoginViewModel.loginUser(loginUsername, loginPassword)
+                    if (success) {
+                        onLoginSuccess(loginUsername) // Navigate to the inventory page
                     } else {
-                        showError("Invalid username or password!")
+                        showError(error ?: "An unknown error occurred.")
                     }
                 },
                 modifier = Modifier.fillMaxWidth(0.33f)
@@ -111,11 +114,11 @@ fun LoginView(
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
-                    val result = AccountViewModel.registerUser(registerUsername, registerPassword)
-                    if (result == "Registration successful") {
-                        showError(result) // Show success message
+                    val (success, error) = LoginViewModel.registerUser(registerUsername, registerPassword)
+                    if (success) {
+                        onLoginSuccess(registerUsername) // Navigate to the inventory page
                     } else {
-                        showError(result) // Show the error message
+                        showError(error ?: "An unknown error occurred.")
                     }
                 },
                 modifier = Modifier.fillMaxWidth(0.33f)

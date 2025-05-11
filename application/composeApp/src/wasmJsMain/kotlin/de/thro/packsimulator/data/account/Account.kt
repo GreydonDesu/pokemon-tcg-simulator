@@ -13,9 +13,9 @@ import kotlinx.serialization.Serializable
 data class Account(
     val username: String,
     val password: String,    // Temporary
-    val inventory: List<CardBrief> = emptyList()
+    var inventory: MutableList<CardBrief> = mutableListOf()
 ) {
-    fun getInventory(): List<CardBrief> {
-        return inventory
+    fun addCardsToInventory(cards: List<CardBrief>) {
+        inventory.addAll(cards)
     }
 }
