@@ -2,7 +2,7 @@ spring:
   data:
     mongodb:
       database: packsimulator
-      uri: mongodb://localhost:27017
+      uri: mongodb://mongo:27017
   application:
     name: PackSimulator
   logging:
