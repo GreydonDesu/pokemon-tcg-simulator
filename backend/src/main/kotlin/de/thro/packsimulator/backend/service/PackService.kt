@@ -1,30 +1,46 @@
 package de.thro.packsimulator.backend.service
 
 import de.thro.packsimulator.backend.data.Card
+import de.thro.packsimulator.backend.repository.AccountRepository
 import de.thro.packsimulator.backend.repository.SetRepository
-import de.thro.packsimulator.backend.repository.UserRepository
 import org.springframework.stereotype.Service
+import kotlin.random.Random
 
-// Packs usually have 5 cards each
-const val CARD_AMOUNT_PER_PACK = 5
+private const val CARD_AMOUNT = 5
 
 @Service
 class PackService(
     private val setRepository: SetRepository,
-    private val userRepository: UserRepository
+    private val accountRepository: AccountRepository
 ) {
 
-    fun openPack(userId: String, setId: String): List<Card> {
-        val user = userRepository.findById(userId).orElseThrow { Exception("User not found") }
-        val set = setRepository.findById(setId).orElseThrow { Exception("Set not found") }
+    // Open a pack and assign cards to the user's inventory
+    fun openPack(username: String, setId: String): List<Card> {
+        // Validate the set
+        val set = setRepository.findById(setId)
+            .orElseThrow { IllegalArgumentException("Set with ID $setId not found") }
 
-        // Randomly select 5 cards
-        val selectedCards = List(CARD_AMOUNT_PER_PACK) { set.cards.random() }
+        // Validate the user
+        val account = accountRepository.findById(username)
+            .orElseThrow { IllegalArgumentException("Account with username $username not found") }
 
-        // Update user's inventory
-        user.inventory.addAll(selectedCards)
-        userRepository.save(user)
+        // Randomly select cards from the set (e.g., 5 cards per pack)
+        val cardsToAdd = selectRandomCards(set.cards)
 
-        return selectedCards
+        // Add the selected cards to the user's inventory
+        account.inventory.addAll(cardsToAdd)
+
+        // Save the updated account
+        accountRepository.save(account)
+
+        return cardsToAdd
+    }
+
+    // Helper function to select random cards
+    private fun selectRandomCards(cards: List<Card>): List<Card> {
+        if (cards.size <= CARD_AMOUNT) {
+            return cards // If fewer cards are available, return all
+        }
+        return cards.shuffled(Random).take(CARD_AMOUNT) // Randomly select `count` cards
     }
 }
