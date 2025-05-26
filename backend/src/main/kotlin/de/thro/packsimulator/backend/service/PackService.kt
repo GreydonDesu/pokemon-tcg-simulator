@@ -3,6 +3,7 @@ package de.thro.packsimulator.backend.service
 import de.thro.packsimulator.backend.data.Card
 import de.thro.packsimulator.backend.repository.AccountRepository
 import de.thro.packsimulator.backend.repository.SetRepository
+import de.thro.packsimulator.backend.util.JwtUtil
 import org.springframework.stereotype.Service
 import kotlin.random.Random
 
@@ -15,7 +16,11 @@ class PackService(
 ) {
 
     // Open a pack and assign cards to the user's inventory
-    fun openPack(username: String, setId: String): List<Card>? {
+    fun openPack(token: String, setId: String): List<Card>? {
+        // Validate the token and extract the username
+        val username = JwtUtil.validateToken(token)
+            ?: throw IllegalArgumentException("Invalid or expired token")
+
         // Validate the set
         val set = setRepository.findById(setId)
             .orElseThrow { IllegalArgumentException("Set with ID $setId not found") }

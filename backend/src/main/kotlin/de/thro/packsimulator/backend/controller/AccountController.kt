@@ -1,8 +1,11 @@
 package de.thro.packsimulator.backend.controller
 
+import de.thro.packsimulator.backend.data.Card
 import de.thro.packsimulator.backend.service.AccountService
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -27,7 +30,20 @@ class AccountController(private val accountService: AccountService) {
         @RequestParam username: String,
         @RequestParam password: String
     ): ResponseEntity<String> {
-        accountService.login(username, password)
-        return ResponseEntity.ok("Login successful")
+        val token = accountService.login(username, password)
+        return ResponseEntity.ok(token) // Return the JWT token
+    }
+
+    // Fetch the inventory of the currently authenticated user
+    @GetMapping("/inventory")
+    fun getInventory(
+        @RequestHeader("Authorization") token: String
+    ): ResponseEntity<List<Card>> {
+        // Remove the "Bearer " prefix from the token
+        val jwtToken = token.removePrefix("Bearer ").trim()
+
+        // Fetch the inventory
+        val inventory = accountService.getInventory(jwtToken)
+        return ResponseEntity.ok(inventory)
     }
 }
