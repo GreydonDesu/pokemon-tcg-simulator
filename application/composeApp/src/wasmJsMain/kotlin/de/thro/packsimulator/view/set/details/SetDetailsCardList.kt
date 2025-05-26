@@ -19,12 +19,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.thro.packsimulator.data.card.CardBrief
+import de.thro.packsimulator.model.CardModel
 import de.thro.packsimulator.view.miscellaneous.card.CardBriefItem
 
 const val ROW_NUMBERS = 5
 
 @Composable
-fun SetDetailsCardList(cards: List<CardBrief>, startExpanded: Boolean = false) {
+fun SetDetailsCardList(cards: List<CardModel>, startExpanded: Boolean = false) {
     var isExpanded by remember { mutableStateOf(startExpanded) } // Tracks whether the grid is expanded
 
     Column(modifier = Modifier.fillMaxWidth()) {

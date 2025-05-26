@@ -9,4 +9,13 @@ plugins {
 
     kotlin("jvm") version "2.1.20"
     kotlin("plugin.serialization") version "2.1.20"
+
+    id("io.gitlab.arturbosch.detekt") version "1.23.8" // Add the Detekt plugin
+}
+
+detekt {
+    toolVersion = "1.23.8" // Ensure you're using the same version as the plugin
+    config = files("detekt.yml") // Optional: Specify a custom config file
+    buildUponDefaultConfig = true // Use Detekt's default configuration as a base
+    allRules = false // Disable all rules unless explicitly enabled
 }

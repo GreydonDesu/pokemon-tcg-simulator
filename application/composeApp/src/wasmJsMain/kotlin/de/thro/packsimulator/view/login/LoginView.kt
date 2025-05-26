@@ -15,6 +15,8 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,19 +27,37 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import de.thro.packsimulator.manager.AccountManager
-import de.thro.packsimulator.viewmodel.account.AccountViewModel
-import de.thro.packsimulator.viewmodel.login.LoginViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.thro.packsimulator.viewmodel.AccountViewModel
 
 @Composable
 fun LoginView(
     onLoginSuccess: (String) -> Unit, // Callback for navigating to the inventory page
-    showError: (String) -> Unit // Callback to show error messages
+    showError: (String) -> Unit, // Callback to show error messages
+    accountViewModel: AccountViewModel = viewModel() // Inject AccountViewModel
 ) {
     var loginUsername by remember { mutableStateOf("") }
     var loginPassword by remember { mutableStateOf("") }
     var registerUsername by remember { mutableStateOf("") }
     var registerPassword by remember { mutableStateOf("") }
+
+    // Observe state from AccountViewModel
+    val loginStatusMessage by accountViewModel.statusMessage.collectAsState()
+    val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
+
+    // Show error messages if any
+    LaunchedEffect(loginStatusMessage) {
+        if (loginStatusMessage.isNotBlank()) {
+            showError(loginStatusMessage)
+        }
+    }
+
+    // Navigate on successful login
+    LaunchedEffect(isLoggedIn) {
+        if (isLoggedIn) {
+            onLoginSuccess(loginUsername) // Pass the username to navigate
+        }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -69,12 +89,7 @@ fun LoginView(
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
-                    val (success, error) = LoginViewModel.loginUser(loginUsername, loginPassword)
-                    if (success) {
-                        onLoginSuccess(loginUsername) // Navigate to the inventory page
-                    } else {
-                        showError(error ?: "An unknown error occurred.")
-                    }
+                    accountViewModel.login(loginUsername, loginPassword)
                 },
                 modifier = Modifier.fillMaxWidth(0.33f)
             ) {
@@ -114,12 +129,7 @@ fun LoginView(
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
-                    val (success, error) = LoginViewModel.registerUser(registerUsername, registerPassword)
-                    if (success) {
-                        onLoginSuccess(registerUsername) // Navigate to the inventory page
-                    } else {
-                        showError(error ?: "An unknown error occurred.")
-                    }
+                    accountViewModel.register(registerUsername, registerPassword)
                 },
                 modifier = Modifier.fillMaxWidth(0.33f)
             ) {
@@ -128,4 +138,3 @@ fun LoginView(
         }
     }
 }
-

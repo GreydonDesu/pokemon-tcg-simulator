@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.composeCompiler)
 
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.kover)
 }
 
 kotlin {
@@ -44,6 +43,7 @@ kotlin {
             // Android
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
 
             // Coil Image Compose
             implementation(libs.coil.compose)
@@ -57,6 +57,7 @@ kotlin {
             implementation(libs.ktor.client.cio)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.logging)
 
             // Kotlinx Coroutines
             runtimeOnly(libs.kotlinx.coroutines.core)

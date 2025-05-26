@@ -15,18 +15,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import de.thro.packsimulator.data.set.SetBrief
-import kotlinx.coroutines.flow.StateFlow
+import de.thro.packsimulator.model.SetModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun SetBriefList(
-    setBriefList: List<SetBrief>,
-    onItemClick: (SetBrief) -> Unit // Pass the click callback
+    setBriefList: List<SetModel>,
+    onItemClick: (SetModel) -> Unit // Pass the click callback
 ) {
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
@@ -56,7 +54,7 @@ fun SetBriefList(
                         .align(Alignment.Center)
                 ) {
                     setBriefList.forEach { setBrief ->
-                        SetBriefItem(setBrief = setBrief, onClick = { onItemClick(setBrief) })
+                        SetBriefItem(sets = setBrief, onClick = { onItemClick(setBrief) })
                     }
                 }
             }

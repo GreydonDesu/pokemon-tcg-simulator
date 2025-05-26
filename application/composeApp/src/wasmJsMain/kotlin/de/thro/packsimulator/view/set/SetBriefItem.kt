@@ -16,11 +16,11 @@ import androidx.compose.ui.unit.dp
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import de.thro.packsimulator.data.set.SetBrief
+import de.thro.packsimulator.model.SetModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SetBriefItem(setBrief: SetBrief, onClick: () -> Unit) {
+fun SetBriefItem(sets: SetModel, onClick: () -> Unit) {
     Card(
         modifier = Modifier.padding(8.dp),
         onClick = onClick // Trigger the passed onClick callback
@@ -31,30 +31,30 @@ fun SetBriefItem(setBrief: SetBrief, onClick: () -> Unit) {
         ) {
             Column {
                 Row {
-                    if (setBrief.getSymbolUrl("png") != "null.png") {
+                    if (sets.symbol!!.isNotEmpty()) {
                         AsyncImage(
                             model = ImageRequest.Builder(PlatformContext.INSTANCE)
-                                .data(setBrief.getSymbolUrl("png")).build(),
-                            contentDescription = "Symbol for ${setBrief.name}",
+                                .data(sets.symbol).build(),
+                            contentDescription = "Symbol for ${sets.name}",
                             modifier = Modifier.size(24.dp)
                         )
                     }
                     Spacer(Modifier.size(2.dp))
-                    Text(text = setBrief.name, style = MaterialTheme.typography.h6)
+                    Text(text = sets.name, style = MaterialTheme.typography.h6)
                     Spacer(Modifier.size(2.dp))
-                    Text(text = "[${setBrief.id}]", style = MaterialTheme.typography.body2)
+                    Text(text = "[${sets.id}]", style = MaterialTheme.typography.body2)
                 }
                 Text(
-                    text = "Total Cards: ${setBrief.cardCount.total}",
+                    text = "Total Cards: ${sets.totalCards}",
                     style = MaterialTheme.typography.body2
                 )
             }
             Spacer(Modifier.size(16.dp))
-            if (setBrief.getLogoUrl("png") != "null.png") {
+            if (sets.logo!!.isNotEmpty()) {
                 AsyncImage(
                     model = ImageRequest.Builder(PlatformContext.INSTANCE)
-                        .data(setBrief.getLogoUrl("png")).build(),
-                    contentDescription = "Logo for ${setBrief.name}",
+                        .data(sets.logo).build(),
+                    contentDescription = "Logo for ${sets.name}",
                     modifier = Modifier.size(128.dp)
                 )
             }

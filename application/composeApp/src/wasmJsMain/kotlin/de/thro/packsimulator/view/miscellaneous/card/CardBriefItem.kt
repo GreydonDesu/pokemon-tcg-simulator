@@ -16,10 +16,10 @@ import androidx.compose.ui.unit.dp
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import de.thro.packsimulator.data.card.CardBrief
+import de.thro.packsimulator.model.CardModel
 
 @Composable
-fun CardBriefItem(card: CardBrief) {
+fun CardBriefItem(card: CardModel) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,17 +45,15 @@ fun CardBriefItem(card: CardBrief) {
             Spacer(modifier = Modifier.height(8.dp))
 
             // Display card image below the text
-            card.image?.let {
-                AsyncImage(
-                    model = ImageRequest.Builder(PlatformContext.INSTANCE)
-                        .data(card.getImageUrl())
-                        .build(),
-                    contentDescription = "Image for ${card.name}",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 8.dp)
-                )
-            }
+            AsyncImage(
+                model = ImageRequest.Builder(PlatformContext.INSTANCE)
+                    .data(card.image)
+                    .build(),
+                contentDescription = "Image for ${card.name}",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
+            )
         }
     }
 }

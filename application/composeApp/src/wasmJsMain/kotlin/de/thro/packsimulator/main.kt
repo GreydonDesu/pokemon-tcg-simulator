@@ -11,6 +11,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,12 +21,12 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
-import de.thro.packsimulator.data.account.Account
-import de.thro.packsimulator.manager.AccountManager
+import de.thro.packsimulator.service.ApiService
 import de.thro.packsimulator.view.account.AccountView
 import de.thro.packsimulator.view.login.LoginView
 import de.thro.packsimulator.view.miscellaneous.TopBarContentItem
 import de.thro.packsimulator.view.set.SetView
+import de.thro.packsimulator.viewmodel.AccountViewModel
 import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -39,15 +40,20 @@ fun main() {
 
 @Composable
 fun App() {
-    // State to track the current page and login status
+    // State to track the current page
     var currentPage by remember { mutableStateOf("SetSelectPage") }
-    var isLoggedIn by remember { mutableStateOf(false) }
 
     // State for error messages
     var errorMessage by remember { mutableStateOf("") }
 
     // ScaffoldState for managing the snackbar
     val scaffoldState = rememberScaffoldState()
+
+    // AccountViewModel instance
+    val accountViewModel = remember { AccountViewModel() }
+
+    // Observe login state from AccountViewModel
+    val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
 
     MaterialTheme {
         Scaffold(
@@ -66,12 +72,10 @@ fun App() {
                 "SetPage" -> SetView(scaffoldState = scaffoldState)
                 "LoginPage" -> {
                     LoginView(
-                        onLoginSuccess = { username ->
-                            // Initialize the AccountManager with the logged-in account
-                            AccountManager.setCurrentAccount(
-                                Account(username = username, password = "")
-                            )
-                            isLoggedIn = true
+                        onLoginSuccess = { token ->
+                            // Store the token in ApiService and update the AccountViewModel state
+                            ApiService.setToken(token)
+                            accountViewModel.login("", "") // Trigger login state (username not needed here)
                             currentPage = "AccountPage" // Navigate to AccountPage after login
                         },
                         showError = { message ->
@@ -81,17 +85,16 @@ fun App() {
                 }
 
                 "AccountPage" -> {
-                    val account = AccountManager.getCurrentAccount()
-                    if (account != null) {
+                    if (isLoggedIn) {
                         AccountView(
                             onLogoutClick = {
-                                isLoggedIn = false
-                                AccountManager.setCurrentAccount(null) // Clear the current account
+                                accountViewModel.logout() // Clear the logged-in account
+                                ApiService.logout() // Clear the token in ApiService
                                 currentPage = "LoginPage" // Navigate back to LoginPage after logout
                             }
                         )
                     } else {
-                        // If no account is found (edge case), redirect to login
+                        // If not logged in (edge case), redirect to LoginPage
                         currentPage = "LoginPage"
                     }
                 }
@@ -113,7 +116,6 @@ fun App() {
         }
     }
 }
-
 
 @Composable
 fun ResponsiveLayout(content: @Composable () -> Unit) {

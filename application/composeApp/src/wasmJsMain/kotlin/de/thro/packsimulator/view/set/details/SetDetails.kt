@@ -16,6 +16,7 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,55 +25,47 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import de.thro.packsimulator.data.set.Set
-import de.thro.packsimulator.manager.APIManager
-import de.thro.packsimulator.manager.AccountManager
-import de.thro.packsimulator.viewmodel.set.SetDetailsViewModel
+import de.thro.packsimulator.model.SetModel
+import de.thro.packsimulator.viewmodel.PackViewModel
+import de.thro.packsimulator.viewmodel.SetViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun SetDetails(
     setId: String,
-    scaffoldState: ScaffoldState // Accept ScaffoldState from the parent
+    scaffoldState: ScaffoldState, // Accept ScaffoldState from the parent
+    setViewModel: SetViewModel, // Inject SetDetailsViewModel
+    packViewModel: PackViewModel = viewModel() // Inject PackViewModel
 ) {
-    var setData by remember { mutableStateOf<Set?>(null) }
-    var isLoading by remember { mutableStateOf(true) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+    // Observe state from SetViewModel
+    val sets by setViewModel.sets.collectAsState()
+    val errorMessage by setViewModel.errorMessage.collectAsState()
+
+    // Find the selected set from the list of sets
+    val selectedSet = sets.find { it.id == setId }
+
+    // Observe state from PackViewModel
+    val packOpeningState by packViewModel.cards.collectAsState()
+    val packErrorMessage by packViewModel.errorMessage.collectAsState()
 
     val scope = rememberCoroutineScope()
-    val currentAccount = AccountManager.getCurrentAccount() // Fetch the currently logged-in account
 
-    // Fetch data when the composable is displayed
-    LaunchedEffect(setId) {
-        isLoading = true
-        errorMessage = null
-        try {
-            setData = APIManager.getSet(setId)
-        } catch (e: Exception) {
-            errorMessage = "Error fetching set details: ${e.message}"
-        } finally {
-            isLoading = false
-        }
-    }
-
-    if (isLoading) {
+    if (selectedSet == null) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            CircularProgressIndicator()
+            if (errorMessage.isNotEmpty()) {
+                Text(text = errorMessage, color = MaterialTheme.colors.error)
+            } else {
+                Text(text = "Set not found.", color = MaterialTheme.colors.error)
+            }
         }
-    } else if (errorMessage != null) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = errorMessage ?: "Unknown error", color = MaterialTheme.colors.error)
-        }
-    } else if (setData != null) {
+    } else {
         Card(
             modifier = Modifier
                 .fillMaxSize()
@@ -80,12 +73,12 @@ fun SetDetails(
         ) {
             Box(Modifier.fillMaxSize()) {
                 // Logo at the top-right corner
-                if (setData!!.getLogoUrl("png") != "null.png") {
+                if (selectedSet.logo!!.isNotEmpty()) {
                     AsyncImage(
                         model = ImageRequest.Builder(PlatformContext.INSTANCE)
-                            .data(setData!!.getLogoUrl("png"))
+                            .data(selectedSet.logo)
                             .build(),
-                        contentDescription = "Logo for ${setData!!.name}",
+                        contentDescription = "Logo for ${selectedSet.name}",
                         modifier = Modifier
                             .size(256.dp)
                             .align(Alignment.TopEnd)
@@ -102,12 +95,12 @@ fun SetDetails(
                 ) {
                     // Title and release date
                     Text(
-                        text = "${setData!!.name} [${setData!!.id}]",
+                        text = "${selectedSet.name} [${selectedSet.id}]",
                         style = MaterialTheme.typography.h5
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Release Date: ${setData!!.releaseDate}",
+                        text = "Release Date: ${selectedSet.releaseDate}",
                         style = MaterialTheme.typography.body2
                     )
                     Spacer(modifier = Modifier.height(16.dp))
@@ -119,7 +112,6 @@ fun SetDetails(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    // Render a 2x5 grid for card count
                     Column {
                         Row {
                             Text(
@@ -128,55 +120,7 @@ fun SetDetails(
                                 style = MaterialTheme.typography.body2
                             )
                             Text(
-                                text = "${setData!!.cardCount.total}",
-                                modifier = Modifier.weight(1f),
-                                style = MaterialTheme.typography.body2
-                            )
-                        }
-                        Row {
-                            Text(
-                                text = "Official Cards:",
-                                modifier = Modifier.weight(1f),
-                                style = MaterialTheme.typography.body2
-                            )
-                            Text(
-                                text = "${setData!!.cardCount.official}",
-                                modifier = Modifier.weight(1f),
-                                style = MaterialTheme.typography.body2
-                            )
-                        }
-                        Row {
-                            Text(
-                                text = "Reverse Holo:",
-                                modifier = Modifier.weight(1f),
-                                style = MaterialTheme.typography.body2
-                            )
-                            Text(
-                                text = "${setData!!.cardCount.reverse}",
-                                modifier = Modifier.weight(1f),
-                                style = MaterialTheme.typography.body2
-                            )
-                        }
-                        Row {
-                            Text(
-                                text = "Holo Cards:",
-                                modifier = Modifier.weight(1f),
-                                style = MaterialTheme.typography.body2
-                            )
-                            Text(
-                                text = "${setData!!.cardCount.holo}",
-                                modifier = Modifier.weight(1f),
-                                style = MaterialTheme.typography.body2
-                            )
-                        }
-                        Row {
-                            Text(
-                                text = "First Edition:",
-                                modifier = Modifier.weight(1f),
-                                style = MaterialTheme.typography.body2
-                            )
-                            Text(
-                                text = "${setData!!.cardCount.firstEd}",
+                                text = "${selectedSet.totalCards}",
                                 modifier = Modifier.weight(1f),
                                 style = MaterialTheme.typography.body2
                             )
@@ -185,22 +129,52 @@ fun SetDetails(
 
                     Button(
                         onClick = {
-                            // Delegate the logic to SetDetailsViewModel
-                            SetDetailsViewModel.openPack(
-                                account = currentAccount,
-                                cards = setData!!.cards,
-                                scaffoldState = scaffoldState,
-                                scope = scope
-                            )
+                            scope.launch {
+                                packViewModel.openPack(setId)
+                                if (packViewModel.errorMessage.value.isNotEmpty()) {
+                                    // Show a snackbar with error message
+                                    scaffoldState.snackbarHostState.showSnackbar(
+                                        message = packViewModel.errorMessage.value
+                                    )
+                                } else {
+                                    // Show a success snackbar
+                                    scaffoldState.snackbarHostState.showSnackbar(
+                                        message = "Pack opened successfully!"
+                                    )
+                                }
+                            }
                         },
                         modifier = Modifier.padding(top = 16.dp)
                     ) {
                         Text(text = "Open Pack")
                     }
 
+                    // Handle pack opening state
+                    if (packOpeningState.isNotEmpty()) {
+                        Text(
+                            text = "Pack opened! Cards received:",
+                            style = MaterialTheme.typography.h6,
+                            modifier = Modifier.padding(top = 16.dp)
+                        )
+                        // Render a list of cards
+                        packOpeningState.forEach { card ->
+                            Text(text = card.name, style = MaterialTheme.typography.body2)
+                        }
+                    }
+
+                    // Display pack opening error if any
+                    if (packErrorMessage.isNotEmpty()) {
+                        Text(
+                            text = packErrorMessage,
+                            color = MaterialTheme.colors.error,
+                            style = MaterialTheme.typography.body2,
+                            modifier = Modifier.padding(top = 16.dp)
+                        )
+                    }
+
                     // Render CardBrief List
-                    if (setData!!.cards.isNotEmpty()) {
-                        SetDetailsCardList(cards = setData!!.cards)
+                    if (selectedSet.cards.isNotEmpty()) {
+                        SetDetailsCardList(cards = selectedSet.cards)
                     } else {
                         Text(text = "No cards available.", style = MaterialTheme.typography.body2)
                     }

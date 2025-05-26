@@ -15,27 +15,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import de.thro.packsimulator.data.set.SetBrief
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.thro.packsimulator.model.SetModel
 import de.thro.packsimulator.view.set.details.SetDetails
-import de.thro.packsimulator.viewmodel.set.SetBriefViewModel
+import de.thro.packsimulator.viewmodel.SetViewModel
 
 // Scroll amount
 const val SCROLL_VALUE = 1200
 
 @Composable
-fun SetView(scaffoldState: ScaffoldState) {
+fun SetView(scaffoldState: ScaffoldState, setViewModel: SetViewModel = viewModel()) {
     // Collect the StateFlow from the ViewModel
-    val setBriefs by SetBriefViewModel.setBriefs.collectAsState()
+    val sets by setViewModel.sets.collectAsState() // Observing the list of sets
 
-    // Mutable state for tracking the selected SetBrief
-    var selectedSetBrief by remember { mutableStateOf<SetBrief?>(null) }
+    // Mutable state for tracking the selected set
+    var selectedSet by remember { mutableStateOf<SetModel?>(null) }
 
     // Fetch data when the composable is first composed
     LaunchedEffect(Unit) {
-        SetBriefViewModel.fetchSetBriefs()
+        setViewModel.fetchAllSets()
     }
 
-    if (setBriefs.isEmpty()) {
+    if (sets.isEmpty()) {
         // Show loading indicator while data is being fetched
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -48,18 +49,22 @@ fun SetView(scaffoldState: ScaffoldState) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Top list of set briefs
             SetBriefList(
-                setBriefList = setBriefs,
-                onItemClick = { selectedSetBrief = it }
+                setBriefList = sets,
+                onItemClick = { selectedSet = it }
             )
 
             // Bottom details section
-            selectedSetBrief?.let { brief ->
+            selectedSet?.let { brief ->
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f) // Take remaining vertical space
                 ) {
-                    SetDetails(brief.id, scaffoldState= scaffoldState)
+                    SetDetails(
+                        setId = brief.id,
+                        scaffoldState = scaffoldState, // Pass ScaffoldState
+                        setViewModel = setViewModel // Pass SetViewModel to SetDetails
+                    )
                 }
             }
         }
