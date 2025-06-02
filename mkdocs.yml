@@ -3,6 +3,7 @@ nav:
   - Home: index.md
   - Guide: guide.md
   - API: api.md
+  - Open Source: open_source.md
 theme:
   name: material
 markdown_extensions:
