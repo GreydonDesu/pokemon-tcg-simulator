@@ -18,7 +18,7 @@ class PackService(
     // Open a pack and assign cards to the user's inventory
     fun openPack(token: String, setId: String): List<Card>? {
         // Validate the token and extract the username
-        val username = JwtUtil.validateToken(token)
+        val username = JwtUtil.extractUsername(token)
             ?: throw IllegalArgumentException("Invalid or expired token")
 
         // Validate the set

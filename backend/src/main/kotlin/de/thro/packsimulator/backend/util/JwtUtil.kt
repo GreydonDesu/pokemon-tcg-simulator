@@ -2,8 +2,6 @@ package de.thro.packsimulator.backend.util
 
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.security.Keys
-import io.jsonwebtoken.security.SignatureAlgorithm
 import java.util.*
 import javax.crypto.SecretKey
 import javax.crypto.spec.SecretKeySpec
