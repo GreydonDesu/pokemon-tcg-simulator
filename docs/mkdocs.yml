@@ -1,4 +1,4 @@
-site_name: Pokémon TCG Pack Simulator Documentation
+site_name: Pokémon TCG Pack Simulator - Dokumentation
 nav:
   - Home: index.md
   - Guide: guide.md
