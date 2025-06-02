@@ -27,6 +27,7 @@ import de.thro.packsimulator.view.login.LoginView
 import de.thro.packsimulator.view.miscellaneous.TopBarContentItem
 import de.thro.packsimulator.view.set.SetView
 import de.thro.packsimulator.viewmodel.AccountViewModel
+import de.thro.packsimulator.viewmodel.SetViewModel
 import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -41,7 +42,7 @@ fun main() {
 @Composable
 fun App() {
     // State to track the current page
-    var currentPage by remember { mutableStateOf("SetSelectPage") }
+    var currentPage by remember { mutableStateOf("SetPage") }
 
     // State for error messages
     var errorMessage by remember { mutableStateOf("") }
@@ -69,7 +70,7 @@ fun App() {
         ) {
             // Render the appropriate page based on the current state
             when (currentPage) {
-                "SetPage" -> SetView(scaffoldState = scaffoldState)
+                "SetPage" -> SetView(scaffoldState = scaffoldState, setViewModel = SetViewModel())
                 "LoginPage" -> {
                     LoginView(
                         onLoginSuccess = { token ->
