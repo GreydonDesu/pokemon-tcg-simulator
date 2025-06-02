@@ -1,0 +1,14 @@
+spring:
+  data:
+    mongodb:
+      database: packsimulator
+      uri: mongodb://mongo:27017
+  application:
+    name: PackSimulator
+  logging:
+    level:
+      root: info
+      de.thro.packsimulator: debug
+      org.springframework: warn
+server:
+  port: 8080

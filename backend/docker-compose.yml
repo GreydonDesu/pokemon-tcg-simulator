@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build: # This will build the Docker image for the backend
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Map container port 8080 to host port 8080
+    depends_on:
+      - mongo # Ensure MongoDB starts first
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017 # MongoDB connection string
+      SPRING_DATA_MONGODB_DATABASE: packsimulator # MongoDB database name
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo:latest # Use the official MongoDB image
+    container_name: mongo # Name the container
+    ports:
+      - "27017:27017" # Expose MongoDB for debugging or external access
+    volumes:
+      - mongo_data:/data/db # Persist MongoDB data
+    networks:
+      - app-network
+
+volumes:
+  mongo_data: # Define a volume for MongoDB data persistence
+
+networks:
+  app-network: # Define a shared network for backend and MongoDB

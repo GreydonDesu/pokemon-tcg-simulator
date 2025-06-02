@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,10 +21,12 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
-import de.thro.packsimulator.ui.SetSelectPage
-import de.thro.packsimulator.ui.LoginPage
-import de.thro.packsimulator.ui.InventoryPage
-import de.thro.packsimulator.ui.item.TopBarContentItem
+import de.thro.packsimulator.service.ApiService
+import de.thro.packsimulator.view.account.AccountView
+import de.thro.packsimulator.view.login.LoginView
+import de.thro.packsimulator.view.miscellaneous.TopBarContentItem
+import de.thro.packsimulator.view.set.SetView
+import de.thro.packsimulator.viewmodel.AccountViewModel
 import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -35,41 +40,78 @@ fun main() {
 
 @Composable
 fun App() {
-    // State to track the current page and login status
+    // State to track the current page
     var currentPage by remember { mutableStateOf("SetSelectPage") }
-    var isLoggedIn by remember { mutableStateOf(false) }
+
+    // State for error messages
+    var errorMessage by remember { mutableStateOf("") }
+
+    // ScaffoldState for managing the snackbar
+    val scaffoldState = rememberScaffoldState()
+
+    // AccountViewModel instance
+    val accountViewModel = remember { AccountViewModel() }
+
+    // Observe login state from AccountViewModel
+    val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
 
     MaterialTheme {
         Scaffold(
+            scaffoldState = scaffoldState, // Attach the ScaffoldState
             topBar = {
                 TopBarContentItem(
-                    onAddCardsClick = { currentPage = "SetSelectPage" },
+                    onAddCardsClick = { currentPage = "SetPage" },
                     onInventoryClick = {
-                        currentPage = if (isLoggedIn) "InventoryPage" else "LoginPage"
+                        currentPage = if (isLoggedIn) "AccountPage" else "LoginPage"
                     }
                 )
             }
         ) {
             // Render the appropriate page based on the current state
             when (currentPage) {
-                "SetSelectPage" -> SetSelectPage()
+                "SetPage" -> SetView(scaffoldState = scaffoldState)
                 "LoginPage" -> {
-                    LoginPage(
-                        onLoginSuccess = {
-                            isLoggedIn = true // Mark the user as logged in
-                            currentPage = "InventoryPage" // Navigate to InventoryPage after login
+                    LoginView(
+                        onLoginSuccess = { token ->
+                            // Store the token in ApiService and update the AccountViewModel state
+                            ApiService.setToken(token)
+                            accountViewModel.login("", "") // Trigger login state (username not needed here)
+                            currentPage = "AccountPage" // Navigate to AccountPage after login
                         },
-                        onBackClick = {
-                            currentPage = "SetSelectPage" // Go back to SetSelectPage
+                        showError = { message ->
+                            errorMessage = message
                         }
                     )
                 }
 
-                "InventoryPage" -> InventoryPage(
-                    onBackClick = {
-                        currentPage = "SetSelectPage" // Go back to SetSelectPage
+                "AccountPage" -> {
+                    if (isLoggedIn) {
+                        AccountView(
+                            onLogoutClick = {
+                                accountViewModel.logout() // Clear the logged-in account
+                                ApiService.logout() // Clear the token in ApiService
+                                currentPage = "LoginPage" // Navigate back to LoginPage after logout
+                            }
+                        )
+                    } else {
+                        // If not logged in (edge case), redirect to LoginPage
+                        currentPage = "LoginPage"
                     }
-                )
+                }
+
+                else -> SetView(scaffoldState = scaffoldState)
+            }
+
+            // Show the snackbar if there’s an error message
+            if (errorMessage.isNotEmpty()) {
+                // Trigger the snackbar
+                LaunchedEffect(errorMessage) {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = errorMessage,
+                        actionLabel = "Dismiss"
+                    )
+                    errorMessage = "" // Reset the error message after the snackbar is shown
+                }
             }
         }
     }

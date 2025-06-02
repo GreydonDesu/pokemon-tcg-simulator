@@ -7,13 +7,12 @@ plugins {
     alias(libs.plugins.composeCompiler)
 
     alias(libs.plugins.kotlinSerialization)
-    alias(libs.plugins.kover)
 }
 
 kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
+        outputModuleName = "composeApp"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
@@ -33,14 +32,18 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // Kotlin Compose
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
+            // Android
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
 
             // Coil Image Compose
             implementation(libs.coil.compose)
@@ -51,14 +54,19 @@ kotlin {
 
             // Ktor for HTTP requests
             implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.cio)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.logging)
 
             // Kotlinx Coroutines
             runtimeOnly(libs.kotlinx.coroutines.core)
         }
 
         wasmJsMain.dependencies {
+            // Compose
+            implementation(compose.runtime)
+
             // Ktor for Js
             implementation(libs.ktor.client.js)
         }

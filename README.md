@@ -2,19 +2,19 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/8b58d45061c64747946e4ad1f2c38436)](https://app.codacy.com/gh/GreydonDesu/pokemon-tcg-simulator/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
-This project is a required project for the module `Software Quality Assurance` ("*Software-Qualitätssicherung*") on the Technical University of Applied Science Rosenheim for the Master of Science degree in Computer Science ("Informatik").
+Dieses Projekt ist eine Studienarbeit für das Modul "Software-Qualitätssicherung des Studiengangs Informatik (Master) an der Technischen Hochschule Rosenheim.
 
-## License
+## Lizenz
 
-This project is not produced, endorsed, supported or affiliated with Nintendo, Game Freak or The Pokémon Company\
-All assets used in this project are owned by their respectful owners and creators.
+Dieses Projekt wird weder von Nintendo, Game Freak noch von The Pokémon Company produziert, unterstützt oder steht in Verbindung mit den eben genannten Parteien.
+Alle in diesem Projekt verwendeten Inhalte sind Eigentum ihrer jeweiligen Eigentümer und Ersteller.
 
-This project is solely created for educational purposes.
+Dieses Projekt diekt ausschließlich zu Bildungszwecken.
 
-This project is licensed under [MIT](https://github.com/GreydonDesu/pokemon-tcg-simulator/blob/master/LICENSE).
+Dieses Projekt ist unter [MIT](https://github.com/GreydonDesu/pokemon-tcg-simulator/blob/master/LICENSE) lizensiert.
 
-## Author
+## Entwickler
 
 ### Raymond Hoang
 
-- [Mail (University)](mailto:raymond.hoang@stud.th-rosenheim.de)
+- [Mail (Hochschule)](mailto:raymond.hoang@stud.th-rosenheim.de)
