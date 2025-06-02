@@ -9,20 +9,16 @@ import org.springframework.security.web.SecurityFilterChain
 class SecurityConfig {
 
     @Bean
-    fun filterChain(http: HttpSecurity): SecurityFilterChain {
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .securityMatcher("/") // Apply security to all endpoints
-            .authorizeHttpRequests { requests ->
-                requests
-                    .requestMatchers("/api/sets").permitAll() // Allow public access to `/api/sets`
-                    .anyRequest().authenticated() // Secure all other endpoints
+            .authorizeHttpRequests {
+                it
+                    .anyRequest().permitAll() // Allow access to all endpoints
+//                    .requestMatchers("/api/sets", "/images/").permitAll() // Allow public access to these endpoints
+//                    .anyRequest().authenticated() // Secure all other endpoints
             }
-            .csrf { csrf ->
-                csrf.disable() // Disable CSRF explicitly using the new API
-            }
-            .httpBasic { basic ->
-                basic.realmName("Realm") // Configure HTTP Basic authentication with custom realm
-            }
+            .httpBasic {} // Enable basic authentication
+            .csrf { it.disable() } // Disable CSRF for simplicity (optional, adjust based on your use case)
         return http.build()
     }
 }

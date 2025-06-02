@@ -16,6 +16,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
+import kotlin.io.path.absolutePathString
 
 @Service
 class SetService(private val setRepository: SetRepository) {
@@ -24,7 +25,7 @@ class SetService(private val setRepository: SetRepository) {
         const val BUFFER_SIZE_MB = 10 // Buffer size in MB
         const val BYTES_PER_MB = 1024 * 1024 // Number of bytes in one MB
         const val IMAGE_DIRECTORY = "images" // Directory to save images
-        const val BASE_URL = "http://localhost:8080/images" // Base URL to serve images
+        const val BASE_URL = "http://localhost:8080" // API base URL
     }
 
     private val logger: Logger = LoggerFactory.getLogger(SetService::class.java)
@@ -37,7 +38,6 @@ class SetService(private val setRepository: SetRepository) {
         .build()
 
     private val imageDirectory: Path = Paths.get(IMAGE_DIRECTORY) // Use constant
-    private val baseUrl = BASE_URL // Use constant
 
     init {
         Files.createDirectories(imageDirectory) // Ensure the directory exists
@@ -60,7 +60,7 @@ class SetService(private val setRepository: SetRepository) {
     private fun fetchAndSaveSetsFromAPI() {
         logger.info("Fetching sets from the external API...")
 
-        val testSets = listOf("A1", "A2a", "A2b")
+        val testSets = listOf("A1")
 
         val briefSets = webClient.get()
             .uri("/sets")
@@ -99,12 +99,8 @@ class SetService(private val setRepository: SetRepository) {
         val logoPath = downloadAndSaveImage(logoUrl, "logo_${setDTO.id}.png")
         val symbolPath = symbolUrl?.let { downloadAndSaveImage(it, "symbol_${setDTO.id}.png") }
 
-        logger.info("Resulting Logo Path: $logoPath")
-        logger.info("Resulting Symbol Path: $symbolPath")
-
         val cards = setDTO.cards?.map {
             val cardImageUrl = "${it.image}/high.png"
-            logger.info("Loading cards from $cardImageUrl")
             Card(
                 id = it.id,
                 localId = it.localId,
@@ -116,12 +112,12 @@ class SetService(private val setRepository: SetRepository) {
         return Set(
             id = setDTO.id,
             name = setDTO.name,
-            logo = "$baseUrl/${Paths.get(logoPath).fileName}",
-            symbol = symbolPath?.let { "$baseUrl/${Paths.get(it).fileName}" },
+            logo = "$BASE_URL/$IMAGE_DIRECTORY/${Paths.get(logoPath).fileName}", // Append /images
+            symbol = symbolPath?.let { "$BASE_URL/$IMAGE_DIRECTORY/${Paths.get(it).fileName}" }, // Append /images
             totalCards = setDTO.totalCards,
             releaseDate = setDTO.releaseDate,
             cards = cards.map { card ->
-                card.copy(image = "$baseUrl/${Paths.get(card.image).fileName}")
+                card.copy(image = "$BASE_URL/$IMAGE_DIRECTORY/${Paths.get(card.image).fileName}") // Append /images
             }
         )
     }

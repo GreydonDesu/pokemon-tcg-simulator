@@ -474,3 +474,6 @@ mkdocs-env
 
 # Fast Request
 */.fastRequest
+
+# Local temporary files
+backend/images

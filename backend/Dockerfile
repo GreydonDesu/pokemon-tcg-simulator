@@ -1,14 +1,19 @@
-# Use a lightweight OpenJDK image as the base image
-FROM openjdk:17-jdk-slim
+# Stage 1: Build the backend
+FROM gradle:8.14.1-jdk21 AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build -x test
+# TODO: Remove the test skip
 
-# Build argument to specify the JAR file location
-ARG JAR_FILE=build/libs/*.jar
+# Stage 2: Create a lightweight runtime container
+FROM eclipse-temurin:21-jdk-alpine
+WORKDIR /app
 
-# Copy the JAR file into the container
-COPY ${JAR_FILE} app.jar
+# Copy the built JAR from the previous stage
+COPY --from=build /home/gradle/src/build/libs/*.jar app.jar
 
 # Expose the default Spring Boot port
 EXPOSE 8080
 
 # Command to run the application
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
