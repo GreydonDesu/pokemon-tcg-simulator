@@ -1,4 +1,4 @@
-# Welcome to MkDocs
+# Pokémon TCG Pack Simulator
 
 For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 

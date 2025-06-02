@@ -1,11 +1,15 @@
 site_name: Pokémon TCG Pack Simulator - Dokumentation
 nav:
-  - Home: index.md
-  - Guide: guide.md
+  - Start: index.md
+  - Quick Start: guide.md
   - API: api.md
   - Open Source: open_source.md
 theme:
   name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
 markdown_extensions:
   - toc
   - tables

@@ -15,7 +15,7 @@ Das Projekt soll folgende Funktionen erfüllen:
 - Login und Registrierung für eben genanntes Nutzerprofil
 - Wahrscheinlichkeiten der Karten sind identisch (realistisch haben die Karten unterschiedliche Wahrscheinlichkeiten abhängig von ihrer Rarität)
 
-Technologie-Auswahl ist frei gestaltet und wird im Laufe der Dokumentation erläutert. Stakeholder des Projektes können Spieler sein, die an dem Spiel "Pokémon TCG Pocket" interessiert sind. Es ist wichtig anzumerken, dass das Projekt nicht konsequent weiter entwickelt wird. Das Projekt dient als Demo für potenzielle weitere Ideen. Es ist nicht ohne Grund unter [MIT](https://github.com/GreydonDesu/pokemon-tcg-simulator/blob/master/LICENSE) lizensiert.
+Technologie-Auswahl ist frei gestaltet und wird im Laufe der Dokumentation erläutert. Stakeholder des Projektes können Spieler sein, die an dem Spiel "Pokémon TCG Pocket" interessiert sind. Es ist wichtig anzumerken, dass das Projekt nicht konsequent weiter entwickelt wird. Das Projekt dient als Demo für potenzielle weitere Ideen. Es ist aufgrund dessen unter [MIT](https://github.com/GreydonDesu/pokemon-tcg-simulator/blob/master/LICENSE) lizensiert.
 
 ### 1.1 Aufgabenstellung
 
