@@ -24,6 +24,7 @@ class SetService(private val setRepository: SetRepository) {
     companion object {
         const val BUFFER_SIZE_MB = 10 // Buffer size in MB
         const val BYTES_PER_MB = 1024 * 1024 // Number of bytes in one MB
+        const val RESOURCE_DIRECTORY = "/META-INF/resources"
         const val IMAGE_DIRECTORY = "images" // Directory to save images
         const val BASE_URL = "http://localhost:8080" // API base URL
     }
@@ -37,7 +38,7 @@ class SetService(private val setRepository: SetRepository) {
         }
         .build()
 
-    private val imageDirectory: Path = Paths.get(IMAGE_DIRECTORY) // Use constant
+    private val imageDirectory: Path = Paths.get("$RESOURCE_DIRECTORY/$IMAGE_DIRECTORY") // Use constant
 
     init {
         Files.createDirectories(imageDirectory) // Ensure the directory exists
@@ -133,6 +134,7 @@ class SetService(private val setRepository: SetRepository) {
                     DataBufferUtils.write(dataBufferFlux, filePath, StandardOpenOption.CREATE)
                         .block()
                 }
+                logger.info("File path for $fileName: $filePath")
             filePath.toString()
         } catch (ex: IOException) {
             logger.error("Failed to download image from $url: ${ex.message}")

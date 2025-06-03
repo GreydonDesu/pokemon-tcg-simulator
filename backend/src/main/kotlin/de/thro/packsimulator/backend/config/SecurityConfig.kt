@@ -13,9 +13,8 @@ class SecurityConfig {
         http
             .authorizeHttpRequests {
                 it
-                    .anyRequest().permitAll() // Allow access to all endpoints
-//                    .requestMatchers("/api/sets", "/images/").permitAll() // Allow public access to these endpoints
-//                    .anyRequest().authenticated() // Secure all other endpoints
+                    .requestMatchers("/api/sets", "/images/*").permitAll() // Allow public access to these endpoints
+                    .anyRequest().authenticated() // Secure all other endpoints
             }
             .httpBasic {} // Enable basic authentication
             .csrf { it.disable() } // Disable CSRF for simplicity (optional, adjust based on your use case)
