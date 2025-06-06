@@ -1,6 +1,5 @@
 package de.thro.packsimulator.backend.controller
 
-import de.thro.packsimulator.backend.config.WebConfig
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.Resource
@@ -23,7 +22,7 @@ class ImageController {
     // Base directory where images are stored
     private val imageDirectory: Path = Paths.get("/META-INF/resources/images")
 
-    private val logger: Logger = LoggerFactory.getLogger(WebConfig::class.java)
+    private val logger: Logger = LoggerFactory.getLogger(ImageController::class.java)
 
     @GetMapping("/{fileName:.+}")
     fun getImage(@PathVariable fileName: String): ResponseEntity<Resource> {

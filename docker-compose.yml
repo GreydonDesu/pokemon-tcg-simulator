@@ -23,18 +23,18 @@ services:
     networks:
       - app-network
 
-  # frontend:
-  #   build:
-  #     context: ./application # Path to the application directory
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:80" # Map nginx's default port 80 to host port 3000
-  #   depends_on:
-  #     - backend # Ensure the backend starts first
-  #   environment:
-  #     - BACKEND_API_URL=http://backend:8080 # Backend service name in Docker network
-  #   networks:
-  #     - app-network
+  frontend:
+     build:
+       context: ./application # Path to the application directory
+       dockerfile: Dockerfile
+     ports:
+       - "3000:80" # Map nginx's default port 80 to host port 3000
+     depends_on:
+       - backend # Ensure the backend starts first
+    #  environment:
+    #    - BACKEND_API_URL=http://backend:8080 # Backend service name in Docker network
+     networks:
+       - app-network
 
 volumes:
   mongo_data: # Define a volume for MongoDB data persistence

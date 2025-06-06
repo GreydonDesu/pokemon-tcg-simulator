@@ -1,14 +1,15 @@
 package de.thro.packsimulator.backend.config
 
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
+@EnableWebMvc
 class WebConfig : WebMvcConfigurer {
-    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry
-            .addResourceHandler("/images/")
-            .addResourceLocations("file:/META-INF/resources/images/") // Use the "file:" prefix for absolute paths
+    public override fun addCorsMappings(registry: CorsRegistry) {
+        registry.addMapping("/**")
+            .allowedOrigins("http://localhost:3000")
     }
 }

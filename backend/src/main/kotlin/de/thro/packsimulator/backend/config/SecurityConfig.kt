@@ -7,10 +7,10 @@ import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 class SecurityConfig {
-
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
+            .cors {}
             .authorizeHttpRequests {
                 it
                     .requestMatchers("/api/sets", "/images/*").permitAll() // Allow public access to these endpoints
