@@ -32,111 +32,101 @@ import org.koin.compose.koinInject
 
 @Composable
 fun LoginView(
-    onLoginSuccess: (String) -> Unit, // Callback for navigating to the inventory page
-    showError: (String) -> Unit, // Callback to show error messages
+  onLoginSuccess: (String) -> Unit, // Callback for navigating to the inventory page
+  showError: (String) -> Unit, // Callback to show error messages
 ) {
-    // Inject AccountViewModel using Koin
-    val accountViewModel: AccountViewModel = koinInject()
+  // Inject AccountViewModel using Koin
+  val accountViewModel: AccountViewModel = koinInject()
 
-    var loginUsername by remember { mutableStateOf("") }
-    var loginPassword by remember { mutableStateOf("") }
-    var registerUsername by remember { mutableStateOf("") }
-    var registerPassword by remember { mutableStateOf("") }
+  var loginUsername by remember { mutableStateOf("") }
+  var loginPassword by remember { mutableStateOf("") }
+  var registerUsername by remember { mutableStateOf("") }
+  var registerPassword by remember { mutableStateOf("") }
 
-    // Observe state from AccountViewModel
-    val loginStatusMessage by accountViewModel.statusMessage.collectAsState()
-    val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
+  // Observe state from AccountViewModel
+  val loginStatusMessage by accountViewModel.statusMessage.collectAsState()
+  val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
 
-    // Show error messages if any
-    LaunchedEffect(loginStatusMessage) {
-        if (loginStatusMessage.isNotBlank()) {
-            showError(loginStatusMessage)
-        }
+  // Show error messages if any
+  LaunchedEffect(loginStatusMessage) {
+    if (loginStatusMessage.isNotBlank()) {
+      showError(loginStatusMessage)
     }
+  }
 
-    // Navigate on successful login
-    LaunchedEffect(isLoggedIn) {
-        if (isLoggedIn) {
-            onLoginSuccess(loginUsername) // Pass the username to navigate
-        }
+  // Navigate on successful login
+  LaunchedEffect(isLoggedIn) {
+    if (isLoggedIn) {
+      onLoginSuccess(loginUsername) // Pass the username to navigate
     }
+  }
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+  Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Column(
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.Center,
+      modifier = Modifier.padding(16.dp),
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(16.dp)
-        ) {
-            // Login Section
-            Text("Login", fontSize = 20.sp, modifier = Modifier.align(Alignment.Start))
-            Spacer(modifier = Modifier.height(8.dp))
-            TextField(
-                value = loginUsername,
-                onValueChange = { loginUsername = it },
-                label = { Text("Username") },
-                modifier = Modifier.fillMaxWidth(0.33f)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            TextField(
-                value = loginPassword,
-                onValueChange = { loginPassword = it },
-                label = { Text("Password") },
-                visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                modifier = Modifier.fillMaxWidth(0.33f)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = {
-                    accountViewModel.login(loginUsername, loginPassword)
-                },
-                modifier = Modifier.fillMaxWidth(0.33f)
-            ) {
-                Text("Log In")
-            }
+      // Login Section
+      Text("Login", fontSize = 20.sp, modifier = Modifier.align(Alignment.Start))
+      Spacer(modifier = Modifier.height(8.dp))
+      TextField(
+        value = loginUsername,
+        onValueChange = { loginUsername = it },
+        label = { Text("Username") },
+        modifier = Modifier.fillMaxWidth(0.33f),
+      )
+      Spacer(modifier = Modifier.height(8.dp))
+      TextField(
+        value = loginPassword,
+        onValueChange = { loginPassword = it },
+        label = { Text("Password") },
+        visualTransformation = PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        modifier = Modifier.fillMaxWidth(0.33f),
+      )
+      Spacer(modifier = Modifier.height(16.dp))
+      Button(
+        onClick = { accountViewModel.login(loginUsername, loginPassword) },
+        modifier = Modifier.fillMaxWidth(0.33f),
+      ) {
+        Text("Log In")
+      }
 
-            // Divider with "OR"
-            Spacer(modifier = Modifier.height(24.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Divider(modifier = Modifier.weight(1f))
-                Text("OR", modifier = Modifier.padding(horizontal = 8.dp))
-                Divider(modifier = Modifier.weight(1f))
-            }
-            Spacer(modifier = Modifier.height(24.dp))
+      // Divider with "OR"
+      Spacer(modifier = Modifier.height(24.dp))
+      Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+        Divider(modifier = Modifier.weight(1f))
+        Text("OR", modifier = Modifier.padding(horizontal = 8.dp))
+        Divider(modifier = Modifier.weight(1f))
+      }
+      Spacer(modifier = Modifier.height(24.dp))
 
-            // Register Section
-            Text("Register", fontSize = 20.sp, modifier = Modifier.align(Alignment.Start))
-            Spacer(modifier = Modifier.height(8.dp))
-            TextField(
-                value = registerUsername,
-                onValueChange = { registerUsername = it },
-                label = { Text("Username") },
-                modifier = Modifier.fillMaxWidth(0.33f)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            TextField(
-                value = registerPassword,
-                onValueChange = { registerPassword = it },
-                label = { Text("Password") },
-                visualTransformation = PasswordVisualTransformation(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                modifier = Modifier.fillMaxWidth(0.33f)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = {
-                    accountViewModel.register(registerUsername, registerPassword)
-                },
-                modifier = Modifier.fillMaxWidth(0.33f)
-            ) {
-                Text("Register")
-            }
-        }
+      // Register Section
+      Text("Register", fontSize = 20.sp, modifier = Modifier.align(Alignment.Start))
+      Spacer(modifier = Modifier.height(8.dp))
+      TextField(
+        value = registerUsername,
+        onValueChange = { registerUsername = it },
+        label = { Text("Username") },
+        modifier = Modifier.fillMaxWidth(0.33f),
+      )
+      Spacer(modifier = Modifier.height(8.dp))
+      TextField(
+        value = registerPassword,
+        onValueChange = { registerPassword = it },
+        label = { Text("Password") },
+        visualTransformation = PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        modifier = Modifier.fillMaxWidth(0.33f),
+      )
+      Spacer(modifier = Modifier.height(16.dp))
+      Button(
+        onClick = { accountViewModel.register(registerUsername, registerPassword) },
+        modifier = Modifier.fillMaxWidth(0.33f),
+      ) {
+        Text("Register")
+      }
     }
+  }
 }

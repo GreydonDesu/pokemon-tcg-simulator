@@ -18,67 +18,44 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-/**
- *
- */
 @Composable
-fun TopBarContentItem(
-    onAddCardsClick: () -> Unit,
-    onInventoryClick: () -> Unit
-) {
-    TopAppBar(
-        title = { Text("Pokémon TCG Pack Simulator") },
-        elevation = 4.dp,
-        actions = {
-            // Add Cards Button
-            IconWithTextButton(
-                icon = {
-                    Icon(
-                        Icons.Filled.AddCircle,
-                        contentDescription = "Add Cards",
-                        tint = Color.White
-                    )
-                },
-                text = "Add Cards",
-                onClick = onAddCardsClick
-            )
+fun TopBarContentItem(onAddCardsClick: () -> Unit, onInventoryClick: () -> Unit) {
+  TopAppBar(
+    title = { Text("Pokémon TCG Pack Simulator") },
+    elevation = 4.dp,
+    actions = {
+      // Add Cards Button
+      IconWithTextButton(
+        icon = {
+          Icon(Icons.Filled.AddCircle, contentDescription = "Add Cards", tint = Color.White)
+        },
+        text = "Add Cards",
+        onClick = onAddCardsClick,
+      )
 
-            Spacer(modifier = Modifier.width(8.dp)) // Space between buttons
+      Spacer(modifier = Modifier.width(8.dp)) // Space between buttons
 
-            // Inventory Button
-            IconWithTextButton(
-                icon = {
-                    Icon(
-                        Icons.Filled.AccountCircle,
-                        contentDescription = "Account",
-                        tint = Color.White
-                    )
-                },
-                text = "Account",
-                onClick = onInventoryClick
-            )
-        }
-    )
+      // Inventory Button
+      IconWithTextButton(
+        icon = {
+          Icon(Icons.Filled.AccountCircle, contentDescription = "Account", tint = Color.White)
+        },
+        text = "Account",
+        onClick = onInventoryClick,
+      )
+    },
+  )
 }
 
 @Composable
-fun IconWithTextButton(
-    icon: @Composable () -> Unit,
-    text: String,
-    onClick: () -> Unit
-) {
-    TextButton(
-        onClick = onClick,
-        modifier = Modifier.padding(horizontal = 8.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Icon
-            icon()
-            Spacer(modifier = Modifier.width(4.dp)) // Space between icon and text
-            // Text
-            Text(text = text, fontSize = 14.sp, color = Color.White)
-        }
+fun IconWithTextButton(icon: @Composable () -> Unit, text: String, onClick: () -> Unit) {
+  TextButton(onClick = onClick, modifier = Modifier.padding(horizontal = 8.dp)) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+      // Icon
+      icon()
+      Spacer(modifier = Modifier.width(4.dp)) // Space between icon and text
+      // Text
+      Text(text = text, fontSize = 14.sp, color = Color.White)
     }
+  }
 }

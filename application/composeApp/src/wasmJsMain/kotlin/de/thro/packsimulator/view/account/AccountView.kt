@@ -25,61 +25,65 @@ import org.koin.compose.koinInject
 
 @Composable
 fun AccountView(
-    onLogoutClick: () -> Unit, // Callback for logout action
+  onLogoutClick: () -> Unit // Callback for logout action
 ) {
-    // Inject AccountViewModel using Koin
-    val accountViewModel: AccountViewModel = koinInject()
+  // Inject AccountViewModel using Koin
+  val accountViewModel: AccountViewModel = koinInject()
 
-    // Observe state from AccountViewModel
-    val inventory by accountViewModel.inventory.collectAsState()
-    val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
-    val statusMessage by accountViewModel.statusMessage.collectAsState()
+  // Observe state from AccountViewModel
+  val inventory by accountViewModel.inventory.collectAsState()
+  val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
+  val statusMessage by accountViewModel.statusMessage.collectAsState()
 
-    if (!isLoggedIn) {
-        Text("No account is currently logged in.")
-        return
-    }
+  if (!isLoggedIn) {
+    Text("No account is currently logged in.")
+    return
+  }
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.TopCenter // Align everything at the top
+  Box(
+    modifier = Modifier.fillMaxSize(),
+    contentAlignment = Alignment.TopCenter, // Align everything at the top
+  ) {
+    Column(
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.Top, // Arrange content from the top
+      modifier = Modifier.padding(16.dp),
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top, // Arrange content from the top
-            modifier = Modifier.padding(16.dp)
-        ) {
-            // Display the status message
-            if (statusMessage.isNotEmpty()) {
-                Text(statusMessage, color = MaterialTheme.colors.primary, modifier = Modifier.padding(bottom = 16.dp))
-            }
+      // Display the status message
+      if (statusMessage.isNotEmpty()) {
+        Text(
+          statusMessage,
+          color = MaterialTheme.colors.primary,
+          modifier = Modifier.padding(bottom = 16.dp),
+        )
+      }
 
-            // Logout button with an icon
-            Button(
-                onClick = {
-                    accountViewModel.logout() // Clear the logged-in account
-                    onLogoutClick()
-                },
-                modifier = Modifier.padding(bottom = 16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Close, // Logout icon
-                    contentDescription = "Logout",
-                    modifier = Modifier.padding(end = 8.dp) // Add spacing between icon and text
-                )
-                Text("Logout")
-            }
+      // Logout button with an icon
+      Button(
+        onClick = {
+          accountViewModel.logout() // Clear the logged-in account
+          onLogoutClick()
+        },
+        modifier = Modifier.padding(bottom = 16.dp),
+      ) {
+        Icon(
+          imageVector = Icons.Filled.Close, // Logout icon
+          contentDescription = "Logout",
+          modifier = Modifier.padding(end = 8.dp), // Add spacing between icon and text
+        )
+        Text("Logout")
+      }
 
-            // Inventory Section
-            Text("Your Inventory", style = MaterialTheme.typography.h6)
-            Spacer(modifier = Modifier.height(16.dp))
+      // Inventory Section
+      Text("Your Inventory", style = MaterialTheme.typography.h6)
+      Spacer(modifier = Modifier.height(16.dp))
 
-            if (inventory.isNotEmpty()) {
-                // Use SetDetailsCardList to display the inventory cards
-                SetDetailsCardList(cards = inventory, startExpanded = true)
-            } else {
-                Text("Your inventory is empty.")
-            }
-        }
+      if (inventory.isNotEmpty()) {
+        // Use SetDetailsCardList to display the inventory cards
+        SetDetailsCardList(cards = inventory, startExpanded = true)
+      } else {
+        Text("Your inventory is empty.")
+      }
     }
+  }
 }
