@@ -1,5 +1,5 @@
 FunctionNaming:
   active: true
   functionPattern: '^[a-z][a-zA-Z0-9]*$' # Default camelCase rule
-  excludeAnnotatedFunctions:
+  ignoreAnnotated:
     - Composable # Ignore functions annotated with @Composable
