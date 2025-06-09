@@ -20,21 +20,23 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.PlatformContext
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import de.thro.packsimulator.viewmodel.PackViewModel
 import de.thro.packsimulator.viewmodel.SetViewModel
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 @Composable
 fun SetDetails(
     setId: String,
     scaffoldState: ScaffoldState, // Accept ScaffoldState from the parent
-    setViewModel: SetViewModel, // Inject SetDetailsViewModel
-    packViewModel: PackViewModel = viewModel() // Inject PackViewModel
+    setViewModel: SetViewModel, // Inject SetViewModel from parent
 ) {
+    // Inject PackViewModel using Koin
+    val packViewModel: PackViewModel = koinInject()
+
     // Observe state from SetViewModel
     val sets by setViewModel.sets.collectAsState()
     val errorMessage by setViewModel.errorMessage.collectAsState()

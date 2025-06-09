@@ -15,16 +15,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.thro.packsimulator.model.SetModel
 import de.thro.packsimulator.view.set.details.SetDetails
 import de.thro.packsimulator.viewmodel.SetViewModel
+import org.koin.compose.koinInject
 
 // Scroll amount
 const val SCROLL_VALUE = 1200
 
 @Composable
-fun SetView(scaffoldState: ScaffoldState, setViewModel: SetViewModel = viewModel()) {
+fun SetView(scaffoldState: ScaffoldState) {
+    // Inject the SetViewModel using Koin
+    val setViewModel: SetViewModel = koinInject()
+
     // Collect the StateFlow from the ViewModel
     val sets by setViewModel.sets.collectAsState() // Observing the list of sets
 

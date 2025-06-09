@@ -27,14 +27,21 @@ import de.thro.packsimulator.view.login.LoginView
 import de.thro.packsimulator.view.miscellaneous.TopBarContentItem
 import de.thro.packsimulator.view.set.SetView
 import de.thro.packsimulator.viewmodel.AccountViewModel
-import de.thro.packsimulator.viewmodel.SetViewModel
+import di.appModule
 import kotlinx.browser.document
+import org.koin.core.context.startKoin
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
+    // Initialize Koin
+    startKoin {
+        modules(appModule) // Load the Koin module
+    }
+
+    // Start the Compose application
     ComposeViewport(document.body!!) {
         ResponsiveLayout {
-            App()
+            App() // Your main Composable function
         }
     }
 }
@@ -70,7 +77,7 @@ fun App() {
         ) {
             // Render the appropriate page based on the current state
             when (currentPage) {
-                "SetPage" -> SetView(scaffoldState = scaffoldState, setViewModel = SetViewModel())
+                "SetPage" -> SetView(scaffoldState = scaffoldState)
                 "LoginPage" -> {
                     LoginView(
                         onLoginSuccess = { token ->

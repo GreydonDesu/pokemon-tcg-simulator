@@ -19,15 +19,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.thro.packsimulator.view.set.details.SetDetailsCardList
 import de.thro.packsimulator.viewmodel.AccountViewModel
+import org.koin.compose.koinInject
 
 @Composable
 fun AccountView(
     onLogoutClick: () -> Unit, // Callback for logout action
-    accountViewModel: AccountViewModel = viewModel() // Inject AccountViewModel
 ) {
+    // Inject AccountViewModel using Koin
+    val accountViewModel: AccountViewModel = koinInject()
+
     // Observe state from AccountViewModel
     val inventory by accountViewModel.inventory.collectAsState()
     val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()

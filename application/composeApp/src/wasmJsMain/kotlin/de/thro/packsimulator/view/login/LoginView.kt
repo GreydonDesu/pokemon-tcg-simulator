@@ -27,15 +27,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.thro.packsimulator.viewmodel.AccountViewModel
+import org.koin.compose.koinInject
 
 @Composable
 fun LoginView(
     onLoginSuccess: (String) -> Unit, // Callback for navigating to the inventory page
     showError: (String) -> Unit, // Callback to show error messages
-    accountViewModel: AccountViewModel = viewModel() // Inject AccountViewModel
 ) {
+    // Inject AccountViewModel using Koin
+    val accountViewModel: AccountViewModel = koinInject()
+
     var loginUsername by remember { mutableStateOf("") }
     var loginPassword by remember { mutableStateOf("") }
     var registerUsername by remember { mutableStateOf("") }
