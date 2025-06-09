@@ -14,36 +14,34 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/accounts")
 class AccountController(private val accountService: AccountService) {
 
-    // Register a new account
-    @PostMapping("/register")
-    fun register(
-        @RequestParam username: String,
-        @RequestParam password: String
-    ): ResponseEntity<String> {
-        accountService.registerAccount(username, password)
-        return ResponseEntity.ok("Account registered successfully")
-    }
+  // Register a new account
+  @PostMapping("/register")
+  fun register(
+      @RequestParam username: String,
+      @RequestParam password: String
+  ): ResponseEntity<String> {
+    accountService.registerAccount(username, password)
+    return ResponseEntity.ok("Account registered successfully")
+  }
 
-    // Login with username and password
-    @PostMapping("/login")
-    fun login(
-        @RequestParam username: String,
-        @RequestParam password: String
-    ): ResponseEntity<String> {
-        val token = accountService.login(username, password)
-        return ResponseEntity.ok(token) // Return the JWT token
-    }
+  // Login with username and password
+  @PostMapping("/login")
+  fun login(
+      @RequestParam username: String,
+      @RequestParam password: String
+  ): ResponseEntity<String> {
+    val token = accountService.login(username, password)
+    return ResponseEntity.ok(token) // Return the JWT token
+  }
 
-    // Fetch the inventory of the currently authenticated user
-    @GetMapping("/inventory")
-    fun getInventory(
-        @RequestHeader("Authorization") token: String
-    ): ResponseEntity<List<Card>> {
-        // Remove the "Bearer " prefix from the token
-        val jwtToken = token.removePrefix("Bearer ").trim()
+  // Fetch the inventory of the currently authenticated user
+  @GetMapping("/inventory")
+  fun getInventory(@RequestHeader("Authorization") token: String): ResponseEntity<List<Card>> {
+    // Remove the "Bearer " prefix from the token
+    val jwtToken = token.removePrefix("Bearer ").trim()
 
-        // Fetch the inventory
-        val inventory = accountService.getInventory(jwtToken)
-        return ResponseEntity.ok(inventory)
-    }
+    // Fetch the inventory
+    val inventory = accountService.getInventory(jwtToken)
+    return ResponseEntity.ok(inventory)
+  }
 }

@@ -3,9 +3,8 @@ package de.thro.packsimulator.backend
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-@SpringBootApplication
-class PokemonTcgPackSimulatorBackendApplication
+@SpringBootApplication class BackendApplication
 
 fun main(args: Array<String>) {
-	runApplication<PokemonTcgPackSimulatorBackendApplication>(*args)
+  runApplication<BackendApplication>(*args)
 }
