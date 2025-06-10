@@ -20,8 +20,9 @@ class AccountController(private val accountService: AccountService) {
       @RequestParam username: String,
       @RequestParam password: String
   ): ResponseEntity<String> {
-    accountService.registerAccount(username, password)
-    return ResponseEntity.ok("Account registered successfully")
+    println("POST register received: $username, $password")
+    accountService.register(username, password)
+    return ResponseEntity.ok("Account registered successfully. Please login with the new credentials.")
   }
 
   // Login with username and password
@@ -30,6 +31,11 @@ class AccountController(private val accountService: AccountService) {
       @RequestParam username: String,
       @RequestParam password: String
   ): ResponseEntity<String> {
+    if (username.isBlank() || password.isBlank()) {
+      return ResponseEntity.badRequest().body("Username and password must not be empty")
+    }
+
+    println("POST login received: $username, $password")
     val token = accountService.login(username, password)
     return ResponseEntity.ok(token) // Return the JWT token
   }

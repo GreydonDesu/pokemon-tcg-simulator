@@ -66,6 +66,9 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
+
+            // Cryptography
+            implementation("dev.whyoleg.cryptography:cryptography-core:0.4.0")
         }
 
         wasmJsMain.dependencies {
@@ -74,6 +77,8 @@ kotlin {
 
             // Ktor for Js
             implementation(libs.ktor.client.js)
+
+            implementation("dev.whyoleg.cryptography:cryptography-provider-webcrypto:0.4.0")
         }
     }
 }

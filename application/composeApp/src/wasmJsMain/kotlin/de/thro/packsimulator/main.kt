@@ -65,38 +65,46 @@ fun App() {
 
   MaterialTheme {
     Scaffold(
-      scaffoldState = scaffoldState, // Attach the ScaffoldState
-      topBar = {
-        TopBarContentItem(
-          onAddCardsClick = { currentPage = "SetPage" },
-          onInventoryClick = { currentPage = if (isLoggedIn) "AccountPage" else "LoginPage" },
-        )
-      },
+        scaffoldState = scaffoldState,
+        topBar = {
+          TopBarContentItem(
+              onAddCardsClick = { currentPage = "SetPage" },
+              onInventoryClick = { currentPage = if (isLoggedIn) "AccountPage" else "LoginPage" },
+              accountViewModel = accountViewModel,
+          )
+        },
     ) {
       // Render the appropriate page based on the current state
       when (currentPage) {
         "SetPage" -> SetView(scaffoldState = scaffoldState)
         "LoginPage" -> {
-          LoginView(
-            onLoginSuccess = { token ->
-              // Store the token in ApiService and update the AccountViewModel state
-              ApiService.setToken(token)
-              accountViewModel.login("", "") // Trigger login state (username not needed here)
-              currentPage = "AccountPage" // Navigate to AccountPage after login
-            },
-            showError = { message -> errorMessage = message },
-          )
+          if (isLoggedIn) {
+            currentPage = "AccountPage"
+          } else {
+            LoginView(
+                onLoginSuccess = { token ->
+                  // Store the token in ApiService
+                  ApiService.setToken(token)
+
+                  // Update the AccountViewModel state
+                  accountViewModel.setLoggedIn(true) // Explicitly set the logged-in state
+
+                  // Navigate to AccountPage after login
+                  currentPage = "AccountPage"
+                },
+                showError = { message -> errorMessage = message },
+            )
+          }
         }
 
         "AccountPage" -> {
           if (isLoggedIn) {
             AccountView(
-              onLogoutClick = {
-                accountViewModel.logout() // Clear the logged-in account
-                ApiService.logout() // Clear the token in ApiService
-                currentPage = "LoginPage" // Navigate back to LoginPage after logout
-              }
-            )
+                onLogoutClick = {
+                  accountViewModel.logout() // Clear the logged-in account
+                  ApiService.logout() // Clear the token in ApiService
+                  currentPage = "LoginPage" // Navigate back to LoginPage after logout
+                })
           } else {
             // If not logged in (edge case), redirect to LoginPage
             currentPage = "LoginPage"
@@ -111,8 +119,8 @@ fun App() {
         // Trigger the snackbar
         LaunchedEffect(errorMessage) {
           scaffoldState.snackbarHostState.showSnackbar(
-            message = errorMessage,
-            actionLabel = "Dismiss",
+              message = errorMessage,
+              actionLabel = "Dismiss",
           )
           errorMessage = "" // Reset the error message after the snackbar is shown
         }
@@ -127,20 +135,19 @@ fun ResponsiveLayout(content: @Composable () -> Unit) {
   val maxWidth = 1200.dp
 
   BoxWithConstraints(
-    modifier = Modifier.fillMaxSize() // Fill the available screen space
-  ) {
-    // Check the current screen width (via maxWidth constraints)
-    val currentWidth = maxWidth.coerceAtMost(this.maxWidth)
+      modifier = Modifier.fillMaxSize() // Fill the available screen space
+      ) {
+        // Check the current screen width (via maxWidth constraints)
+        val currentWidth = maxWidth.coerceAtMost(this.maxWidth)
 
-    // Center the content and apply the responsive width
-    Box(
-      modifier =
-        Modifier.width(currentWidth)
-          .fillMaxHeight() // Fill the height of the screen
-          .padding(horizontal = 16.dp) // Optional padding for spacing
-          .align(Alignment.TopCenter)
-    ) {
-      content() // Render the provided content
-    }
-  }
+        // Center the content and apply the responsive width
+        Box(
+            modifier =
+                Modifier.width(currentWidth)
+                    .fillMaxHeight() // Fill the height of the screen
+                    .padding(horizontal = 16.dp) // Optional padding for spacing
+                    .align(Alignment.TopCenter)) {
+              content() // Render the provided content
+            }
+      }
 }

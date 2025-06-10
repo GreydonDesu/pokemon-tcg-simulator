@@ -12,7 +12,7 @@ class SecurityConfig {
     http
         .cors {}
         .authorizeHttpRequests {
-          it.requestMatchers("/api/sets", "/images/*")
+          it.requestMatchers("/api/sets", "/images/*", "/api/accounts/register", "/api/accounts/login")
               .permitAll() // Allow public access to these endpoints
               .anyRequest()
               .authenticated() // Secure all other endpoints

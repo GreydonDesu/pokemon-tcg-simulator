@@ -2,15 +2,15 @@ package de.thro.packsimulator.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import coil3.network.HttpException
 import de.thro.packsimulator.model.SetModel
 import de.thro.packsimulator.service.ApiService
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.io.IOException
-import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.Json
+import okio.Buffer
 
 class SetViewModel : ViewModel() {
   private val _sets = MutableStateFlow<List<SetModel>>(emptyList())
@@ -22,6 +22,8 @@ class SetViewModel : ViewModel() {
     get() = _errorMessage
 
   private val _isLoading = MutableStateFlow(false)
+  val isLoading: StateFlow<Boolean>
+    get() = _isLoading
 
   private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
     println("Unhandled exception: ${throwable.message}") // Log the unexpected exception
@@ -29,26 +31,30 @@ class SetViewModel : ViewModel() {
 
   fun fetchAllSets() {
     viewModelScope.launch(exceptionHandler) {
-      try {
-        _isLoading.value = true
-        val allSets = ApiService.getAllSets()
-        _sets.value = allSets
-        _errorMessage.value = ""
-      } catch (e: IOException) {
-        // Handle network-related exceptions
-        _errorMessage.value = "Network error: ${e.message}"
-        println("IOException during fetchAllSets: ${e.message}") // Log the exception
-      } catch (e: HttpException) {
-        // Handle HTTP errors (e.g., 401 Unauthorized, 404 Not Found)
-        _errorMessage.value = "HTTP error: ${e.message}"
-        println("HttpException during fetchAllSets: ${e.message}") // Log the exception
-      } catch (e: SerializationException) {
-        // Handle JSON parsing errors
-        _errorMessage.value = "Invalid server response"
-        println("SerializationException during fetchAllSets: ${e.message}") // Log the exception
-      } finally {
-        _isLoading.value = false
+      _isLoading.value = true
+      val response = ApiService.getAllSets()
+
+      when (response.code) {
+        HttpStatusCode.OK.value -> {
+          // Deserialize the JSON string into List<SetModel>
+          val sets = response.body?.let { body ->
+            val buffer = Buffer()
+            body.writeTo(buffer)
+            Json.decodeFromString<List<SetModel>>(buffer.readUtf8())
+          }
+          _sets.value = sets ?: emptyList()
+          _errorMessage.value = ""
+        }
+        else -> {
+          val errorMessage = response.body?.let { body ->
+            val buffer = Buffer()
+            body.writeTo(buffer)
+            buffer.readUtf8()
+          } ?: "Unknown error"
+          _errorMessage.value = "HTTP error (${response.code}): $errorMessage"
+        }
       }
+      _isLoading.value = false
     }
   }
 }

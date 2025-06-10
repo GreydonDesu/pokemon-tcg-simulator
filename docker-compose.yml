@@ -4,8 +4,10 @@ services:
     container_name: mongo # Name the container
     ports:
       - "27017:27017" # Expose MongoDB for debugging or external access
-    volumes:
-      - mongo_data:/data/db # Persist MongoDB data
+    tmpfs:
+      - /data/db # Use a temporary filesystem for MongoDB data
+    # volumes:
+    #   - mongo_data:/data/db # Persist MongoDB data
     networks:
       - app-network
 
@@ -20,6 +22,7 @@ services:
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongo:27017 # MongoDB connection string
       SPRING_DATA_MONGODB_DATABASE: packsimulator # MongoDB database name
+      JWT_SECRET: NyQGY9Q9WfRbyuPaLd1ut08WOdFKDpJOasb7PXECMKE=
     networks:
       - app-network
 
@@ -31,13 +34,14 @@ services:
        - "3000:80" # Map nginx's default port 80 to host port 3000
      depends_on:
        - backend # Ensure the backend starts first
-    #  environment:
-    #    - BACKEND_API_URL=http://backend:8080 # Backend service name in Docker network
+     volumes:
+       - gradle-cache:/home/gradle/.gradle # Mount Gradle cache directory
      networks:
        - app-network
 
 volumes:
   mongo_data: # Define a volume for MongoDB data persistence
+  gradle-cache: # Define a volume for Gradle cache
 
 networks:
   app-network: # Define a shared network for all services

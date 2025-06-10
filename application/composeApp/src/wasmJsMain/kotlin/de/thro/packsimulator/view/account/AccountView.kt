@@ -14,6 +14,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,7 +26,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun AccountView(
-  onLogoutClick: () -> Unit // Callback for logout action
+    onLogoutClick: () -> Unit // Callback for logout action
 ) {
   // Inject AccountViewModel using Koin
   val accountViewModel: AccountViewModel = koinInject()
@@ -33,7 +34,9 @@ fun AccountView(
   // Observe state from AccountViewModel
   val inventory by accountViewModel.inventory.collectAsState()
   val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
-  val statusMessage by accountViewModel.statusMessage.collectAsState()
+
+  // Trigger inventory refresh when the view is entered
+  LaunchedEffect(Unit) { if (isLoggedIn) accountViewModel.fetchInventory() }
 
   if (!isLoggedIn) {
     Text("No account is currently logged in.")
@@ -41,35 +44,35 @@ fun AccountView(
   }
 
   Box(
-    modifier = Modifier.fillMaxSize(),
-    contentAlignment = Alignment.TopCenter, // Align everything at the top
+      modifier = Modifier.fillMaxSize(),
+      contentAlignment = Alignment.TopCenter, // Align everything at the top
   ) {
     Column(
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Top, // Arrange content from the top
-      modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top, // Arrange content from the top
+        modifier = Modifier.padding(16.dp),
     ) {
-      // Display the status message
-      if (statusMessage.isNotEmpty()) {
+      // Display the username
+      if (isLoggedIn) {
         Text(
-          statusMessage,
-          color = MaterialTheme.colors.primary,
-          modifier = Modifier.padding(bottom = 16.dp),
+            "Logged in as ${accountViewModel.username}",
+            color = MaterialTheme.colors.primary,
+            modifier = Modifier.padding(bottom = 16.dp),
         )
       }
 
       // Logout button with an icon
       Button(
-        onClick = {
-          accountViewModel.logout() // Clear the logged-in account
-          onLogoutClick()
-        },
-        modifier = Modifier.padding(bottom = 16.dp),
+          onClick = {
+            accountViewModel.logout() // Clear the logged-in account
+            onLogoutClick()
+          },
+          modifier = Modifier.padding(bottom = 16.dp),
       ) {
         Icon(
-          imageVector = Icons.Filled.Close, // Logout icon
-          contentDescription = "Logout",
-          modifier = Modifier.padding(end = 8.dp), // Add spacing between icon and text
+            imageVector = Icons.Filled.Close, // Logout icon
+            contentDescription = "Logout",
+            modifier = Modifier.padding(end = 8.dp), // Add spacing between icon and text
         )
         Text("Logout")
       }
