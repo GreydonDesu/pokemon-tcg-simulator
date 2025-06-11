@@ -17,7 +17,10 @@ import java.net.URLDecoder
 private val BASE64_REGEX = Regex("^[A-Za-z0-9+/=]+\$")
 
 @Service
-class AccountService(private val accountRepository: AccountRepository) {
+class AccountService(
+  private val accountRepository: AccountRepository,
+  private val jwtUtil: JwtUtil // Inject JwtUtil as a dependency
+) {
 
   private val logger: Logger = LoggerFactory.getLogger(AccountService::class.java)
 
@@ -72,7 +75,7 @@ class AccountService(private val accountRepository: AccountRepository) {
     }
 
     // Generate and return a JWT token
-    val token = JwtUtil.generateToken(normalizedUsername)
+    val token = jwtUtil.generateToken(normalizedUsername) // Use the injected JwtUtil
     logger.info("Login successful for username: $normalizedUsername")
     return token
   }
@@ -108,7 +111,7 @@ class AccountService(private val accountRepository: AccountRepository) {
   }
 
   private fun validateTokenAndGetUsername(token: String): String {
-    val username = JwtUtil.extractUsername(token)
+    val username = jwtUtil.extractUsername(token) // Use the injected JwtUtil
     if (username == null) {
       logger.warn("Token validation failed: Invalid or expired token")
       throw InvalidTokenException("Invalid or expired token")

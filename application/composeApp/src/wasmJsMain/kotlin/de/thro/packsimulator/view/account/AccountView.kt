@@ -28,65 +28,73 @@ import org.koin.compose.koinInject
 fun AccountView(
     onLogoutClick: () -> Unit // Callback for logout action
 ) {
-  // Inject AccountViewModel using Koin
-  val accountViewModel: AccountViewModel = koinInject()
+    // Inject AccountViewModel using Koin
+    val accountViewModel: AccountViewModel = koinInject()
 
-  // Observe state from AccountViewModel
-  val inventory by accountViewModel.inventory.collectAsState()
-  val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
+    // Observe state from AccountViewModel
+    val inventory by accountViewModel.inventory.collectAsState()
+    val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
+    val statusMessage by accountViewModel.statusMessage.collectAsState()
 
-  // Trigger inventory refresh when the view is entered
-  LaunchedEffect(Unit) { if (isLoggedIn) accountViewModel.fetchInventory() }
-
-  if (!isLoggedIn) {
-    Text("No account is currently logged in.")
-    return
-  }
-
-  Box(
-      modifier = Modifier.fillMaxSize(),
-      contentAlignment = Alignment.TopCenter, // Align everything at the top
-  ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top, // Arrange content from the top
-        modifier = Modifier.padding(16.dp),
-    ) {
-      // Display the username
-      if (isLoggedIn) {
-        Text(
-            "Logged in as ${accountViewModel.username}",
-            color = MaterialTheme.colors.primary,
-            modifier = Modifier.padding(bottom = 16.dp),
-        )
-      }
-
-      // Logout button with an icon
-      Button(
-          onClick = {
-            accountViewModel.logout() // Clear the logged-in account
-            onLogoutClick()
-          },
-          modifier = Modifier.padding(bottom = 16.dp),
-      ) {
-        Icon(
-            imageVector = Icons.Filled.Close, // Logout icon
-            contentDescription = "Logout",
-            modifier = Modifier.padding(end = 8.dp), // Add spacing between icon and text
-        )
-        Text("Logout")
-      }
-
-      // Inventory Section
-      Text("Your Inventory", style = MaterialTheme.typography.h6)
-      Spacer(modifier = Modifier.height(16.dp))
-
-      if (inventory.isNotEmpty()) {
-        // Use SetDetailsCardList to display the inventory cards
-        SetDetailsCardList(cards = inventory, startExpanded = true)
-      } else {
-        Text("Your inventory is empty.")
-      }
+    // Trigger navigation on logout
+    if (!isLoggedIn) {
+        onLogoutClick()
     }
-  }
+
+    // Trigger inventory refresh when the view is entered
+    LaunchedEffect(Unit) {
+        if (isLoggedIn) accountViewModel.fetchInventory()
+    }
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.TopCenter, // Align everything at the top
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top, // Arrange content from the top
+            modifier = Modifier.padding(16.dp),
+        ) {
+            if (!isLoggedIn) {
+                Text(
+                    text = statusMessage,
+                    color = MaterialTheme.colors.error,
+                    modifier = Modifier.padding(8.dp)
+                )
+            } else {
+                // Display the username
+                Text(
+                    "Logged in as ${accountViewModel.username.value}",
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier.padding(bottom = 16.dp),
+                )
+
+                // Logout button with an icon
+                Button(
+                    onClick = {
+                        accountViewModel.logout() // Clear the logged-in account
+                    },
+                    modifier = Modifier.padding(bottom = 16.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Close, // Logout icon
+                        contentDescription = "Logout",
+                        modifier = Modifier.padding(end = 8.dp), // Add spacing between icon and text
+                    )
+                    Text("Logout")
+                }
+
+                // Inventory Section
+                Text("Your Inventory", style = MaterialTheme.typography.h6)
+                Spacer(modifier = Modifier.height(16.dp))
+
+                if (inventory.isNotEmpty()) {
+                    // Use SetDetailsCardList to display the inventory cards
+                    SetDetailsCardList(cards = inventory, startExpanded = true)
+                } else {
+                    Text("Your inventory is empty.")
+                }
+            }
+        }
+    }
 }

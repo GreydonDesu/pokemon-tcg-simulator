@@ -21,17 +21,12 @@ class SetViewModel : ViewModel() {
   val errorMessage: StateFlow<String>
     get() = _errorMessage
 
-  private val _isLoading = MutableStateFlow(false)
-  val isLoading: StateFlow<Boolean>
-    get() = _isLoading
-
   private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
     println("Unhandled exception: ${throwable.message}") // Log the unexpected exception
   }
 
   fun fetchAllSets() {
     viewModelScope.launch(exceptionHandler) {
-      _isLoading.value = true
       val response = ApiService.getAllSets()
 
       when (response.code) {
@@ -54,7 +49,6 @@ class SetViewModel : ViewModel() {
           _errorMessage.value = "HTTP error (${response.code}): $errorMessage"
         }
       }
-      _isLoading.value = false
     }
   }
 }

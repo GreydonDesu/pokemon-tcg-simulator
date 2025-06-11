@@ -12,12 +12,9 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
-import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
-import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.io.IOException
 import kotlinx.serialization.json.Json
@@ -29,7 +26,6 @@ import okio.Path
 object ApiService {
   private const val BASE_URL: String = "http://localhost:8080"
   private var token: String? = null // Store the token
-  private var refreshToken: String? = null // Optional: Store the refresh token
 
   private val client =
       HttpClient(Js) {
@@ -56,25 +52,26 @@ object ApiService {
   }
 
   suspend fun login(username: String, password: String): NetworkResponse {
-    val response =
-        client.post("$BASE_URL/api/accounts/login") {
-          parameter("username", username)
-          parameter("password", password)
-        }
-
-    if (response.status == HttpStatusCode.OK) {
-      val body = response.body<Map<String, String>>()
-      val accessToken = body["token"] ?: throw Exception("Missing access token in response")
-      val refreshToken = body["refreshToken"] // Optional
-      setToken(accessToken, refreshToken)
+    val response = client.post("$BASE_URL/api/accounts/login") {
+      parameter("username", username)
+      parameter("password", password)
     }
 
-    return handleResponse(response)
+    return if (response.status == HttpStatusCode.OK) {
+      // Read the plain string token from the response body
+      val token = response.bodyAsText() // Correctly read the response as plain text
+      setToken(token) // Store the token
+      NetworkResponse(
+        code = response.status.value,
+        body = token.toNetworkResponseBody() // Wrap the plain string in a NetworkResponseBody
+      )
+    } else {
+      handleResponse(response) // Handle error responses as usual
+    }
   }
 
   fun logout() {
     token = null
-    refreshToken = null
   }
 
   // -------------------------
@@ -124,50 +121,23 @@ object ApiService {
   // Token Management
   // -------------------------
   // Function to set the token (e.g., after login)
-  fun setToken(newToken: String, newRefreshToken: String? = null) {
+  fun setToken(newToken: String) {
+    println("Setting token: $newToken") // Debugging log
     token = newToken
-    refreshToken = newRefreshToken
   }
 
   // -------------------------
   // Helper functions
   // -------------------------
   private suspend fun makeAuthenticatedRequest(
-      apiCall: suspend (headers: Map<String, String>) -> HttpResponse
+    apiCall: suspend (headers: Map<String, String>) -> HttpResponse
   ): HttpResponse {
     val currentToken = token ?: throw UnsupportedOperationException("Please log in to continue")
     val headers = mapOf("Authorization" to "Bearer $currentToken")
 
-    val response = apiCall(headers)
+    println("Sending Authorization header: Bearer $currentToken") // Debugging log
 
-    if (response.status == HttpStatusCode.Unauthorized && refreshToken != null) {
-      refreshAuthToken()
-      val newToken = token ?: throw IllegalStateException("Unauthorized: Token refresh failed")
-      val newHeaders = mapOf("Authorization" to "Bearer $newToken")
-      return apiCall(newHeaders)
-    }
-
-    return response
-  }
-
-  private suspend fun refreshAuthToken() {
-    val currentRefreshToken =
-        refreshToken ?: throw NullPointerException("No refresh token available")
-    val response =
-        client.post("$BASE_URL/api/auth/refresh") {
-          contentType(ContentType.Application.Json)
-          setBody(mapOf("refreshToken" to currentRefreshToken))
-        }
-
-    if (response.status == HttpStatusCode.OK) {
-      val body = response.body<Map<String, String>>()
-      token = body["token"]
-      refreshToken = body["refreshToken"]
-    } else {
-      // If token refresh fails, log out the user
-      logout()
-      throw Exception("Failed to refresh token: ${response.bodyAsText()}")
-    }
+    return apiCall(headers)
   }
 
   private suspend fun handleResponse(response: HttpResponse): NetworkResponse {

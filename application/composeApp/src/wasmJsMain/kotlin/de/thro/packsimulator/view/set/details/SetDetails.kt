@@ -1,5 +1,7 @@
 package de.thro.packsimulator.view.set.details
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -130,20 +132,28 @@ fun SetDetails(
 
             // Handle pack opening state
             if (packOpeningState.isNotEmpty()) {
-              Column { // Use a Column to display multiple lines of text
+              Column {
                 Text(
-                  text = "Pack opened! Cards received:",
-                  style = MaterialTheme.typography.h6,
+                    text = "Pack opened! Cards received",
+                    style = MaterialTheme.typography.h6,
                 )
-                packOpeningState.forEach { card ->
-                  Text(text = card.name, style = MaterialTheme.typography.body2)
+                Row {
+                  packOpeningState.forEach { card ->
+                    Text(
+                        modifier =
+                            Modifier
+                                .border(BorderStroke(1.dp, MaterialTheme.colors.primary))
+                                .padding(4.dp),
+                        text = card.name,
+                        style = MaterialTheme.typography.body2)
+                  }
                 }
               }
             } else if (packErrorMessage.isNotEmpty()) {
               Text(
-                text = packErrorMessage,
-                color = MaterialTheme.colors.error,
-                style = MaterialTheme.typography.body2,
+                  text = packErrorMessage,
+                  color = MaterialTheme.colors.error,
+                  style = MaterialTheme.typography.body2,
               )
             }
           }

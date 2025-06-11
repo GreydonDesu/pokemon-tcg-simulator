@@ -21,7 +21,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
-import de.thro.packsimulator.service.ApiService
 import de.thro.packsimulator.view.account.AccountView
 import de.thro.packsimulator.view.login.LoginView
 import de.thro.packsimulator.view.miscellaneous.TopBarContentItem
@@ -33,110 +32,92 @@ import org.koin.core.context.startKoin
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-  // Initialize Koin
-  startKoin {
-    modules(appModule) // Load the Koin module
-  }
-
-  // Start the Compose application
-  ComposeViewport(document.body!!) {
-    ResponsiveLayout {
-      App() // Your main Composable function
+    // Initialize Koin
+    startKoin {
+        modules(appModule) // Load the Koin module
     }
-  }
+
+    // Start the Compose application
+    ComposeViewport(document.body!!) {
+        ResponsiveLayout {
+            App() // Your main Composable function
+        }
+    }
 }
 
 @Composable
 fun App() {
-  // State to track the current page
-  var currentPage by remember { mutableStateOf("SetPage") }
+    // State to track the current page
+    var currentPage by remember { mutableStateOf("SetPage") }
 
-  // State for error messages
-  var errorMessage by remember { mutableStateOf("") }
+    // State for error messages
+    var errorMessage by remember { mutableStateOf("") }
 
-  // ScaffoldState for managing the snackbar
-  val scaffoldState = rememberScaffoldState()
+    // ScaffoldState for managing the snackbar
+    val scaffoldState = rememberScaffoldState()
 
-  // AccountViewModel instance
-  val accountViewModel = remember { AccountViewModel() }
+    // AccountViewModel instance
+    val accountViewModel = remember { AccountViewModel() }
 
-  // Observe login state from AccountViewModel
-  val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
+    // Observe login state from AccountViewModel
+    val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
 
-  MaterialTheme {
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-          TopBarContentItem(
-              onAddCardsClick = { currentPage = "SetPage" },
-              onInventoryClick = { currentPage = if (isLoggedIn) "AccountPage" else "LoginPage" },
-              accountViewModel = accountViewModel,
-          )
-        },
-    ) {
-      // Render the appropriate page based on the current state
-      when (currentPage) {
-        "SetPage" -> SetView(scaffoldState = scaffoldState)
-        "LoginPage" -> {
-          if (isLoggedIn) {
-            currentPage = "AccountPage"
-          } else {
-            LoginView(
-                onLoginSuccess = { token ->
-                  // Store the token in ApiService
-                  ApiService.setToken(token)
+    MaterialTheme {
+        Scaffold(
+            scaffoldState = scaffoldState,
+            topBar = {
+                TopBarContentItem(
+                    onAddCardsClick = { currentPage = "SetPage" },
+                    onInventoryClick = { currentPage = if (isLoggedIn) "AccountPage" else "LoginPage" },
+                    accountViewModel = accountViewModel,
+                )
+            },
+        ) {
+            // Render the appropriate page based on the current state
+            when (currentPage) {
+                "SetPage" -> SetView(scaffoldState = scaffoldState)
 
-                  // Update the AccountViewModel state
-                  accountViewModel.setLoggedIn(true) // Explicitly set the logged-in state
+                "LoginPage" ->
+                    LoginView(
+                        onLoginSuccess = {
+                            currentPage = "AccountPage" // Navigate to AccountPage after login
+                        },
+                        showError = { message -> errorMessage = message },
+                    )
 
-                  // Navigate to AccountPage after login
-                  currentPage = "AccountPage"
-                },
-                showError = { message -> errorMessage = message },
-            )
-          }
+                "AccountPage" ->
+                    AccountView(
+                        onLogoutClick = {
+                            accountViewModel.logout() // Clear the logged-in account
+                            currentPage = "LoginPage" // Navigate back to LoginPage after logout
+                        })
+
+                else -> SetView(scaffoldState = scaffoldState)
+            }
+
+            // Show the snackbar if there’s an error message
+            if (errorMessage.isNotEmpty()) {
+                // Trigger the snackbar
+                LaunchedEffect(errorMessage) {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = errorMessage,
+                        actionLabel = "Dismiss",
+                    )
+                    errorMessage = "" // Reset the error message after the snackbar is shown
+                }
+            }
         }
-
-        "AccountPage" -> {
-          if (isLoggedIn) {
-            AccountView(
-                onLogoutClick = {
-                  accountViewModel.logout() // Clear the logged-in account
-                  ApiService.logout() // Clear the token in ApiService
-                  currentPage = "LoginPage" // Navigate back to LoginPage after logout
-                })
-          } else {
-            // If not logged in (edge case), redirect to LoginPage
-            currentPage = "LoginPage"
-          }
-        }
-
-        else -> SetView(scaffoldState = scaffoldState)
-      }
-
-      // Show the snackbar if there’s an error message
-      if (errorMessage.isNotEmpty()) {
-        // Trigger the snackbar
-        LaunchedEffect(errorMessage) {
-          scaffoldState.snackbarHostState.showSnackbar(
-              message = errorMessage,
-              actionLabel = "Dismiss",
-          )
-          errorMessage = "" // Reset the error message after the snackbar is shown
-        }
-      }
     }
-  }
 }
 
 @Composable
 fun ResponsiveLayout(content: @Composable () -> Unit) {
-  // Define a maximum width for your app layout
-  val maxWidth = 1200.dp
+    // Define a maximum width for your app layout
+    val maxWidth = 1200.dp
 
-  BoxWithConstraints(
-      modifier = Modifier.fillMaxSize() // Fill the available screen space
-      ) {
+    BoxWithConstraints(
+        modifier = Modifier.fillMaxSize() // Fill the available screen space
+    ) {
         // Check the current screen width (via maxWidth constraints)
         val currentWidth = maxWidth.coerceAtMost(this.maxWidth)
 
@@ -147,7 +128,7 @@ fun ResponsiveLayout(content: @Composable () -> Unit) {
                     .fillMaxHeight() // Fill the height of the screen
                     .padding(horizontal = 16.dp) // Optional padding for spacing
                     .align(Alignment.TopCenter)) {
-              content() // Render the provided content
-            }
-      }
+            content() // Render the provided content
+        }
+    }
 }

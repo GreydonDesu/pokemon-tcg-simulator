@@ -1,5 +1,13 @@
-FunctionNaming:
-  active: true
-  functionPattern: '^[a-z][a-zA-Z0-9]*$' # Default camelCase rule
-  ignoreAnnotated:
-    - Composable # Ignore functions annotated with @Composable
+complexity:
+  LongMethod:
+    active: true
+    ignoreAnnotated: [ 'Composable' ]
+naming:
+  FunctionNaming:
+    active: true
+    functionPattern: '[a-z][a-zA-Z0-9]*'
+    ignoreAnnotated: [ 'Composable' ]
+style:
+  MagicNumber:
+    active: true
+    ignoreAnnotated: [ 'Composable' ]

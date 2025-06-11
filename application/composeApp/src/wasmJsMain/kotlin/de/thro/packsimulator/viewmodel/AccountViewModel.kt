@@ -25,7 +25,6 @@ private const val PASSWORD_REQUIREMENTS_MESSAGE =
         "and be at least 8 characters long."
 
 class AccountViewModel : ViewModel() {
-  private val _token = MutableStateFlow<String?>(null) // The current token
 
   private val _username = MutableStateFlow("") // Username
   val username: StateFlow<String>
@@ -45,47 +44,6 @@ class AccountViewModel : ViewModel() {
 
   private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
     println("Unhandled exception: ${throwable.message}") // Log the unexpected exception
-  }
-
-  // Login function
-  fun login(username: String, password: String) {
-    if (username.isBlank() || password.isBlank()) {
-      _statusMessage.value = "Username and password are required."
-      return
-    }
-
-    val normalizedUsername = username.lowercase() // Normalize username
-    viewModelScope.launch(exceptionHandler) {
-      val hashedPassword = hashPassword(password) // Hash the password
-      val response = ApiService.login(normalizedUsername, hashedPassword) // Make the API call
-
-      when (response.code) {
-        HttpStatusCode.OK.value -> { // Success
-          // Directly read the plain string JWT token from the response body
-          val token = response.body.toString() // Read the response as plain text
-
-          if (token.isNotBlank()) {
-            _token.value = token // Store the token in the ViewModel
-            ApiService.setToken(token) // Store the token in ApiService
-            _username.value = username
-            _isLoggedIn.value = true
-            _statusMessage.value = "Login successful"
-            fetchInventory() // Fetch inventory after login
-          } else {
-            _statusMessage.value = "Failed to retrieve token from response."
-          }
-        }
-        HttpStatusCode.Unauthorized.value -> { // Unauthorized
-          _statusMessage.value = "Unauthorized: Invalid credentials."
-          _isLoggedIn.value = false
-        }
-        else -> { // Other errors
-          val errorMessage = response.body.toString() // Read the error response as plain text
-          _statusMessage.value = "HTTP error (${response.code}): $errorMessage"
-          _isLoggedIn.value = false
-        }
-      }
-    }
   }
 
   // Register function
@@ -132,6 +90,57 @@ class AccountViewModel : ViewModel() {
     }
   }
 
+  // Login function
+  fun login(username: String, password: String) {
+    if (username.isBlank() || password.isBlank()) {
+      _statusMessage.value = "Username and password are required."
+      return
+    }
+
+    val normalizedUsername = username.lowercase() // Normalize username
+    viewModelScope.launch(exceptionHandler) {
+      val hashedPassword = hashPassword(password) // Hash the password
+      val response = ApiService.login(normalizedUsername, hashedPassword) // Make the API call
+
+      when (response.code) {
+        HttpStatusCode.OK.value -> { // Success
+          // Extract the plain string JWT token from the response body
+          val responseBody =
+              response.body?.let { body ->
+                val buffer = Buffer()
+                body.writeTo(buffer) // Write the body to a buffer
+                buffer.readUtf8() // Read the plain string token
+              }
+
+
+          if (!responseBody.isNullOrBlank()) {
+            _username.value = username
+            _isLoggedIn.value = true // Update the logged-in state
+            _statusMessage.value = "Login successful"
+            println("Login successful! username: $username")
+            fetchInventory() // Fetch inventory after login
+          } else {
+            _statusMessage.value = "Failed to retrieve token from response."
+          }
+        }
+        HttpStatusCode.Unauthorized.value -> { // Unauthorized
+          _statusMessage.value = "Unauthorized: Invalid credentials."
+          _isLoggedIn.value = false
+        }
+        else -> { // Other errors
+          val errorMessage =
+              response.body?.let { body ->
+                val buffer = Buffer()
+                body.writeTo(buffer) // Write the body to a buffer
+                buffer.readUtf8() // Read the error message as plain text
+              } ?: "Unknown error"
+          _statusMessage.value = "HTTP error (${response.code}): $errorMessage"
+          _isLoggedIn.value = false
+        }
+      }
+    }
+  }
+
   // Fetch the inventory of the logged-in user
   fun fetchInventory() {
     viewModelScope.launch(exceptionHandler) {
@@ -165,16 +174,15 @@ class AccountViewModel : ViewModel() {
 
   // Logout function
   fun logout() {
-    _token.value = null
     _inventory.value = emptyList()
     _isLoggedIn.value = false
     ApiService.logout() // Clear the token in ApiService
     _statusMessage.value = "Logged out successfully"
   }
 
-  // Set Logged In State
-  fun setLoggedIn(isLoggedIn: Boolean) {
-    _isLoggedIn.value = isLoggedIn
+  // Clear Status Message
+  fun clearStatusMessage() {
+    _statusMessage.value = ""
   }
 
   // Hash passwords

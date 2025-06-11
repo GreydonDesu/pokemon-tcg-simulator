@@ -12,14 +12,15 @@ private const val CARD_AMOUNT = 5
 @Service
 class PackService(
     private val setRepository: SetRepository,
-    private val accountRepository: AccountRepository
+    private val accountRepository: AccountRepository,
+    private val jwtUtil: JwtUtil // Inject JwtUtil as a dependency
 ) {
 
   // Open a pack and assign cards to the user's inventory
   fun openPack(token: String, setId: String): List<Card>? {
     // Validate the token and extract the username
     val username =
-        JwtUtil.extractUsername(token) ?: throw IllegalArgumentException("Invalid or expired token")
+        jwtUtil.extractUsername(token) ?: throw IllegalArgumentException("Invalid or expired token")
 
     // Validate the set
     val set =
