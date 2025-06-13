@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/packs")
 class PackController(private val packService: PackService) {
 
-    // Open a pack for the given user and set
-    @PostMapping("/open")
-    fun openPack(
-        @RequestHeader("Authorization") token: String, // Get the token from the Authorization header
-        @RequestParam setId: String
-    ): ResponseEntity<List<Card>> {
-        val jwt = token.removePrefix("Bearer ") // Remove the "Bearer " prefix
-        val cards = packService.openPack(jwt, setId)
-        return ResponseEntity.ok(cards)
-    }
+  // Open a pack for the given user and set
+  @PostMapping("/open")
+  fun openPack(
+      @RequestHeader("Authorization") token: String, // Get the token from the Authorization header
+      @RequestParam setId: String
+  ): ResponseEntity<List<Card>> {
+    val jwt = token.removePrefix("Bearer ") // Remove the "Bearer " prefix
+    val cards = packService.openPack(jwt, setId)
+    return ResponseEntity.ok(cards)
+  }
 }

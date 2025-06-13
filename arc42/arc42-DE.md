@@ -1,61 +1,38 @@
-# 
+# Pokémon TCG Pack Simulator - arc42
 
-**Über arc42**
+## 1. Einführung und Ziele
 
-arc42, das Template zur Dokumentation von Software- und
-Systemarchitekturen.
+Das Videospiel ["Pokémon TCG Pocket"](https://tcgpocket.pokemon.com/de-de/), welches seit ihrer Veröffentlichung am 30. Oktober 2024 auf mobilen Endgeräten spielbar ist, gewann schnell an Popularität, vor allem durch viele kostenlose Funktionen, das Sammeln von Karten und auch der Funktion vom Tauschen und dem Verwenden der Karten in PvP-Kartenspielen.
 
-Template Version 8.2 DE. (basiert auf AsciiDoc Version), Januar 2023
+Eines der wichtigsten Aspekte in dem Spiel ist das Öffnen von Kartenpacks, bestehend aus 5 zufälligen Karten, welche alle einer Rarität und einer bekannten Wahrscheinlichkeit im Pack erscheinen kann. Dadurch, dass der Spieler dazu gezwungen ist, 12 Stunden zu warten, um ein kostenloses Pack zu öffnen, ist eines der Punkte, wo die Entwickler etwas Geld verdienen können. Entwickler können durch das Beschleunigen der Wartezeit, der Möglichkeit, exklusive Packs für die Spieler, oder auch ganze Pakete mit weiteren kosmetischen Items Umsatz generieren.
 
-Created, maintained and © by Dr. Peter Hruschka, Dr. Gernot Starke and
-contributors. Siehe <https://arc42.org>.
+Dieses Projekt dient als eine Simulation (mit veränderter Wahrscheinlichkeit), welche Karten aus einem Paket möglich sind. Ziel dieses Projektes ist eine vereinfachte, nicht optimierte Version zur Simulation von dem Öffnen von Kartenpacks. Das Öffnen der Packs hat keinen Mehrwert und werden auch nur im Rahmen der Simulation gespeichert.
 
-::: note
-Diese Version des Templates enthält Hilfen und Erläuterungen. Sie dient
-der Einarbeitung in arc42 sowie dem Verständnis der Konzepte. Für die
-Dokumentation eigener System verwenden Sie besser die *plain* Version.
-:::
+Das Projekt soll folgende Funktionen erfüllen:
 
-# Einführung und Ziele {#section-introduction-and-goals}
+- Das Öffnen von Kartenpacks, bestehend auf 5 zufälligen Karten aus einem Pool ermöglichen
+- Die gewonnenen Karten mittels eines Nutzerprofils speichern
+- Login und Registrierung für eben genanntes Nutzerprofil
+- Wahrscheinlichkeiten der Karten sind identisch (realistisch haben die Karten unterschiedliche Wahrscheinlichkeiten abhängig von ihrer Rarität)
 
-Beschreibt die wesentlichen Anforderungen und treibenden Kräfte, die bei
-der Umsetzung der Softwarearchitektur und Entwicklung des Systems
-berücksichtigt werden müssen.
+Technologie-Auswahl ist frei gestaltet und wird im Laufe der Dokumentation erläutert. Stakeholder des Projektes können Spieler sein, die an dem Spiel "Pokémon TCG Pocket" interessiert sind. Es ist wichtig anzumerken, dass das Projekt nicht konsequent weiter entwickelt wird. Das Projekt dient als Demo für potenzielle weitere Ideen. Es ist aufgrund dessen unter [MIT](https://github.com/GreydonDesu/pokemon-tcg-simulator/blob/master/LICENSE) lizensiert.
 
-Dazu gehören:
+### 1.1 Aufgabenstellung
 
--   zugrunde liegende Geschäftsziele,
-
--   wesentliche Aufgabenstellungen,
-
--   wesentliche funktionale Anforderungen,
-
--   Qualitätsziele für die Architektur und
-
--   relevante Stakeholder und deren Erwartungshaltung.
-
-## Aufgabenstellung {#_aufgabenstellung}
-
-::: formalpara-title
-**Inhalt**
-:::
+#### Inhalt
 
 Kurzbeschreibung der fachlichen Aufgabenstellung, treibenden Kräfte,
 Extrakt (oder Abstract) der Anforderungen. Verweis auf (hoffentlich
 vorliegende) Anforderungsdokumente (mit Versionsbezeichnungen und
 Ablageorten).
 
-::: formalpara-title
-**Motivation**
-:::
+#### Motivation
 
 Aus Sicht der späteren Nutzung ist die Unterstützung einer fachlichen
 Aufgabe oder Verbesserung der Qualität der eigentliche Beweggrund, ein
 neues System zu schaffen oder ein bestehendes zu modifizieren.
 
-::: formalpara-title
-**Form**
-:::
+#### Form
 
 Kurze textuelle Beschreibung, eventuell in tabellarischer Use-Case Form.
 Sofern vorhanden, sollte die Aufgabenstellung Verweise auf die
@@ -67,7 +44,7 @@ und Redundanzfreiheit gegeneinander ab.
 Siehe [Anforderungen und Ziele](https://docs.arc42.org/section-1/) in
 der online-Dokumentation (auf Englisch!).
 
-## Qualitätsziele {#_qualit_tsziele}
+### 1.2 Qualitätsziele {#_qualit_tsziele}
 
 ::: formalpara-title
 **Inhalt**
@@ -100,7 +77,7 @@ Qualitätsziele kennen, möglichst konkret und operationalisierbar.
 Tabellarische Darstellung der Qualitätsziele mit möglichst konkreten
 Szenarien, geordnet nach Prioritäten.
 
-## Stakeholder {#_stakeholder}
+### Stakeholder {#_stakeholder}
 
 ::: formalpara-title
 **Inhalt**
@@ -144,7 +121,7 @@ bezüglich der Architektur und deren Dokumentation.
 | *\<Rolle-2>*    | *\<Kontakt-2>*  | *\<Erwartung-2>*                  |
 +-----------------+-----------------+-----------------------------------+
 
-# Randbedingungen {#section-architecture-constraints}
+## Randbedingungen {#section-architecture-constraints}
 
 ::: formalpara-title
 **Inhalt**
@@ -177,7 +154,7 @@ Namenskonvention).
 Siehe [Randbedingungen](https://docs.arc42.org/section-2/) in der
 online-Dokumentation (auf Englisch!).
 
-# Kontextabgrenzung {#section-context-and-scope}
+## Kontextabgrenzung {#section-context-and-scope}
 
 ::: formalpara-title
 **Inhalt**
@@ -213,7 +190,7 @@ Verschiedene Optionen:
 Siehe [Kontextabgrenzung](https://docs.arc42.org/section-3/) in der
 online-Dokumentation (auf Englisch!).
 
-## Fachlicher Kontext {#_fachlicher_kontext}
+### Fachlicher Kontext {#_fachlicher_kontext}
 
 ::: formalpara-title
 **Inhalt**
@@ -246,7 +223,7 @@ Kommunikationsbeziehung, Eingabe, Ausgabe.
 
 **\<optional: Erläuterung der externen fachlichen Schnittstellen>**
 
-## Technischer Kontext {#_technischer_kontext}
+### Technischer Kontext {#_technischer_kontext}
 
 ::: formalpara-title
 **Inhalt**
@@ -280,7 +257,7 @@ Ein-/Ausgaben abbildet.
 
 **\<Mapping fachliche auf technische Schnittstellen>**
 
-# Lösungsstrategie {#section-solution-strategy}
+## Lösungsstrategie {#section-solution-strategy}
 
 ::: formalpara-title
 **Inhalt**
@@ -324,7 +301,7 @@ auf weitere Ausführungen in Folgeabschnitten.
 Siehe [Lösungsstrategie](https://docs.arc42.org/section-4/) in der
 online-Dokumentation (auf Englisch!).
 
-# Bausteinsicht {#section-building-block-view}
+## Bausteinsicht {#section-building-block-view}
 
 ::: formalpara-title
 **Inhalt**
@@ -371,7 +348,7 @@ Bausteine.
 Siehe [Bausteinsicht](https://docs.arc42.org/section-5/) in der
 online-Dokumentation (auf Englisch!).
 
-## Whitebox Gesamtsystem {#_whitebox_gesamtsystem}
+### Whitebox Gesamtsystem {#_whitebox_gesamtsystem}
 
 An dieser Stelle beschreiben Sie die Zerlegung des Gesamtsystems anhand
 des nachfolgenden Whitebox-Templates. Dieses enthält:
@@ -436,7 +413,7 @@ beschreiben Sie jede wichtige Blackbox in einem eigenen
 Blackbox-Template. Dessen Überschrift ist jeweils der Namen dieser
 Blackbox.
 
-### \<Name Blackbox 1> {#__name_blackbox_1}
+#### \<Name Blackbox 1> {#__name_blackbox_1}
 
 Beschreiben Sie die \<Blackbox 1> anhand des folgenden
 Blackbox-Templates:
@@ -469,21 +446,21 @@ Blackbox-Templates:
 
 *\<(optional) Offene Punkte/Probleme/Risiken>*
 
-### \<Name Blackbox 2> {#__name_blackbox_2}
+#### \<Name Blackbox 2> {#__name_blackbox_2}
 
 *\<Blackbox-Template>*
 
-### \<Name Blackbox n> {#__name_blackbox_n}
+#### \<Name Blackbox n> {#__name_blackbox_n}
 
 *\<Blackbox-Template>*
 
-### \<Name Schnittstelle 1> {#__name_schnittstelle_1}
+#### \<Name Schnittstelle 1> {#__name_schnittstelle_1}
 
 ...
 
-### \<Name Schnittstelle m> {#__name_schnittstelle_m}
+#### \<Name Schnittstelle m> {#__name_schnittstelle_m}
 
-## Ebene 2 {#_ebene_2}
+### Ebene 2 {#_ebene_2}
 
 Beschreiben Sie den inneren Aufbau (einiger) Bausteine aus Ebene 1 als
 Whitebox.
@@ -494,23 +471,23 @@ Skizzieren Sie wichtige, überraschende, riskante, komplexe oder
 besonders volatile Bausteine. Normale, einfache oder standardisierte
 Teile sollten Sie weglassen.
 
-### Whitebox *\<Baustein 1>* {#_whitebox_emphasis_baustein_1_emphasis}
+#### Whitebox *\<Baustein 1>* {#_whitebox_emphasis_baustein_1_emphasis}
 
 ...zeigt das Innenleben von *Baustein 1*.
 
 *\<Whitebox-Template>*
 
-### Whitebox *\<Baustein 2>* {#_whitebox_emphasis_baustein_2_emphasis}
+#### Whitebox *\<Baustein 2>* {#_whitebox_emphasis_baustein_2_emphasis}
 
 *\<Whitebox-Template>*
 
 ...
 
-### Whitebox *\<Baustein m>* {#_whitebox_emphasis_baustein_m_emphasis}
+#### Whitebox *\<Baustein m>* {#_whitebox_emphasis_baustein_m_emphasis}
 
 *\<Whitebox-Template>*
 
-## Ebene 3 {#_ebene_3}
+### Ebene 3 {#_ebene_3}
 
 Beschreiben Sie den inneren Aufbau (einiger) Bausteine aus Ebene 2 als
 Whitebox.
@@ -518,21 +495,21 @@ Whitebox.
 Bei tieferen Gliederungen der Architektur kopieren Sie diesen Teil von
 arc42 für die weiteren Ebenen.
 
-### Whitebox \<\_Baustein x.1\_\> {#_whitebox_baustein_x_1}
+#### Whitebox \<\_Baustein x.1\_\> {#_whitebox_baustein_x_1}
 
 ...zeigt das Innenleben von *Baustein x.1*.
 
 *\<Whitebox-Template>*
 
-### Whitebox \<\_Baustein x.2\_\> {#_whitebox_baustein_x_2}
+#### Whitebox \<\_Baustein x.2\_\> {#_whitebox_baustein_x_2}
 
 *\<Whitebox-Template>*
 
-### Whitebox \<\_Baustein y.1\_\> {#_whitebox_baustein_y_1}
+#### Whitebox \<\_Baustein y.1\_\> {#_whitebox_baustein_y_1}
 
 *\<Whitebox-Template>*
 
-# Laufzeitsicht {#section-runtime-view}
+## Laufzeitsicht {#section-runtime-view}
 
 ::: formalpara-title
 **Inhalt**
@@ -592,22 +569,22 @@ Ausdrucksmöglichkeiten. Nutzen Sie beispielsweise:
 Siehe [Laufzeitsicht](https://docs.arc42.org/section-6/) in der
 online-Dokumentation (auf Englisch!).
 
-## *\<Bezeichnung Laufzeitszenario 1>* {#__emphasis_bezeichnung_laufzeitszenario_1_emphasis}
+### *\<Bezeichnung Laufzeitszenario 1>* {#__emphasis_bezeichnung_laufzeitszenario_1_emphasis}
 
 -   \<hier Laufzeitdiagramm oder Ablaufbeschreibung einfügen>
 
 -   \<hier Besonderheiten bei dem Zusammenspiel der Bausteine in diesem
     Szenario erläutern>
 
-## *\<Bezeichnung Laufzeitszenario 2>* {#__emphasis_bezeichnung_laufzeitszenario_2_emphasis}
+### *\<Bezeichnung Laufzeitszenario 2>* {#__emphasis_bezeichnung_laufzeitszenario_2_emphasis}
 
 ...
 
-## *\<Bezeichnung Laufzeitszenario n>* {#__emphasis_bezeichnung_laufzeitszenario_n_emphasis}
+### *\<Bezeichnung Laufzeitszenario n>* {#__emphasis_bezeichnung_laufzeitszenario_n_emphasis}
 
 ...
 
-# Verteilungssicht {#section-deployment-view}
+## Verteilungssicht {#section-deployment-view}
 
 ::: formalpara-title
 **Inhalt**
@@ -664,7 +641,7 @@ hinein:
 Siehe [Verteilungssicht](https://docs.arc42.org/section-7/) in der
 online-Dokumentation (auf Englisch!).
 
-## Infrastruktur Ebene 1 {#_infrastruktur_ebene_1}
+### Infrastruktur Ebene 1 {#_infrastruktur_ebene_1}
 
 An dieser Stelle beschreiben Sie (als Kombination von Diagrammen mit
 Tabellen oder Texten):
@@ -696,28 +673,28 @@ Zuordnung von Bausteinen zu Infrastruktur
 
 :   *\<Beschreibung der Zuordnung>*
 
-## Infrastruktur Ebene 2 {#_infrastruktur_ebene_2}
+### Infrastruktur Ebene 2 {#_infrastruktur_ebene_2}
 
 An dieser Stelle können Sie den inneren Aufbau (einiger)
 Infrastrukturelemente aus Ebene 1 beschreiben.
 
 Für jedes Infrastrukturelement kopieren Sie die Struktur aus Ebene 1.
 
-### *\<Infrastrukturelement 1>* {#__emphasis_infrastrukturelement_1_emphasis}
+#### *\<Infrastrukturelement 1>* {#__emphasis_infrastrukturelement_1_emphasis}
 
 *\<Diagramm + Erläuterungen>*
 
-### *\<Infrastrukturelement 2>* {#__emphasis_infrastrukturelement_2_emphasis}
+#### *\<Infrastrukturelement 2>* {#__emphasis_infrastrukturelement_2_emphasis}
 
 *\<Diagramm + Erläuterungen>*
 
 ...
 
-### *\<Infrastrukturelement n>* {#__emphasis_infrastrukturelement_n_emphasis}
+#### *\<Infrastrukturelement n>* {#__emphasis_infrastrukturelement_n_emphasis}
 
 *\<Diagramm + Erläuterungen>*
 
-# Querschnittliche Konzepte {#section-concepts}
+## Querschnittliche Konzepte {#section-concepts}
 
 ::: formalpara-title
 **Inhalt**
@@ -797,21 +774,21 @@ concepts](images/08-concepts-DE.drawio.png)
 Siehe [Querschnittliche Konzepte](https://docs.arc42.org/section-8/) in
 der online-Dokumentation (auf Englisch).
 
-## *\<Konzept 1>* {#__emphasis_konzept_1_emphasis}
+### *\<Konzept 1>* {#__emphasis_konzept_1_emphasis}
 
 *\<Erklärung>*
 
-## *\<Konzept 2>* {#__emphasis_konzept_2_emphasis}
+### *\<Konzept 2>* {#__emphasis_konzept_2_emphasis}
 
 *\<Erklärung>*
 
 ...
 
-## *\<Konzept n>* {#__emphasis_konzept_n_emphasis}
+### *\<Konzept n>* {#__emphasis_konzept_n_emphasis}
 
 *\<Erklärung>*
 
-# Architekturentscheidungen {#section-design-decisions}
+## Architekturentscheidungen {#section-design-decisions}
 
 ::: formalpara-title
 **Inhalt**
@@ -854,7 +831,7 @@ Siehe [Architekturentscheidungen](https://docs.arc42.org/section-9/) in
 der arc42 Dokumentation (auf Englisch!). Dort finden Sie Links und
 Beispiele zum Thema ADR.
 
-# Qualitätsanforderungen {#section-quality-scenarios}
+## Qualitätsanforderungen {#section-quality-scenarios}
 
 ::: formalpara-title
 **Inhalt**
@@ -882,7 +859,7 @@ Qualitätsanforderungen kennen, möglichst konkret und operationalisiert.
 Siehe [Qualitätsanforderungen](https://docs.arc42.org/section-10/) in
 der online-Dokumentation (auf Englisch!).
 
-## Qualitätsbaum {#_qualit_tsbaum}
+### Qualitätsbaum {#_qualit_tsbaum}
 
 ::: formalpara-title
 **Inhalt**
@@ -905,7 +882,7 @@ die --- oftmals zahlreichen --- Qualitätsanforderungen.
 In jedem Fall sollten Sie hier Verweise auf die Qualitätsszenarien des
 folgenden Abschnittes aufnehmen.
 
-## Qualitätsszenarien {#_qualit_tsszenarien}
+### Qualitätsszenarien {#_qualit_tsszenarien}
 
 ::: formalpara-title
 **Inhalt**
@@ -948,7 +925,7 @@ diskutierbaren und nachprüfbaren Szenarien.
 
 Entweder tabellarisch oder als Freitext.
 
-# Risiken und technische Schulden {#section-technical-risks}
+## Risiken und technische Schulden {#section-technical-risks}
 
 ::: formalpara-title
 **Inhalt**
@@ -977,7 +954,7 @@ Siehe [Risiken und technische
 Schulden](https://docs.arc42.org/section-11/) in der
 online-Dokumentation (auf Englisch!).
 
-# Glossar {#section-glossary}
+## Glossar {#section-glossary}
 
 ::: formalpara-title
 **Inhalt**
@@ -1013,3 +990,13 @@ online-Dokumentation (auf Englisch!).
 +-----------------------+-----------------------------------------------+
 | *\<Begriff-2*         | *\<Definition-2>*                             |
 +-----------------------+-----------------------------------------------+
+
+## Über arc42
+
+arc42, das Template zur Dokumentation von Software- und
+Systemarchitekturen.
+
+Template Version 8.2 DE. (basiert auf AsciiDoc Version), Januar 2023
+
+Created, maintained and © by Dr. Peter Hruschka, Dr. Gernot Starke and
+contributors. Siehe <https://arc42.org>.

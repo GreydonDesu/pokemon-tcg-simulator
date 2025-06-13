@@ -14,69 +14,86 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.thro.packsimulator.view.set.details.SetDetailsCardList
 import de.thro.packsimulator.viewmodel.AccountViewModel
+import org.koin.compose.koinInject
 
 @Composable
 fun AccountView(
-    onLogoutClick: () -> Unit, // Callback for logout action
-    accountViewModel: AccountViewModel = viewModel() // Inject AccountViewModel
+    onLogoutClick: () -> Unit // Callback for logout action
 ) {
+    // Inject AccountViewModel using Koin
+    val accountViewModel: AccountViewModel = koinInject()
+
     // Observe state from AccountViewModel
     val inventory by accountViewModel.inventory.collectAsState()
     val isLoggedIn by accountViewModel.isLoggedIn.collectAsState()
     val statusMessage by accountViewModel.statusMessage.collectAsState()
 
+    // Trigger navigation on logout
     if (!isLoggedIn) {
-        Text("No account is currently logged in.")
-        return
+        onLogoutClick()
+    }
+
+    // Trigger inventory refresh when the view is entered
+    LaunchedEffect(Unit) {
+        if (isLoggedIn) accountViewModel.fetchInventory()
     }
 
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.TopCenter // Align everything at the top
+        contentAlignment = Alignment.TopCenter, // Align everything at the top
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top, // Arrange content from the top
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         ) {
-            // Display the status message
-            if (statusMessage.isNotEmpty()) {
-                Text(statusMessage, color = MaterialTheme.colors.primary, modifier = Modifier.padding(bottom = 16.dp))
-            }
-
-            // Logout button with an icon
-            Button(
-                onClick = {
-                    accountViewModel.logout() // Clear the logged-in account
-                    onLogoutClick()
-                },
-                modifier = Modifier.padding(bottom = 16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Close, // Logout icon
-                    contentDescription = "Logout",
-                    modifier = Modifier.padding(end = 8.dp) // Add spacing between icon and text
+            if (!isLoggedIn) {
+                Text(
+                    text = statusMessage,
+                    color = MaterialTheme.colors.error,
+                    modifier = Modifier.padding(8.dp)
                 )
-                Text("Logout")
-            }
-
-            // Inventory Section
-            Text("Your Inventory", style = MaterialTheme.typography.h6)
-            Spacer(modifier = Modifier.height(16.dp))
-
-            if (inventory.isNotEmpty()) {
-                // Use SetDetailsCardList to display the inventory cards
-                SetDetailsCardList(cards = inventory, startExpanded = true)
             } else {
-                Text("Your inventory is empty.")
+                // Display the username
+                Text(
+                    "Logged in as ${accountViewModel.username.value}",
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier.padding(bottom = 16.dp),
+                )
+
+                // Logout button with an icon
+                Button(
+                    onClick = {
+                        accountViewModel.logout() // Clear the logged-in account
+                    },
+                    modifier = Modifier.padding(bottom = 16.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Close, // Logout icon
+                        contentDescription = "Logout",
+                        modifier = Modifier.padding(end = 8.dp), // Add spacing between icon and text
+                    )
+                    Text("Logout")
+                }
+
+                // Inventory Section
+                Text("Your Inventory", style = MaterialTheme.typography.h6)
+                Spacer(modifier = Modifier.height(16.dp))
+
+                if (inventory.isNotEmpty()) {
+                    // Use SetDetailsCardList to display the inventory cards
+                    SetDetailsCardList(cards = inventory, startExpanded = true)
+                } else {
+                    Text("Your inventory is empty.")
+                }
             }
         }
     }

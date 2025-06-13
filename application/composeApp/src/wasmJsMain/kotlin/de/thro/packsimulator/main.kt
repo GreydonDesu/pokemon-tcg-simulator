@@ -21,19 +21,26 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeViewport
-import de.thro.packsimulator.service.ApiService
 import de.thro.packsimulator.view.account.AccountView
 import de.thro.packsimulator.view.login.LoginView
 import de.thro.packsimulator.view.miscellaneous.TopBarContentItem
 import de.thro.packsimulator.view.set.SetView
 import de.thro.packsimulator.viewmodel.AccountViewModel
+import di.appModule
 import kotlinx.browser.document
+import org.koin.core.context.startKoin
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
+    // Initialize Koin
+    startKoin {
+        modules(appModule) // Load the Koin module
+    }
+
+    // Start the Compose application
     ComposeViewport(document.body!!) {
         ResponsiveLayout {
-            App()
+            App() // Your main Composable function
         }
     }
 }
@@ -41,7 +48,7 @@ fun main() {
 @Composable
 fun App() {
     // State to track the current page
-    var currentPage by remember { mutableStateOf("SetSelectPage") }
+    var currentPage by remember { mutableStateOf("SetPage") }
 
     // State for error messages
     var errorMessage by remember { mutableStateOf("") }
@@ -57,47 +64,33 @@ fun App() {
 
     MaterialTheme {
         Scaffold(
-            scaffoldState = scaffoldState, // Attach the ScaffoldState
+            scaffoldState = scaffoldState,
             topBar = {
                 TopBarContentItem(
                     onAddCardsClick = { currentPage = "SetPage" },
-                    onInventoryClick = {
-                        currentPage = if (isLoggedIn) "AccountPage" else "LoginPage"
-                    }
+                    onInventoryClick = { currentPage = if (isLoggedIn) "AccountPage" else "LoginPage" },
+                    accountViewModel = accountViewModel,
                 )
-            }
+            },
         ) {
             // Render the appropriate page based on the current state
             when (currentPage) {
                 "SetPage" -> SetView(scaffoldState = scaffoldState)
-                "LoginPage" -> {
+
+                "LoginPage" ->
                     LoginView(
-                        onLoginSuccess = { token ->
-                            // Store the token in ApiService and update the AccountViewModel state
-                            ApiService.setToken(token)
-                            accountViewModel.login("", "") // Trigger login state (username not needed here)
+                        onLoginSuccess = {
                             currentPage = "AccountPage" // Navigate to AccountPage after login
                         },
-                        showError = { message ->
-                            errorMessage = message
-                        }
+                        showError = { message -> errorMessage = message },
                     )
-                }
 
-                "AccountPage" -> {
-                    if (isLoggedIn) {
-                        AccountView(
-                            onLogoutClick = {
-                                accountViewModel.logout() // Clear the logged-in account
-                                ApiService.logout() // Clear the token in ApiService
-                                currentPage = "LoginPage" // Navigate back to LoginPage after logout
-                            }
-                        )
-                    } else {
-                        // If not logged in (edge case), redirect to LoginPage
-                        currentPage = "LoginPage"
-                    }
-                }
+                "AccountPage" ->
+                    AccountView(
+                        onLogoutClick = {
+                            accountViewModel.logout() // Clear the logged-in account
+                            currentPage = "LoginPage" // Navigate back to LoginPage after logout
+                        })
 
                 else -> SetView(scaffoldState = scaffoldState)
             }
@@ -108,7 +101,7 @@ fun App() {
                 LaunchedEffect(errorMessage) {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = errorMessage,
-                        actionLabel = "Dismiss"
+                        actionLabel = "Dismiss",
                     )
                     errorMessage = "" // Reset the error message after the snackbar is shown
                 }
@@ -130,12 +123,11 @@ fun ResponsiveLayout(content: @Composable () -> Unit) {
 
         // Center the content and apply the responsive width
         Box(
-            modifier = Modifier
-                .width(currentWidth)
-                .fillMaxHeight() // Fill the height of the screen
-                .padding(horizontal = 16.dp) // Optional padding for spacing
-                .align(Alignment.TopCenter)
-        ) {
+            modifier =
+                Modifier.width(currentWidth)
+                    .fillMaxHeight() // Fill the height of the screen
+                    .padding(horizontal = 16.dp) // Optional padding for spacing
+                    .align(Alignment.TopCenter)) {
             content() // Render the provided content
         }
     }

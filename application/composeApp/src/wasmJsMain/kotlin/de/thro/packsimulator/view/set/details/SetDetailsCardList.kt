@@ -25,33 +25,29 @@ const val ROW_NUMBERS = 5
 
 @Composable
 fun SetDetailsCardList(cards: List<CardModel>, startExpanded: Boolean = false) {
-    var isExpanded by remember { mutableStateOf(startExpanded) } // Tracks whether the grid is expanded
+  var isExpanded by remember {
+    mutableStateOf(startExpanded)
+  } // Tracks whether the grid is expanded
 
-    Column(modifier = Modifier.fillMaxWidth()) {
-        // Expand/Collapse button
-        Button(
-            onClick = { isExpanded = !isExpanded },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(text = if (isExpanded) "Hide Cards" else "Show Cards")
-        }
-
-        // Animated visibility for the grid
-        AnimatedVisibility(visible = isExpanded) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(ROW_NUMBERS), // Display 2 items per row
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(cards) { card ->
-                    CardBriefItem(card = card)
-                }
-            }
-        }
+  Column(modifier = Modifier.fillMaxWidth()) {
+    // Expand/Collapse button
+    Button(
+      onClick = { isExpanded = !isExpanded },
+      modifier = Modifier.fillMaxWidth().padding(16.dp),
+    ) {
+      Text(text = if (isExpanded) "Hide Cards" else "Show Cards")
     }
+
+    // Animated visibility for the grid
+    AnimatedVisibility(visible = isExpanded) {
+      LazyVerticalGrid(
+        columns = GridCells.Fixed(ROW_NUMBERS), // Display 2 items per row
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+      ) {
+        items(cards) { card -> CardBriefItem(card = card) }
+      }
+    }
+  }
 }

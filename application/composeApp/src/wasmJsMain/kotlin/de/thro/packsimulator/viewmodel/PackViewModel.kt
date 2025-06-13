@@ -9,21 +9,27 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class PackViewModel : ViewModel() {
-    private val _cards = MutableStateFlow<List<CardModel>>(emptyList())
-    val cards: StateFlow<List<CardModel>> get() = _cards
+  private val _cards = MutableStateFlow<List<CardModel>>(emptyList())
+  val cards: StateFlow<List<CardModel>>
+    get() = _cards
 
-    private val _errorMessage = MutableStateFlow("")
-    val errorMessage: StateFlow<String> get() = _errorMessage
+  private val _statusMessage = MutableStateFlow("")
+  val statusMessage: StateFlow<String>
+    get() = _statusMessage
 
-    fun openPack(setId: String) {
-        viewModelScope.launch {
-            try {
-                val openedCards = ApiService.openPack(setId)
-                _cards.value = openedCards
-                _errorMessage.value = ""
-            } catch (e: Exception) {
-                _errorMessage.value = e.message ?: "Error opening pack"
-            }
-        }
+  fun openPack(setId: String) {
+    viewModelScope.launch {
+      val result = ApiService.openPack(setId)
+      result.onSuccess { cards ->
+        _cards.value = cards
+        _statusMessage.value = "Pack opened successfully!"
+      }.onFailure { error ->
+        _statusMessage.value = error.message ?: "An unknown error occurred"
+      }
     }
+  }
+
+  fun clearStatusMessage() {
+    _statusMessage.value = ""
+  }
 }

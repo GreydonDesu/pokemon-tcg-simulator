@@ -15,58 +15,51 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.thro.packsimulator.model.SetModel
 import de.thro.packsimulator.view.set.details.SetDetails
 import de.thro.packsimulator.viewmodel.SetViewModel
+import org.koin.compose.koinInject
 
 // Scroll amount
 const val SCROLL_VALUE = 1200
 
 @Composable
-fun SetView(scaffoldState: ScaffoldState, setViewModel: SetViewModel = viewModel()) {
-    // Collect the StateFlow from the ViewModel
-    val sets by setViewModel.sets.collectAsState() // Observing the list of sets
+fun SetView(scaffoldState: ScaffoldState) {
+  // Inject the SetViewModel using Koin
+  val setViewModel: SetViewModel = koinInject()
 
-    // Mutable state for tracking the selected set
-    var selectedSet by remember { mutableStateOf<SetModel?>(null) }
+  // Collect the StateFlow from the ViewModel
+  val sets by setViewModel.sets.collectAsState() // Observing the list of sets
 
-    // Fetch data when the composable is first composed
-    LaunchedEffect(Unit) {
-        setViewModel.fetchAllSets()
+  // Mutable state for tracking the selected set
+  var selectedSet by remember { mutableStateOf<SetModel?>(null) }
+
+  // Fetch data when the composable is first composed
+  LaunchedEffect(Unit) { setViewModel.fetchAllSets() }
+
+  if (sets.isEmpty()) {
+    // Show loading indicator while data is being fetched
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+      CircularProgressIndicator()
     }
+  } else {
+    // Layout with top list and bottom details
+    Column(modifier = Modifier.fillMaxSize()) {
+      // Top list of set briefs
+      SetBriefList(setBriefList = sets, onItemClick = { selectedSet = it })
 
-    if (sets.isEmpty()) {
-        // Show loading indicator while data is being fetched
+      // Bottom details section
+      selectedSet?.let { brief ->
         Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+          modifier = Modifier.fillMaxWidth().weight(1f) // Take remaining vertical space
         ) {
-            CircularProgressIndicator()
+          SetDetails(
+            setId = brief.id,
+            scaffoldState = scaffoldState, // Pass ScaffoldState
+            setViewModel = setViewModel, // Pass SetViewModel to SetDetails
+          )
         }
-    } else {
-        // Layout with top list and bottom details
-        Column(modifier = Modifier.fillMaxSize()) {
-            // Top list of set briefs
-            SetBriefList(
-                setBriefList = sets,
-                onItemClick = { selectedSet = it }
-            )
-
-            // Bottom details section
-            selectedSet?.let { brief ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f) // Take remaining vertical space
-                ) {
-                    SetDetails(
-                        setId = brief.id,
-                        scaffoldState = scaffoldState, // Pass ScaffoldState
-                        setViewModel = setViewModel // Pass SetViewModel to SetDetails
-                    )
-                }
-            }
-        }
+      }
     }
+  }
 }

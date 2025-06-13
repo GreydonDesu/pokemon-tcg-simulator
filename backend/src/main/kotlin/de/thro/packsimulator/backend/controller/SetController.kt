@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/sets")
 class SetController(private val setService: SetService) {
-    @GetMapping
-    fun getAllSets(): List<Set> = setService.getAllSets()
+
+  @GetMapping fun getAllSets(): List<Set> = setService.getAllSets()
 }

@@ -20,40 +20,31 @@ import de.thro.packsimulator.model.CardModel
 
 @Composable
 fun CardBriefItem(card: CardModel) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        elevation = 4.dp,
-        shape = RoundedCornerShape(8.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // Display name and Id at the top
-            Text(
-                text = card.name,
-                modifier = Modifier.align(Alignment.Start),
-                style = MaterialTheme.typography.h6
-            )
-            Text(
-                text = "[${card.id}]",
-                modifier = Modifier.align(Alignment.Start),
-                style = MaterialTheme.typography.body2
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+  Card(
+    modifier = Modifier.fillMaxWidth().padding(8.dp),
+    elevation = 4.dp,
+    shape = RoundedCornerShape(8.dp),
+  ) {
+    Column(modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+      // Display name and Id at the top
+      Text(
+        text = card.name,
+        modifier = Modifier.align(Alignment.Start),
+        style = MaterialTheme.typography.h6,
+      )
+      Text(
+        text = "[${card.id}]",
+        modifier = Modifier.align(Alignment.Start),
+        style = MaterialTheme.typography.body2,
+      )
+      Spacer(modifier = Modifier.height(8.dp))
 
-            // Display card image below the text
-            AsyncImage(
-                model = ImageRequest.Builder(PlatformContext.INSTANCE)
-                    .data(card.image)
-                    .build(),
-                contentDescription = "Image for ${card.name}",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-            )
-        }
+      // Display card image below the text
+      AsyncImage(
+        model = ImageRequest.Builder(PlatformContext.INSTANCE).data(card.image).build(),
+        contentDescription = "Image for ${card.name}",
+        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+      )
     }
+  }
 }

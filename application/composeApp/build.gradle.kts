@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-
     alias(libs.plugins.kotlinSerialization)
 }
 
@@ -61,6 +60,15 @@ kotlin {
 
             // Kotlinx Coroutines
             runtimeOnly(libs.kotlinx.coroutines.core)
+
+            // Koin Depencency Injection
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.viewmodel.navigation)
+
+            // Cryptography
+            implementation("dev.whyoleg.cryptography:cryptography-core:0.4.0")
         }
 
         wasmJsMain.dependencies {
@@ -69,6 +77,8 @@ kotlin {
 
             // Ktor for Js
             implementation(libs.ktor.client.js)
+
+            implementation("dev.whyoleg.cryptography:cryptography-provider-webcrypto:0.4.0")
         }
     }
 }

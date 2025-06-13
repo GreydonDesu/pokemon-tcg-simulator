@@ -21,43 +21,35 @@ import de.thro.packsimulator.model.SetModel
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SetBriefItem(sets: SetModel, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier.padding(8.dp),
-        onClick = onClick // Trigger the passed onClick callback
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Column {
-                Row {
-                    if (sets.symbol!!.isNotEmpty()) {
-                        AsyncImage(
-                            model = ImageRequest.Builder(PlatformContext.INSTANCE)
-                                .data(sets.symbol).build(),
-                            contentDescription = "Symbol for ${sets.name}",
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-                    Spacer(Modifier.size(2.dp))
-                    Text(text = sets.name, style = MaterialTheme.typography.h6)
-                    Spacer(Modifier.size(2.dp))
-                    Text(text = "[${sets.id}]", style = MaterialTheme.typography.body2)
-                }
-                Text(
-                    text = "Total Cards: ${sets.totalCards}",
-                    style = MaterialTheme.typography.body2
-                )
-            }
-            Spacer(Modifier.size(16.dp))
-            if (sets.logo!!.isNotEmpty()) {
-                AsyncImage(
-                    model = ImageRequest.Builder(PlatformContext.INSTANCE)
-                        .data(sets.logo).build(),
-                    contentDescription = "Logo for ${sets.name}",
-                    modifier = Modifier.size(128.dp)
-                )
-            }
+  Card(
+    modifier = Modifier.padding(8.dp),
+    onClick = onClick, // Trigger the passed onClick callback
+  ) {
+    Column(modifier = Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+      Column {
+        Row {
+          if (sets.symbol!!.isNotEmpty()) {
+            AsyncImage(
+              model = ImageRequest.Builder(PlatformContext.INSTANCE).data(sets.symbol).build(),
+              contentDescription = "Symbol for ${sets.name}",
+              modifier = Modifier.size(24.dp),
+            )
+          }
+          Spacer(Modifier.size(2.dp))
+          Text(text = sets.name, style = MaterialTheme.typography.h6)
+          Spacer(Modifier.size(2.dp))
+          Text(text = "[${sets.id}]", style = MaterialTheme.typography.body2)
         }
+        Text(text = "Total Cards: ${sets.totalCards}", style = MaterialTheme.typography.body2)
+      }
+      Spacer(Modifier.size(16.dp))
+      if (sets.logo!!.isNotEmpty()) {
+        AsyncImage(
+          model = ImageRequest.Builder(PlatformContext.INSTANCE).data(sets.logo).build(),
+          contentDescription = "Logo for ${sets.name}",
+          modifier = Modifier.size(128.dp),
+        )
+      }
     }
+  }
 }

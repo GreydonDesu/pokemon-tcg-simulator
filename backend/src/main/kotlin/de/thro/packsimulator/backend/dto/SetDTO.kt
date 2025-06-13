@@ -11,11 +11,11 @@ data class SetDTO(
     val serie: SerieDTO?, // Nullable to handle missing series
     val legal: LegalDTO? // Nullable to handle missing legality information
 ) {
-    val totalCards: Int
-        get() = cardCount.total
+  val totalCards: Int
+    get() = cardCount.total
 
-    val safeCards: List<CardDTO>
-        get() = cards ?: emptyList() // Use an empty list if cards is null
+  val safeCards: List<CardDTO>
+    get() = cards ?: emptyList() // Use an empty list if cards is null
 }
 
 data class CardCountDTO(
@@ -27,20 +27,8 @@ data class CardCountDTO(
     val total: Int
 )
 
-data class CardDTO(
-    val id: String,
-    val localId: String,
-    val name: String,
-    val image: String
-)
+data class CardDTO(val id: String, val localId: String, val name: String, val image: String)
 
-data class SerieDTO(
-    val id: String,
-    val name: String
-)
+data class SerieDTO(val id: String, val name: String)
 
-data class LegalDTO(
-    val expanded: Boolean,
-    val standard: Boolean
-)
-
+data class LegalDTO(val expanded: Boolean, val standard: Boolean)
