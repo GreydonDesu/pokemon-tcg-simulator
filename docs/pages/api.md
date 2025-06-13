@@ -187,4 +187,4 @@ Die API des Pokémon TCG Pack Simulators bietet verschiedene Endpunkte, die es e
   - `fileName` (String, erforderlich): Der Name der Bilddatei (z. B. card1.png).
 - **Antwort:**
   - **Status 200:** Erfolgreiches Abrufen des Bildes (im Header wird der Content-Type gesetzt, z. B. image/png).
-- **Status 404:** Bild nicht gefunden.
+  - **Status 404:** Bild nicht gefunden.

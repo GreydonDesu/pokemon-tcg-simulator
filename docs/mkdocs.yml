@@ -14,12 +14,7 @@ theme:
       primary: indigo
       accent: indigo
   features:
-    - content.code.copy
     - navigation.tabs
-extra:
-  navigation:
-    previous: "Zurück"
-    next: "Weiter"
 markdown_extensions:
   - toc
   - tables

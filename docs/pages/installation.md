@@ -23,7 +23,7 @@
     cd pokemon-tcg-simulator
     ```
 
-    > Sollen Sie die Anwendung lokal bauen wollen, springen Sie zu ...
+    > Sollen Sie die Anwendung lokal bauen wollen, springen Sie zu "Lokale Installation"
 
 3. **Starten Sie die Anwendung**
 
