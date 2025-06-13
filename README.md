@@ -8,15 +8,6 @@ Dieses Projekt ist eine Studienarbeit für das Modul "Software-Qualitätssicheru
 
 Die Dokumentation des Projektes ist auf [ReadTheDocs](https://pokemon-tcg-simulator.readthedocs.io/de/latest/) zu lesen.
 
-## Lizenz
-
-Dieses Projekt wird weder von Nintendo, Game Freak noch von The Pokémon Company produziert, unterstützt oder steht in Verbindung mit den eben genannten Parteien.
-Alle in diesem Projekt verwendeten Inhalte sind Eigentum ihrer jeweiligen Eigentümer und Ersteller.
-
-Dieses Projekt diekt ausschließlich zu Bildungszwecken.
-
-Dieses Projekt ist unter [MIT](https://github.com/GreydonDesu/pokemon-tcg-simulator/blob/master/LICENSE) lizensiert.
-
 ## Entwickler
 
 ### Raymond Hoang

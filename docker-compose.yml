@@ -4,10 +4,8 @@ services:
     container_name: mongo # Name the container
     ports:
       - "27017:27017" # Expose MongoDB for debugging or external access
-    tmpfs:
-      - /data/db # Use a temporary filesystem for MongoDB data
-    # volumes:
-    #   - mongo_data:/data/db # Persist MongoDB data
+    volumes:
+      - mongo_data:/data/db # Persist MongoDB data
     networks:
       - app-network
 

@@ -26,7 +26,7 @@ Die API und die dazugehörige Datenbank ist mittels [MIT License](https://github
 
 - Es gibt einen Discord mit **über 500 Mitgliedern** zum Zeitpunkt der Erstellung des Dokumentes
 
-![Discord](assets/discord.png)
+![Discord](../assets/discord.png)
 
 - Issues werden über normale GitHub Issues dokumentiert: <https://github.com/tcgdex/cards-database/issues>
 - Antwortzeiten können etwas lange dauern, da das Projekt größtenteils von 7 Entwicklern maintainted wird.
