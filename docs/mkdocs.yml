@@ -1,4 +1,5 @@
 site_name: Pokémon TCG Pack Simulator - Dokumentation
+docs_dir: pages
 nav:
   - Start: pages/index.md
   - Einführung: pages/introduction.md
