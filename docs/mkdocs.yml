@@ -13,7 +13,21 @@ theme:
     - scheme: default
       primary: indigo
       accent: indigo
+  features:
+    - content.code.copy
+    - navigation.tabs
+extra:
+  navigation:
+    previous: "Zurück"
+    next: "Weiter"
 markdown_extensions:
   - toc
   - tables
   - admonition
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
