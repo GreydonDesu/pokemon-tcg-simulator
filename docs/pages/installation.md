@@ -5,9 +5,9 @@
 - Windows, macOS oder Linux
 - Docker & Docker Compose
 - Für lokale Installation
-  - Java 21
-  - Node.js (für das Frontend)
-  - MongoDB (für die Datenbank)
+    - Java 21
+    - Node.js (für das Frontend)
+    - MongoDB (für die Datenbank)
 
 ## Installation mit Docker & Docker Compose
 
