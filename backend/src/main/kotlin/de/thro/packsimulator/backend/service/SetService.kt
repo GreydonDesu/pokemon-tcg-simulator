@@ -23,7 +23,7 @@ class SetService(private val setRepository: SetRepository) {
   companion object {
     const val BUFFER_SIZE_MB = 10 // Buffer size in MB
     const val BYTES_PER_MB = 1024 * 1024 // Number of bytes in one MB
-    const val RESOURCE_DIRECTORY = "/META-INF/resources"
+    const val RESOURCE_DIRECTORY = "resources"
     const val IMAGE_DIRECTORY = "images" // Directory to save images
     const val BASE_URL = "http://localhost:8080" // API base URL
   }

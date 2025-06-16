@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/images")
 class ImageController {
   // Base directory where images are stored
-  private val imageDirectory: Path = Paths.get("/META-INF/resources/images")
+  private val imageDirectory: Path = Paths.get("resources/images")
 
   private val logger: Logger = LoggerFactory.getLogger(ImageController::class.java)
 
