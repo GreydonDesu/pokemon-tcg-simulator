@@ -3,10 +3,10 @@ name: Upload Coverage to Codacy
 on:
   push:
     branches:
-      - master
+      - dev # Trigger the workflow only on the 'dev' branch
   pull_request:
     branches:
-      - master
+      - master # Trigger the workflow for pull requests targeting the 'master' branch
 
 jobs:
   coverage:
@@ -22,25 +22,21 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin' # Use Eclipse Temurin distribution
-          java-version: '17' # Ensure this matches your project's JDK version
+          java-version: '21' # Ensure this matches your project's JDK version
 
-      # Step 2.5: Ensure Gradle Wrapper is Executable
+      # Step 3: Ensure Gradle Wrapper is Executable
       - name: Ensure Gradle Wrapper is Executable
-        run: chmod +x application/gradlew
+        run: chmod +x backend/gradlew
 
-      # Step 3: Build the project and generate Kover XML report
+      # Step 4: Build the project and generate Jacoco XML report
       - name: Build and generate coverage report
-        working-directory: application # Navigate into the application directory
+        working-directory: backend # Navigate into the backend directory
         run: |
-          ./gradlew koverXmlReport
+          ./gradlew jacocoTestReport
 
-      # Step 4: Run Codacy Coverage Reporter GitHub Action
+      # Step 5: Run Codacy Coverage Reporter GitHub Action
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          # or
-          # api-token: ${{ secrets.CODACY_API_TOKEN }}
-          coverage-reports: application/build/reports/kover/report.xml
-          # or a comma-separated list for multiple reports
-          # coverage-reports: <PATH_TO_REPORT>, <PATH_TO_REPORT>
+          coverage-reports: backend/build/reports/jacoco/test/jacocoTestReport.xml
