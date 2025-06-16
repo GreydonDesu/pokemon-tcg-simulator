@@ -1,0 +1,23 @@
+engines:
+  detekt:
+    rules:
+      complexity:
+        LongMethod:
+          active: true
+          ignoreAnnotated:
+            - 'Composable'
+      naming:
+        FunctionNaming:
+          active: true
+          functionPattern: '[a-z][a-zA-Z0-9]*'
+          ignoreAnnotated:
+            - 'Composable'
+          exclude:
+            - '**/*Test.kt'
+      style:
+        MagicNumber:
+          active: true
+          ignoreAnnotated:
+            - 'Composable'
+          exclude:
+            - '**/*Test.kt'

@@ -7,10 +7,10 @@ plugins {
 }
 
 group = "de.thro"
-
 version = "0.0.1-SNAPSHOT"
 
-java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
+val javaVersion = project.property("javaVersion").toString().toInt()
+java { toolchain { languageVersion = JavaLanguageVersion.of(javaVersion) } }
 
 repositories { mavenCentral() }
 

@@ -38,6 +38,7 @@ class MockController {
     throw UserNotFoundException("User not found")
   }
 
+  @Suppress("TooGenericExceptionThrown")
   @GetMapping("/generic-exception")
   fun throwGenericException(): Nothing {
     throw RuntimeException("Unexpected error")

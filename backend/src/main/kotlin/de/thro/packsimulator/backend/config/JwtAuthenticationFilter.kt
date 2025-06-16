@@ -10,6 +10,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
+private const val BEARER_PREFIX_LENGTH = 7 // Length of "Bearer"
+
 @Component
 class JwtAuthenticationFilter(
     private val jwtUtil: JwtUtil // Inject JwtUtil using constructor injection
@@ -26,7 +28,7 @@ class JwtAuthenticationFilter(
             return
         }
 
-        val jwt = authHeader.substring(7) // Extract the token
+        val jwt = authHeader.substring(BEARER_PREFIX_LENGTH) // Extract the token
         val username = jwtUtil.extractUsername(jwt) // Extract username from token
 
         if (username != null && SecurityContextHolder.getContext().authentication == null) {

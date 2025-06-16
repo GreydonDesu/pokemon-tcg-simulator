@@ -45,6 +45,7 @@ class JwtUtil {
   }
 
   /** Extract the username from the JWT token. */
+  @Suppress("TooGenericExceptionThrown")
   fun extractUsername(token: String): String? {
     return try {
       val claims: Claims = extractAllClaims(token)
