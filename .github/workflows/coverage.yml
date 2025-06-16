@@ -21,8 +21,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' # Use Eclipse Temurin distribution
-          java-version: '21' # Ensure this matches your project's JDK version
+          distribution: "temurin" # Use Eclipse Temurin distribution
+          java-version: "21" # Ensure this matches your project's JDK version
 
       # Step 3: Ensure Gradle Wrapper is Executable
       - name: Ensure Gradle Wrapper is Executable
@@ -34,9 +34,10 @@ jobs:
         run: |
           ./gradlew jacocoTestReport
 
-      # Step 5: Run Codacy Coverage Reporter GitHub Action
-      - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@v1.3.0
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: backend/build/reports/jacoco/test/jacocoTestReport.xml
+      # Step 5: Upload coverage report to Codacy
+      - name: Upload coverage to Codacy
+        env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }} # Use the token from GitHub secrets
+        run: |
+          bash <(curl -Ls https://coverage.codacy.com/get.sh) report \
+          -r backend/build/reports/jacoco/test/jacocoTestReport.xml
