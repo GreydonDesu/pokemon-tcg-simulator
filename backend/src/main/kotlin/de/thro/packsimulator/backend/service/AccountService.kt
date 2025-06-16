@@ -9,17 +9,17 @@ import de.thro.packsimulator.backend.exception.UserNotFoundException
 import de.thro.packsimulator.backend.exception.UsernameAlreadyTakenException
 import de.thro.packsimulator.backend.repository.AccountRepository
 import de.thro.packsimulator.backend.util.JwtUtil
-import org.springframework.stereotype.Service
+import java.net.URLDecoder
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.net.URLDecoder
+import org.springframework.stereotype.Service
 
 private val BASE64_REGEX = Regex("^[A-Za-z0-9+/=]+\$")
 
 @Service
 class AccountService(
-  private val accountRepository: AccountRepository,
-  private val jwtUtil: JwtUtil // Inject JwtUtil as a dependency
+    private val accountRepository: AccountRepository,
+    private val jwtUtil: JwtUtil // Inject JwtUtil as a dependency
 ) {
 
   private val logger: Logger = LoggerFactory.getLogger(AccountService::class.java)
@@ -27,13 +27,12 @@ class AccountService(
   // Register a new account
   @Throws(InvalidPasswordFormatException::class)
   fun register(username: String, clientHashedPassword: String): Account {
+    // Validate the Base64 format
+    validatePasswordFormat(clientHashedPassword)
+
     // Normalize username
     val normalizedUsername = username.lowercase()
     logger.info("Attempting to register account for username: $normalizedUsername")
-
-    // Validate the Base64 format
-    validatePasswordFormat(clientHashedPassword)
-    logger.debug("Password format validated for username: $normalizedUsername")
 
     // Check if the username is already taken
     if (accountRepository.existsById(normalizedUsername)) {
@@ -60,11 +59,12 @@ class AccountService(
     logger.debug("Password format validated for username: $normalizedUsername")
 
     // Retrieve the account from the database
-    val account = accountRepository.findById(normalizedUsername).orElse(null)
-      ?: run {
-        logger.warn("Login failed: User not found for username: $normalizedUsername")
-        throw InvalidCredentialsException("Invalid username or password")
-      }
+    val account =
+        accountRepository.findById(normalizedUsername).orElse(null)
+            ?: run {
+              logger.warn("Login failed: User not found for username: $normalizedUsername")
+              throw InvalidCredentialsException("Invalid username or password")
+            }
 
     // Compare the SHA-512 hash received from the frontend with the stored hash
     val decodedPassword = URLDecoder.decode(clientHashedPassword, "UTF-8")
@@ -89,11 +89,12 @@ class AccountService(
     logger.debug("Token validated and username extracted: $username")
 
     // Retrieve the account from the repository
-    val account = accountRepository.findById(username).orElse(null)
-      ?: run {
-        logger.warn("Inventory fetch failed: User not found for username: $username")
-        throw UserNotFoundException("User not found")
-      }
+    val account =
+        accountRepository.findById(username).orElse(null)
+            ?: run {
+              logger.warn("Inventory fetch failed: User not found for username: $username")
+              throw UserNotFoundException("User not found")
+            }
 
     // Return the user's inventory
     logger.info("Inventory successfully fetched for username: $username")

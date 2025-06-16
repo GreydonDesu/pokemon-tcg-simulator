@@ -61,7 +61,7 @@ class SetService(private val setRepository: SetRepository) {
     return sets
   }
 
-  private fun fetchAndSaveSetsFromAPI() {
+  fun fetchAndSaveSetsFromAPI() {
     logger.info("Fetching sets from the external API...")
 
     val testSets = listOf("A1")
@@ -94,7 +94,7 @@ class SetService(private val setRepository: SetRepository) {
     return webClient.get().uri("/sets/$id").retrieve().bodyToMono(SetDTO::class.java).block()
   }
 
-  private fun transformToSet(setDTO: SetDTO): Set {
+  fun transformToSet(setDTO: SetDTO): Set {
     val logoUrl = "${setDTO.logo}.png"
     val symbolUrl = setDTO.symbol?.let { "$it.png" }
 
@@ -114,7 +114,7 @@ class SetService(private val setRepository: SetRepository) {
     return Set(
         id = setDTO.id,
         name = setDTO.name,
-        logo = "$BASE_URL/$IMAGE_DIRECTORY/${Paths.get(logoPath).fileName}", // Append /images
+        logo = "$BASE_URL/$IMAGE_DIRECTORY/${Paths.get(logoPath!!).fileName}", // Append /images
         symbol =
             symbolPath?.let {
               "$BASE_URL/$IMAGE_DIRECTORY/${Paths.get(it).fileName}"
@@ -124,12 +124,12 @@ class SetService(private val setRepository: SetRepository) {
         cards =
             cards.map { card ->
               card.copy(
-                  image = "$BASE_URL/$IMAGE_DIRECTORY/${Paths.get(card.image).fileName}") // Append
+                  image = "$BASE_URL/$IMAGE_DIRECTORY/${Paths.get(card.image!!).fileName}") // Append
               // /images
             })
   }
 
-  private fun downloadAndSaveImage(url: String, fileName: String): String? {
+  fun downloadAndSaveImage(url: String, fileName: String): String? {
     val filePath = imageDirectory.resolve(fileName)
     return try {
       webClient
