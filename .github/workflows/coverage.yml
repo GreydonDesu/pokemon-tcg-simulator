@@ -42,10 +42,11 @@ jobs:
       # Step 6: Upload test report as artifact (for debugging)
       - name: Upload test report
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-report
-          path: backend/build/reports/tests/test
+          path: backend/build/reports/tests/test/** # Upload all files and directories
+          include-hidden-files: true # Include hidden files if necessary
 
       # Step 7: Upload coverage report to Codacy
       - name: Upload coverage to Codacy
