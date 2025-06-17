@@ -20,11 +20,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 2: Set permissions for Gradle Wrappers
-      - name: Set Executable Permissions for Gradle Wrappers
+      # Step 2: Show Last Commit Information
+      - name: Show Last Commit
         run: |
-          chmod +x application/gradlew
-          chmod +x backend/gradlew
+          echo "Last Commit Information:"
+          git log -1 --pretty=format:"%h - %an: %s"
 
   # Stage 2: Build and Test Backend
   build-backend:
