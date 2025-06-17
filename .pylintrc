@@ -1,0 +1,7 @@
+[MASTER]
+# Files or directories to be excluded from analysis
+ignore-patterns=.*\.txt$
+
+[MESSAGES CONTROL]
+# Disable the "Avoid Pointless Statements" rule globally
+disable=W0104

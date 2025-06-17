@@ -16,16 +16,3 @@ engines:
             - 'Composable'
           exclude:
             - '**/*Test.kt'
-  markdownlint:
-    rules:
-      MD007:
-        active: true
-        indent: 2
-        exclude:
-          - "docs/**/*.md" 
-  pylint:
-    rules:
-      W0104:
-        active: true
-    exclude:
-      - "**/*.txt"
