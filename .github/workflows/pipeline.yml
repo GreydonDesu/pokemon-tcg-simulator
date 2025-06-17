@@ -115,5 +115,5 @@ jobs:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         run: |
           bash <(curl -Ls https://coverage.codacy.com/get.sh) report \
-          -r backend/build/reports/jacoco/test/jacocoTestReport.xml
+          -r coverage/backend/jacocoTestReport.xml
 #          -r coverage/merged/combined-coverage.xml
