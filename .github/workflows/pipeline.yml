@@ -57,6 +57,9 @@ jobs:
           distribution: "temurin"
           java-version: "21"
 
+      - name: Set Executable Permissions for Gradle Wrapper
+        run: chmod +x ./gradlew
+
       - name: Build and Run Tests
         working-directory: backend
         run: |
