@@ -2,9 +2,6 @@ complexity:
   LongMethod:
     active: true
     ignoreAnnotated: [ "Composable" ]
-    excludes:
-      - "**/view/**"
-      - "**/main.kt"
 naming:
   FunctionNaming:
     active: true
