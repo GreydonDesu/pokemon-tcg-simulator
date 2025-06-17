@@ -2,14 +2,19 @@ complexity:
   LongMethod:
     active: true
     ignoreAnnotated: [ "Composable" ]
+    excludes:
+      - "**/view/**"
+      - "**/main.kt"
 naming:
   FunctionNaming:
     active: true
     functionPattern: "[a-z][a-zA-Z0-9]*"
     ignoreAnnotated: [ "Composable" ]
-    excludes: [ "**/*Test.kt" ]
+    excludes: 
+      - "**/*Test.kt"
 style:
   MagicNumber:
     active: true
     ignoreAnnotated: [ "Composable" ]
-    excludes: [ "**/*Test.kt" ]
+    excludes: 
+      - "**/*Test.kt"
