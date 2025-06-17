@@ -10,23 +10,7 @@ on:
       - master
 
 jobs:
-  # Stage 1: Setup Environment and Checkout Code
-  setup:
-    name: Setup Environment and Checkout Code
-    runs-on: ubuntu-latest
-
-    steps:
-      # Step 1: Checkout the repository
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      # Step 2: Set permissions for Gradle Wrappers
-      - name: Set Executable Permissions for Gradle Wrappers
-        run: |
-          chmod +x application/gradlew
-          chmod +x backend/gradlew
-
-  # Stage 2: Build and Test Backend
+  # Stage 1: Build and Test Backend
   build-backend:
     name: Build and Test Backend
     runs-on: ubuntu-latest
@@ -37,19 +21,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 2: Build and Test Backend
+      # Step 2: Ensure Gradle Wrapper is Executable
+      - name: Ensure Gradle Wrapper is Executable
+        run: chmod +x backend/gradlew
+
+      # Step 3: Build and Test Backend
       - name: Build and Test Backend
         working-directory: backend
         run: ./gradlew test jacocoTestReport --continue
 
-      # Step 3: Save Backend Coverage Report
+      # Step 4: Save Backend Coverage Report
       - name: Save Backend Coverage Report
         uses: actions/upload-artifact@v4
         with:
           name: backend-coverage
           path: backend/build/reports/jacoco/test/jacocoTestReport.xml
 
-  # Stage 3: Build Application
+  # Stage 2: Build Application
   build-application:
     name: Build Application
     runs-on: ubuntu-latest
@@ -60,7 +48,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Step 2: Build Application
+      # Step 2: Ensure Gradle Wrapper is Executable
+      - name: Ensure Gradle Wrapper is Executable
+        run: chmod +x application/gradlew
+
+      # Step 3: Build Application
       - name: Build Application
         working-directory: application
         run: ./gradlew wasmJsBrowserDistribution --continue
@@ -72,7 +64,7 @@ jobs:
 #          name: application-coverage
 #          path: application/build # Save build artifacts for future tests
 
-  # Stage 4: Merge Coverage Reports and Upload to Codacy
+  # Stage 3: Merge Coverage Reports and Upload to Codacy
   merge-and-upload-coverage:
     name: Merge Coverage Reports and Upload to Codacy
     runs-on: ubuntu-latest
