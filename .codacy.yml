@@ -1,11 +1,6 @@
 engines:
   detekt:
     rules:
-      complexity:
-        LongMethod:
-          active: true
-          ignoreAnnotated:
-            - 'Composable'
       naming:
         FunctionNaming:
           active: true
@@ -13,11 +8,11 @@ engines:
           ignoreAnnotated:
             - 'Composable'
           exclude:
-            - '**/*Test.kt'
+            - '**/*Test.kt' # Exclude all test files
       style:
         MagicNumber:
           active: true
           ignoreAnnotated:
             - 'Composable'
           exclude:
-            - '**/*Test.kt'
+            - '**/*Test.kt' # Exclude all test files
