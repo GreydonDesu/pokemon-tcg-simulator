@@ -1,24 +1,12 @@
-# syntax=docker/dockerfile:1
-
 # Stage 1: Build the frontend application
-FROM gradle:8.14.1-jdk17 AS builder
+FROM gradle:8.14.2-jdk21 AS builder
 
-# Set the working directory
+# Copy Gradle files, and set working directory
+COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 
-# Copy only the Gradle wrapper and build files first to cache dependencies
-COPY --chown=gradle:gradle gradle gradle
-COPY --chown=gradle:gradle gradlew .
-COPY --chown=gradle:gradle build.gradle.kts settings.gradle.kts ./
-
-# Pre-download dependencies (this step will be cached unless dependencies change)
-RUN ./gradlew --no-daemon wasmJsBrowserDistribution || true
-
-# Copy the rest of the source code
-COPY --chown=gradle:gradle . .
-
 # Build the project
-RUN ./gradlew wasmJsBrowserDistribution --no-daemon
+RUN --mount=type=cache,target=/home/gradle/.gradle gradle wasmJsBrowserDistribution
 
 # Stage 2: Serve the application using nginx
 FROM nginx:alpine
