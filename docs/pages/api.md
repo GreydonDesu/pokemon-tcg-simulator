@@ -9,10 +9,10 @@ Die API des Pokémon TCG Pack Simulators bietet verschiedene Endpunkte, die es e
 - **Endpunkt:** `POST /api/register`
 - **Beschreibung:** Registriert einen neuen Benutzer mit einem Benutzernamen und einem Passwort.
 - **Anfrageparameter:**
-  - `username` (String, erforderlich): Der Benutzername des neuen Kontos.
-  - `password` (String, erforderlich): Das Passwort des neuen Kontos (SHA-512-Hash).
+    - `username` (String, erforderlich): Der Benutzername des neuen Kontos.
+    - `password` (String, erforderlich): Das Passwort des neuen Kontos (SHA-512-Hash).
 - **Antwort:**
-  - **Status 200:** Erfolgreiche Registrierung.
+    - **Status 200:** Erfolgreiche Registrierung.
 
     ```json
     {
@@ -20,17 +20,17 @@ Die API des Pokémon TCG Pack Simulators bietet verschiedene Endpunkte, die es e
     }
     ```
 
-  - **Status 400:** Fehlerhafte Anfrage (z. B. leere Felder oder bereits existierender Benutzername).
+    - **Status 400:** Fehlerhafte Anfrage (z. B. leere Felder oder bereits existierender Benutzername).
 
 ### 1.2 Anmeldung eines Benutzers
 
 - **Endpunkt:** `POST /api/accounts/login`
 - **Beschreibung:** Meldet einen Benutzer an und gibt ein JWT-Token zurück.
 - **Anfrageparameter:**
-  - `username` (String, erforderlich): Der Benutzername des neuen Kontos.
-  - `password` (String, erforderlich): Das Passwort des neuen Kontos (SHA-512-Hash).
+    - `username` (String, erforderlich): Der Benutzername des neuen Kontos.
+    - `password` (String, erforderlich): Das Passwort des neuen Kontos (SHA-512-Hash).
 - **Antwort:**
-  - **Status 200:** Erfolgreiche Anmeldung.
+    - **Status 200:** Erfolgreiche Anmeldung.
 
     ```json
     {
@@ -38,18 +38,18 @@ Die API des Pokémon TCG Pack Simulators bietet verschiedene Endpunkte, die es e
     }
     ```
 
-  - **Status 400:** Fehlerhafte Anfrage (z. B. leere Felder).
-  - **Status 401:** Ungültige Anmeldedaten.
+    - **Status 400:** Fehlerhafte Anfrage (z. B. leere Felder).
+    - **Status 401:** Ungültige Anmeldedaten.
 
 ### 1.3 Abrufen des Inventars
 
 - **Endpunkt:** `GET /api/accounts/inventory`
 - **Beschreibung:** Gibt das Inventar des aktuell authentifizierten Benutzers zurück.
 - **Header:**
-  - `Authorization` (String, erforderlich): Das JWT-Token im Format `Bearer <token>`.
+    - `Authorization` (String, erforderlich): Das JWT-Token im Format `Bearer <token>`.
 - **Antwort:**
-  - **Status 200:** Erfolgreiches Abrufen des Inventars.\
-  Die Liste kann auch leer sein.
+    - **Status 200:** Erfolgreiches Abrufen des Inventars.\
+    Die Liste kann auch leer sein.
 
     ```json
     [
@@ -86,7 +86,7 @@ Die API des Pokémon TCG Pack Simulators bietet verschiedene Endpunkte, die es e
     ]
     ```
 
-  - **Status 401:** Ungültiges oder abgelaufenes Token.
+    - **Status 401:** Ungültiges oder abgelaufenes Token.
 
 ## 2. Kartenpacks
 
@@ -95,11 +95,11 @@ Die API des Pokémon TCG Pack Simulators bietet verschiedene Endpunkte, die es e
 - **Endpunkt:** `POST /api/packs/open`
 - **Beschreibung:** Öffnet ein Kartenpack und fügt die Karten dem Inventar des Benutzers hinzu.
 - **Header:**
-  - `Authorization` (String, erforderlich): Das JWT-Token im Format `Bearer <token>`.
+    - `Authorization` (String, erforderlich): Das JWT-Token im Format `Bearer <token>`.
 - **Anfrageparameter:**
-  - `setId` (String, erforderlich): Die ID des Kartenpacks, das geöffnet werden soll.
+    - `setId` (String, erforderlich): Die ID des Kartenpacks, das geöffnet werden soll.
 - **Antwort:**
-  - **Status 200:** Erfolgreiches Öffnen des Packs.
+    - **Status 200:** Erfolgreiches Öffnen des Packs.
 
     ```json
     [
@@ -136,8 +136,8 @@ Die API des Pokémon TCG Pack Simulators bietet verschiedene Endpunkte, die es e
     ]
     ```
 
-  - **Status 400:** Ungültige Anfrage (z. B. ungültige setId).
-  - **Status 401:** Ungültiges oder abgelaufenes Token.
+    - **Status 400:** Ungültige Anfrage (z. B. ungültige setId).
+    - **Status 401:** Ungültiges oder abgelaufenes Token.
 
 ## 3. Sets
 
@@ -146,7 +146,7 @@ Die API des Pokémon TCG Pack Simulators bietet verschiedene Endpunkte, die es e
 - **Endpunkt:** `GET /api/sets`
 - **Beschreibung:** Gibt eine Liste aller verfügbaren Sets zurück.
 - **Antwort:**
-  - **Status 200:** Erfolgreiches Abrufen der Sets.
+    - **Status 200:** Erfolgreiches Abrufen der Sets.
 
     ```json
     [
@@ -184,7 +184,7 @@ Die API des Pokémon TCG Pack Simulators bietet verschiedene Endpunkte, die es e
 - **Endpunkt:** `GET /images/{fileName}`
 - **Beschreibung:** Gibt ein Bild (z. B. Kartenbild, Logo oder Symbol) zurück.
 - **Pfadparameter:**
-  - `fileName` (String, erforderlich): Der Name der Bilddatei (z. B. card1.png).
+    - `fileName` (String, erforderlich): Der Name der Bilddatei (z. B. card1.png).
 - **Antwort:**
-  - **Status 200:** Erfolgreiches Abrufen des Bildes (im Header wird der Content-Type gesetzt, z. B. image/png).
-- **Status 404:** Bild nicht gefunden.
+    - **Status 200:** Erfolgreiches Abrufen des Bildes (im Header wird der Content-Type gesetzt, z. B. image/png).
+    - **Status 404:** Bild nicht gefunden.

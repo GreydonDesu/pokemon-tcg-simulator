@@ -5,9 +5,9 @@
 - Windows, macOS oder Linux
 - Docker & Docker Compose
 - Für lokale Installation
-  - Java 21
-  - Node.js (für das Frontend)
-  - MongoDB (für die Datenbank)
+    - Java 21
+    - Node.js (für das Frontend)
+    - MongoDB (für die Datenbank)
 
 ## Installation mit Docker & Docker Compose
 
@@ -23,13 +23,15 @@
     cd pokemon-tcg-simulator
     ```
 
-    > Sollen Sie die Anwendung lokal bauen wollen, springen Sie zu ...
+    > Sollen Sie die Anwendung lokal bauen wollen, springen Sie zu "Lokale Installation"
 
 3. **Starten Sie die Anwendung**
 
     ```sh
     docker-compose up --build
     ```
+
+    !!! alert "Beachte die Bau- und Startzeit!"
 
     Die Anwendung samt Benutzeroberfläche (Frontend), Anwendungslogik (Backend) und Datenbank wird durch diesen Befehl aufgebaut. Der Prozess kann etwa 10 Minuten dauern.
 

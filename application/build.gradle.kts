@@ -11,6 +11,13 @@ plugins {
   kotlin("plugin.serialization") version "2.1.20"
 }
 
+repositories {
+  mavenCentral() // Required for Kotlin libraries
+  google() // For Android-related dependencies
+  gradlePluginPortal() // For Kotlin Multiplatform and plugins
+}
+
+
 detekt {
   toolVersion = "1.23.8" // Ensure you're using the same version as the plugin
   config = files("detekt.yml") // Optional: Specify a custom config file

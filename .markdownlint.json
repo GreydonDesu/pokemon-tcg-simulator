@@ -1,0 +1,9 @@
+{
+  "default": true,
+  "files": {
+    "docs/**/*.md": {
+      "MD013": false,
+      "MD007": false 
+    }
+  }
+}

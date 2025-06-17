@@ -7,5 +7,5 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class Account(
     @Id val username: String, // Username acts as the unique identifier
     val password: String, // Hashed password (use BCrypt for hashing)
-    val inventory: MutableList<Card> = mutableListOf() // Optional: user inventory
+    val inventory: MutableList<Card> = mutableListOf() // User inventory
 )

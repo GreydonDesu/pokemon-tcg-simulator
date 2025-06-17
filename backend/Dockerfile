@@ -1,9 +1,12 @@
 # Stage 1: Build the backend
-FROM gradle:8.14.1-jdk21 AS build
+FROM gradle:8.14.2-jdk21-alpine AS build
+
+# Copy Gradle files, and set working directory
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
+
+# Build the project
 RUN gradle build -x test
-# TODO: Remove the test skip
 
 # Stage 2: Create a lightweight runtime container
 FROM eclipse-temurin:21-jdk-alpine

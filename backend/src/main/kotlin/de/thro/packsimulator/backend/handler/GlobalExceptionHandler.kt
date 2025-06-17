@@ -15,48 +15,57 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 @ControllerAdvice
 class GlobalExceptionHandler {
 
-    private val logger: Logger = LoggerFactory.getLogger(GlobalExceptionHandler::class.java)
+  private val logger: Logger = LoggerFactory.getLogger(GlobalExceptionHandler::class.java)
 
-    @ExceptionHandler(InvalidPasswordFormatException::class)
-    fun handleInvalidPasswordFormat(ex: InvalidPasswordFormatException): ResponseEntity<Map<String, String>> {
-        val errorResponse: Map<String, String> = mapOf("error" to (ex.message ?: "Invalid password format"))
-        logger.error("Invalid password format: ${ex.stackTraceToString()}")
-        return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
-    }
+  private fun createErrorResponse(message: String): Map<String, String> {
+    return mapOf("error" to message)
+  }
 
-    @ExceptionHandler(UsernameAlreadyTakenException::class)
-    fun handleUsernameAlreadyTaken(ex: UsernameAlreadyTakenException): ResponseEntity<Map<String, String>> {
-        val errorResponse: Map<String, String> = mapOf("error" to (ex.message ?: "Username is already taken"))
-        logger.error("Username already taken: ${ex.stackTraceToString()}")
-        return ResponseEntity(errorResponse, HttpStatus.CONFLICT)
-    }
+  @ExceptionHandler(InvalidPasswordFormatException::class)
+  fun handleInvalidPasswordFormat(
+      ex: InvalidPasswordFormatException
+  ): ResponseEntity<Map<String, String>> {
+    val errorResponse = createErrorResponse(ex.message ?: "Invalid password format")
+    logger.error("Invalid password format: ${ex.message}")
+    return ResponseEntity(errorResponse, HttpStatus.BAD_REQUEST)
+  }
 
-    @ExceptionHandler(InvalidCredentialsException::class)
-    fun handleInvalidCredentials(ex: InvalidCredentialsException): ResponseEntity<Map<String, String>> {
-        val errorResponse: Map<String, String> = mapOf("error" to (ex.message ?: "Invalid username or password"))
-        logger.error("Invalid username or password: ${ex.stackTraceToString()}")
-        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
-    }
+  @ExceptionHandler(UsernameAlreadyTakenException::class)
+  fun handleUsernameAlreadyTaken(
+      ex: UsernameAlreadyTakenException
+  ): ResponseEntity<Map<String, String>> {
+    val errorResponse = createErrorResponse(ex.message ?: "Username is already taken")
+    logger.error("Username already taken: ${ex.message}")
+    return ResponseEntity(errorResponse, HttpStatus.CONFLICT)
+  }
 
-    @ExceptionHandler(InvalidTokenException::class)
-    fun handleInvalidToken(ex: InvalidTokenException): ResponseEntity<Map<String, String>> {
-        val errorResponse: Map<String, String> = mapOf("error" to (ex.message ?: "Invalid or expired token"))
-        logger.error("Invalid token: ${ex.stackTraceToString()}")
-        return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
-    }
+  @ExceptionHandler(InvalidCredentialsException::class)
+  fun handleInvalidCredentials(
+      ex: InvalidCredentialsException
+  ): ResponseEntity<Map<String, String>> {
+    val errorResponse = createErrorResponse(ex.message ?: "Invalid username or password")
+    logger.error("Invalid username or password: ${ex.message}")
+    return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
+  }
 
-    @ExceptionHandler(UserNotFoundException::class)
-    fun handleUserNotFound(ex: UserNotFoundException): ResponseEntity<Map<String, String>> {
-        val errorResponse: Map<String, String> = mapOf("error" to (ex.message ?: "User not found"))
-        logger.error("User not found: ${ex.stackTraceToString()}")
-        return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
-    }
+  @ExceptionHandler(InvalidTokenException::class)
+  fun handleInvalidToken(ex: InvalidTokenException): ResponseEntity<Map<String, String>> {
+    val errorResponse = createErrorResponse(ex.message ?: "Invalid or expired token")
+    logger.error("Invalid token: ${ex.message}")
+    return ResponseEntity(errorResponse, HttpStatus.UNAUTHORIZED)
+  }
 
-    @ExceptionHandler(Exception::class)
-    fun handleGenericException(ex: Exception): ResponseEntity<Map<String, String>> {
-        val errorResponse: Map<String, String> =
-            mapOf("error" to (ex.message ?: "An unexpected error occurred"))
-        logger.error("An unexpected error occurred: ${ex.stackTraceToString()}")
-        return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+  @ExceptionHandler(UserNotFoundException::class)
+  fun handleUserNotFound(ex: UserNotFoundException): ResponseEntity<Map<String, String>> {
+    val errorResponse = createErrorResponse(ex.message ?: "User not found")
+    logger.error("User not found: ${ex.message}")
+    return ResponseEntity(errorResponse, HttpStatus.NOT_FOUND)
+  }
+
+  @ExceptionHandler(Exception::class)
+  fun handleGenericException(ex: Exception): ResponseEntity<Map<String, String>> {
+    val errorResponse = createErrorResponse("An unexpected error occurred")
+    logger.error("An unexpected error occurred: ${ex.stackTraceToString()}")
+    return ResponseEntity(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR)
+  }
 }

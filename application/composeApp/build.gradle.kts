@@ -26,6 +26,11 @@ kotlin {
                 }
             }
         }
+        nodejs {
+            testTask {
+                useMocha()
+            }
+        }
         binaries.executable()
     }
 
@@ -68,7 +73,14 @@ kotlin {
             implementation(libs.koin.compose.viewmodel.navigation)
 
             // Cryptography
-            implementation("dev.whyoleg.cryptography:cryptography-core:0.4.0")
+            implementation(libs.cryptography.core)
+        }
+
+        commonTest.dependencies {
+            // Testing
+            implementation(libs.kotlin.test)
+            implementation(libs.junit)
+            implementation(libs.ktor.client.mock)
         }
 
         wasmJsMain.dependencies {
@@ -78,7 +90,7 @@ kotlin {
             // Ktor for Js
             implementation(libs.ktor.client.js)
 
-            implementation("dev.whyoleg.cryptography:cryptography-provider-webcrypto:0.4.0")
+            implementation(libs.cryptography.provider.webcrypto)
         }
     }
 }
