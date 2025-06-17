@@ -9,7 +9,7 @@ WORKDIR /home/gradle/src
 # Copy only the Gradle wrapper and build files first to cache dependencies
 COPY --chown=gradle:gradle gradle gradle
 COPY --chown=gradle:gradle gradlew .
-COPY --chown=gradle:gradle build.gradle.kts settings.gradle.kts .
+COPY --chown=gradle:gradle build.gradle.kts settings.gradle.kts ./
 
 # Pre-download dependencies (this step will be cached unless dependencies change)
 RUN ./gradlew --no-daemon wasmJsBrowserDistribution || true

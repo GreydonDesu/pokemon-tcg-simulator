@@ -8,11 +8,24 @@ engines:
           ignoreAnnotated:
             - 'Composable'
           exclude:
-            - '**/*Test.kt' # Exclude all test files
+            - '**/*Test.kt'
       style:
         MagicNumber:
           active: true
           ignoreAnnotated:
             - 'Composable'
           exclude:
-            - '**/*Test.kt' # Exclude all test files
+            - '**/*Test.kt'
+  markdownlint:
+    rules:
+      MD007:
+        active: true
+        indent: 2
+        exclude:
+          - "docs/**/*.md" 
+  pylint:
+    rules:
+      W0104:
+        active: true
+    exclude:
+      - "**/*.txt"
