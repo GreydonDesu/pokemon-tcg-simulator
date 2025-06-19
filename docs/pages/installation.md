@@ -32,7 +32,6 @@
     ```
 
     !!! alert "Beachte die Bau- und Startzeit!"
-
     Die Anwendung samt Benutzeroberfläche (Frontend), Anwendungslogik (Backend) und Datenbank wird durch diesen Befehl aufgebaut. Der Prozess kann etwa 10 Minuten dauern.
 
 4. **Anwendung testen**
