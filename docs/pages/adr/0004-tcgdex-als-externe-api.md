@@ -1,6 +1,6 @@
 # 4 - TCGdex als externe API
 
-Date: 2025-04-12
+Date: 2025-04-12  
 Author: [Raymond Hoang](mailto:grey@greydon.de)
 
 ## Status

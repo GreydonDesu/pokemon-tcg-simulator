@@ -1,4 +1,4 @@
-# Pokémon TCG Pack Simulator - arc42
+# arc42
 
 ## 1. Einführung und Ziele
 

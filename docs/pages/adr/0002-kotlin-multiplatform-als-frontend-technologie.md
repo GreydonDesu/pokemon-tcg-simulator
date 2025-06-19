@@ -1,6 +1,6 @@
 # 2 - Kotlin Multiplatform als Frontend-Technologie
 
-Date: 2025-04-12
+Date: 2025-04-12  
 Author: [Raymond Hoang](mailto:grey@greydon.de)
 
 ## Status
