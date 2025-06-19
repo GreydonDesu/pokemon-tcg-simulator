@@ -8,6 +8,7 @@ nav:
   - Lizenz: license.md
   - Externe API: open_source.md
   - arc42: arc42.md
+  - ADRs: !glob adr/*.md
 theme:
   name: material
   language: de
@@ -19,7 +20,7 @@ theme:
     - navigation.tabs
   icon:
     admonition:
-      alert: material/alert-circle 
+      alert: material/alert-circle
 markdown_extensions:
   - toc
   - tables
@@ -32,3 +33,6 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+plugins:
+  - search
+  - awesome-nav
