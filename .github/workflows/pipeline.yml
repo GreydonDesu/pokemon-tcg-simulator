@@ -1,4 +1,4 @@
-name: CI Pipeline with Unified Coverage Report
+name: Continuous Integration
 
 on:
   push:
