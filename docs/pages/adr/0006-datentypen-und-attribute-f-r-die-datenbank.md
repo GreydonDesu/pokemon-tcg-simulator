@@ -9,28 +9,31 @@ Accepted
 
 ## Context
 
-Für das Projekt werden Datentypen und deren Attribute definiert. Diese Datentypen werden dann auch in der Datenbank so abgespeichert. Alle Funktionen und Endpunkte sollen entsprechend der vorliegenden Datentypen konstruiert werden.
+Das Projekt benötigt eine klare Definition der Datentypen und deren Attribute, um die Persistenz und die API-Kommunikation zu standardisieren.
 
 ## Decision
 
-Das Projekt braucht zwei Datentypen:
+Die folgenden Datentypen werden definiert:
 
 - Nutzer
-  - Nutzername
-  - Password
-  - Inventar
+    - Nutzername
+    - Password
+    - Inventar
 - Kartenset
-  - ID
-  - Name
-  - Metadaten (Anzahl Karten, Erscheinungsdatum, Bilder, ...)
-  - Liste an Karten
+    - ID
+    - Name
+    - Metadaten (Anzahl Karten, Erscheinungsdatum, Bilder, ...)
+    - Liste an Karten
 - Karte
-  - ID
-  - Name
-  - Bild
-
-Der Datentyp des Kartenset und der Karte orientiert sich an der Implementierung der von der externen API zur Verfügung gestellte Datentyp. Das Projekt kürzt dabei bewusst einige Attribute raus, die für das Projekt nicht notwendig sind.
+    - ID
+    - Name
+    - Bild
 
 ## Consequences
 
-Das Projekt ist sehr abhängig von den definierten Datentypen und bei Änderungen von Datentypen wird das Anpassen von Frontend und Backend notwendig.
+- Vorteile:
+    - Klare Strukturierung der Daten erleichtert die Implementierung und Wartung.
+    - Die Datentypen sind an die externe API (TCGdex) angepasst.
+
+- Nachteile:
+    - Änderungen an den Datentypen erfordern Anpassungen im Frontend und Backend.

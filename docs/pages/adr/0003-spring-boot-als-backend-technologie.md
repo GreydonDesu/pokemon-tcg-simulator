@@ -1,4 +1,4 @@
-# 3 - Spring Boot und mongoDB als Backend-Technologie
+# 3 - Spring Boot und MongoDB als Backend-Technologie
 
 Date: 2025-04-12  
 Author: [Raymond Hoang](mailto:grey@greydon.de)
@@ -9,14 +9,23 @@ Accepted
 
 ## Context
 
-Für das Backend wird eine Technologie gebraucht, um die Logik, Verwaltung und Persistenz der Applikation zu bewerkstelligen.
+Für das Backend wird eine Technologie benötigt, um die Logik, Verwaltung und Persistenz der Applikation zu bewerkstelligen. Die Lösung sollte robust, flexibel und zukunftssicher sein.
 
 ## Decision
 
-Die Entscheidung fiel dabei auf die Kombination Spring Boot als Logik mit einer MongoDB Datenbank für Persistenz. Ich habe bereits durch vorherige Vorlesungen Erfahrung mit Spring Boot gehabt. Spring Boot bietet auch durch ihren [Initializer](https://start.spring.io/) ein Tool zum Initialisieren von Projekten samt optionaler Erweiterungen, welche für das Projekt notwendig sind. Die Programmiersprache ist Kotlin und die Kommunikation mit dem Frontend werden mit REST-Abfragen bewerkstelligt.
+Die Entscheidung fiel auf die Kombination aus **Spring Boot** für die Backend-Logik und **MongoDB** als Datenbank. Spring Boot bietet eine schnelle und effiziente Entwicklung von REST-APIs, während MongoDB eine flexible Datenstruktur für die Persistenz bereitstellt.
 
-Als Datenbank habe ich mich für MongoDB entschieden, da ich mich mit einer Datenbank beschäftigen will, welche auch in Zukunft in jeglichen Umgebungen verwendet wird. Ebenso erleichtert es die Persistenz, da es nicht den üblichen Prozess mit SQL-Abfragen verfolgt.
+## Alternatives
+
+(nicht betrachtet)
 
 ## Consequences
 
-Ich habe mich für die Programmiersprache Kotlin für Spring Boot entschieden, da ich subjektiv die Programmiersprache über Java mag. Leserlich und für die generelle Entwicklung präferiere ich Kotlin. Ein Problem kann bei der Suche von Dokumentation sein, da andere Entwickler ihre Spring Boot Projekte meistens mit Java schreiben und ich die Lösungen von Java zu Kotlin umschreiben muss. Es ist nicht viel Arbeit, aber es erfordert etwas umdenken.
+- Vorteile:
+    - Spring Boot bietet eine robuste Grundlage für die Entwicklung von REST-APIs.
+    - MongoDB ermöglicht eine flexible und schemalose Datenmodellierung.
+    - Gute Integration von Spring Boot und MongoDB durch bestehende Bibliotheken.
+
+- Nachteile:
+    - Die meisten Spring Boot-Projekte verwenden Java, was bedeutet, dass Kotlin-spezifische Dokumentation begrenzt ist.
+    - MongoDB erfordert ein Umdenken im Vergleich zu relationalen Datenbanken, was für Entwickler mit SQL-Erfahrung eine Herausforderung sein kann.

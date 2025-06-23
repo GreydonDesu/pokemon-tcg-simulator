@@ -9,12 +9,24 @@ Accepted
 
 ## Context
 
-Für das Frontend wird eine Technologie gebraucht, um die Applikation als Web-App auf jeglichen Browsern darstellen zu können.
+Für das Frontend wird eine Technologie benötigt, um die Applikation als Web-App auf jeglichen Browsern darstellen zu können. Die Technologie sollte plattformübergreifend sein und eine moderne, flexible Entwicklung ermöglichen.
 
 ## Decision
 
-Die Entscheidung ist auf Kotlin Multiplatform gefallen, da ich als Entwickler bereits viel Erfahrung mit der Technologie Android Compose, was für die App-Entwicklung in Android bereits etabliert ist, habe. Kotlin Multiplatform ist programmatisch genau so funktional wie Android Compose und ich fühle mich in der Technologie wohl und würde darin auch mein Frontend bauen wollen.
+Die Entscheidung fiel auf **Kotlin Multiplatform**, da es eine plattformübergreifende Entwicklung ermöglicht und sich gut in bestehende Kotlin-Ökosysteme integriert. Der Entwickler hat bereits Erfahrung mit **Android Compose**, das ähnliche Konzepte verwendet, was die Einarbeitungszeit reduziert.
+
+## Alternatives
+
+- React: Eine etablierte Technologie mit einer großen Community, jedoch keine native Integration in das Kotlin-Ökosystem.
+- Flutter: Eine weitere plattformübergreifende Technologie, die jedoch eine andere Programmiersprache (Dart) erfordert, was zusätzliche Einarbeitung bedeutet.
 
 ## Consequences
 
-Diese Technologie ist von Google als Antwort zu anderen Cross-Platform-Technologien wie React Native und Flutter entstanden worden. Ziel von Google war eine konkurrenzfähige Technologie auf den Markt zu bringen und damit Marktanteile schaffen. Ein Nachteil davon ist beispielsweise die Reifegrad. Dadurch, dass die Technologie nicht vollständig durchdacht ist und quasi eine angepasste Version vom etablierten Android Compose ist, kann es zu Kompatibilitätsschwierigkeiten mit gängigen Tools, die auch für die sonstige Software-Entwicklung verwendet wird, geben.
+- Vorteile:
+    - Wiederverwendbarkeit von Code zwischen verschiedenen Plattformen.
+    - Gute Integration in das Kotlin-Ökosystem.
+    - Reduzierte Einarbeitungszeit durch bestehende Erfahrung mit Android Compose.
+
+- Nachteile:
+    - Kotlin Multiplatform ist noch nicht so ausgereift wie React oder Flutter, was zu Kompatibilitätsproblemen mit gängigen Tools führen kann.
+    - Begrenzte Community und Dokumentation im Vergleich zu etablierten Technologien.

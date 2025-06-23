@@ -9,18 +9,29 @@ Accepted
 
 ## Context
 
-Für die Kommunikation zwischen Frontend und Backend über REST API-Aufrufe müssen im Vorhinein Endpunkte bestimmt werden.
+Für die Kommunikation zwischen Frontend und Backend werden REST-API-Endpunkte benötigt, die die definierten Funktionen des Systems unterstützen.
 
 ## Decision
 
-Folgende Endpunkte werden für die Kommunikation gebraucht:
+Die folgenden Endpunkte werden implementiert:
 
-- Laden von Kartenpaketen aus der externen API
-- Öffnen von Kartenpaketen
-- Registrieren eines neuen Nutzers
-- Anmelden eines bestehenden Nutzers
-- Laden des Inventars des angemeldeten Nutzers
+- Laden von Kartenpaketen aus der externen API.
+- Öffnen von Kartenpaketen.
+- Registrieren eines neuen Nutzers.
+- Anmelden eines bestehenden Nutzers.
+- Laden des Inventars des angemeldeten Nutzers.
+
+## Alternatives
+
+- **GraphQL**: Eine Alternative zu REST, die jedoch für die Anforderungen des Projekts als überdimensioniert angesehen wurde.
+- **gRPC**: Eine weitere Alternative, welche die Kommunikation mittels Protobuf bewerkstellungt.
 
 ## Consequences
 
-Durch die Eigenschaft von REST API, dass die Endpunkte erweitert und verändert werden können auf der Seite des Backends ist eine vernünftige Dokumentation notwendig, damit das Frontend die erwarteten Anforderderungen zum Backend und Ergebnisse vom Backend auch verarbeiten kann. Ebenso wird eine Migrationszeit gebraucht, sofern sich die API grundlegend verändert (beispielsweise bei Major Version Bumps).
+- Vorteile:
+    - REST ist ein bewährtes und weit verbreitetes Protokoll.
+    - Die Endpunkte sind flexibel und können bei Bedarf erweitert werden.
+
+- Nachteile:
+    - Änderungen an den Endpunkten erfordern eine Anpassung des Frontends.
+    - Eine klare Dokumentation der API ist notwendig, um Missverständnisse zu vermeiden.

@@ -9,14 +9,18 @@ Accepted
 
 ## Context
 
-Für eine verlässliche Qualitätssicherung des Quellcodes werden Werkzeuge für das Bestimmen von Qualitätszielen und der Abdeckung von Tests benötigt.
+Für die Qualitätssicherung des Quellcodes werden Werkzeuge benötigt, die die Einhaltung von Qualitätsstandards und die Testabdeckung sicherstellen.
 
 ## Decision
 
-Die Entscheidung ist auf [Codacy](https://www.codacy.com/) gefallen, da es für öffentlich zugängliche Projekte, was dieses Projekt ist, ein kostenfreies Paket anbietet. Codacy unterstützt alle Linting und Code Quality Werkzeuge für die bekannten Programmiersprachen und bietet eine Integration mit GitHub an.
-
-Für die Abdeckung der Testfälle wird JaCoCo verwendet. Dies bietet eine Integration mit Spring Boot an und kann den Abdeckungsbericht in Form von XML exportieren, was für die Darstellung des Reports auf Codacy benötigt wird.
+- **Codacy** wird als Tool für die Code-Qualitätssicherung verwendet.
+- **JaCoCo** wird für die Testabdeckung eingesetzt.
 
 ## Consequences
 
-Soll ein anderes Tool für diese Zwecke wie SonarQube verwendet werden, wird eine Migration notwendig sein. Die Änderungen können dabei etwa einen Tag dauern.
+- Vorteile:
+    - Codacy bietet eine einfache Integration mit GitHub und unterstützt Kotlin.
+    - JaCoCo ist gut in Spring Boot integriert und liefert detaillierte Berichte.
+
+- Nachteile:
+    - Eine Migration zu anderen Tools (z. B. SonarQube) erfordert zusätzlichen Aufwand.

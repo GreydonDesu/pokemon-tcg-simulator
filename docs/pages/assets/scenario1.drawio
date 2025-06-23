@@ -1,0 +1,86 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0" version="27.1.6">
+  <diagram name="Anmeldung eines Nutzers" id="0">
+    <mxGraphModel dx="953" dy="546" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="600" pageHeight="100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="Nutzer" style="swimlane;horizontal=0;rotation=90;" parent="1" vertex="1">
+          <mxGeometry x="-51.25" y="121.88" width="222.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="Frontend" style="swimlane;horizontal=0;rotation=90;" parent="1" vertex="1">
+          <mxGeometry x="110" y="110.63" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-19" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="3">
+          <mxGeometry x="95" y="-50.629999999999995" width="30" height="160.63" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="Backend" style="swimlane;horizontal=0;rotation=90;" parent="1" vertex="1">
+          <mxGeometry x="270" y="115.63" width="220" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-24" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="4">
+          <mxGeometry x="100" y="-20.629999999999995" width="20" height="130.63" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="Datenbank" style="swimlane;horizontal=0;rotation=90;" parent="1" vertex="1">
+          <mxGeometry x="430" y="120.63" width="220" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-25" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="5">
+          <mxGeometry x="100" y="9.370000000000005" width="20" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-12" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="60" as="sourcePoint" />
+            <mxPoint x="200" y="60" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-13" value="&lt;div&gt;Gibt Anmeldedaten&lt;/div&gt;&lt;div&gt;ein&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="d6Bn9XBuzQaRhClG0Aky-12">
+          <mxGeometry x="-0.1286" relative="1" as="geometry">
+            <mxPoint x="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-14" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="240" y="100" as="sourcePoint" />
+            <mxPoint x="360" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-16" value="&lt;div&gt;Sendet Daten&lt;/div&gt;&lt;div&gt;weiter &lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="d6Bn9XBuzQaRhClG0Aky-14">
+          <mxGeometry x="0.2524" y="1" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-17" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="130" as="sourcePoint" />
+            <mxPoint x="520" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-18" value="Fragt Daten von&lt;br&gt;&lt;div&gt;gespeicherten&lt;/div&gt;&lt;div&gt;Nutzer an&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="d6Bn9XBuzQaRhClG0Aky-17">
+          <mxGeometry x="0.2048" y="-2" relative="1" as="geometry">
+            <mxPoint x="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-26" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="180" as="sourcePoint" />
+            <mxPoint x="400" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-27" value="&lt;div&gt;Sendet gefundene&lt;/div&gt;&lt;div&gt;Daten zurück&lt;br&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="d6Bn9XBuzQaRhClG0Aky-26">
+          <mxGeometry x="-0.2524" y="1" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-28" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="220" as="sourcePoint" />
+            <mxPoint x="240" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-29" value="Bei Erfolg: JWT an&lt;br&gt;das Frontend" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="d6Bn9XBuzQaRhClG0Aky-28">
+          <mxGeometry x="0.0524" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

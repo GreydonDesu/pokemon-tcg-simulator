@@ -1,0 +1,114 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0" version="27.1.6">
+  <diagram name="Anmeldung eines Nutzers" id="0">
+    <mxGraphModel dx="790" dy="453" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="600" pageHeight="200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="Nutzer" style="swimlane;horizontal=0;rotation=90;" parent="1" vertex="1">
+          <mxGeometry x="-85.62" y="156.26" width="291.25" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="Frontend" style="swimlane;horizontal=0;rotation=90;container=0;" parent="1" vertex="1">
+          <mxGeometry x="80" y="140" width="290" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="Backend" style="swimlane;horizontal=0;rotation=90;container=0;" parent="1" vertex="1">
+          <mxGeometry x="235" y="136.32999999999998" width="290" height="77.33" as="geometry" />
+        </mxCell>
+        <mxCell id="CrXVt22Ujc1m_WxqW9t_-14" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="285" y="143.67000000000002" as="sourcePoint" />
+            <mxPoint x="165" y="143.67000000000002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CrXVt22Ujc1m_WxqW9t_-15" value="Bestätigung" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="CrXVt22Ujc1m_WxqW9t_-14">
+          <mxGeometry x="-0.2524" y="1" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5" value="Datenbank" style="swimlane;horizontal=0;rotation=90;container=0;" parent="1" vertex="1">
+          <mxGeometry x="390" y="144.60000000000002" width="290" height="69.05999999999995" as="geometry" />
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-25" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="5" vertex="1">
+          <mxGeometry x="135" y="19.059999999999945" width="20" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-26" value="" style="endArrow=classic;html=1;rounded=0;" parent="5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="65.39999999999998" as="sourcePoint" />
+            <mxPoint x="10" y="65.39999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-27" value="&lt;div&gt;Sendet gefundene&lt;/div&gt;&lt;div&gt;Daten zurück&lt;br&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="d6Bn9XBuzQaRhClG0Aky-26" vertex="1" connectable="0">
+          <mxGeometry x="-0.2524" y="1" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-17" value="" style="endArrow=classic;html=1;rounded=0;" parent="5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="10" y="19.059999999999974" as="sourcePoint" />
+            <mxPoint x="130" y="19.059999999999974" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-18" value="&lt;div&gt;Fragt Nutzer und&lt;/div&gt;&lt;div&gt;Kartendaten an&lt;br&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="d6Bn9XBuzQaRhClG0Aky-17" vertex="1" connectable="0">
+          <mxGeometry x="0.2048" y="-2" relative="1" as="geometry">
+            <mxPoint x="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-12" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="60" as="sourcePoint" />
+            <mxPoint x="200" y="60" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-13" value="&lt;div&gt;Wählt Kartenpack&lt;/div&gt;&lt;div&gt;aus&lt;br&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="d6Bn9XBuzQaRhClG0Aky-12" vertex="1" connectable="0">
+          <mxGeometry x="-0.1286" relative="1" as="geometry">
+            <mxPoint x="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-14" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="240" y="100" as="sourcePoint" />
+            <mxPoint x="360" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-16" value="&lt;div&gt;Sendet Daten&lt;/div&gt;&lt;div&gt;weiter (JWT, Pack-ID) &lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="d6Bn9XBuzQaRhClG0Aky-14" vertex="1" connectable="0">
+          <mxGeometry x="0.2524" y="1" relative="1" as="geometry">
+            <mxPoint x="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-28" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="298.13" as="sourcePoint" />
+            <mxPoint x="240" y="298.13" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-29" value="Bei Erfolg: Neue Karten&lt;br&gt;darstellen" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="d6Bn9XBuzQaRhClG0Aky-28" vertex="1" connectable="0">
+          <mxGeometry x="0.0524" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-19" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="210" y="62.50000000000001" width="30" height="235.63" as="geometry" />
+        </mxCell>
+        <mxCell id="d6Bn9XBuzQaRhClG0Aky-24" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="370" y="89.68" width="20" height="210.32" as="geometry" />
+        </mxCell>
+        <mxCell id="CrXVt22Ujc1m_WxqW9t_-6" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="525" y="240" width="20" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="CrXVt22Ujc1m_WxqW9t_-11" value="Wählt zufällig Karten aus" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="104.6" width="20" height="55.4" as="geometry" />
+        </mxCell>
+        <mxCell id="CrXVt22Ujc1m_WxqW9t_-12" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="240" as="sourcePoint" />
+            <mxPoint x="520" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="CrXVt22Ujc1m_WxqW9t_-13" value="Neue Karten ins&lt;br&gt;Inventar" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="CrXVt22Ujc1m_WxqW9t_-12">
+          <mxGeometry x="0.2048" y="-2" relative="1" as="geometry">
+            <mxPoint x="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

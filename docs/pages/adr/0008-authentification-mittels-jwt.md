@@ -9,14 +9,45 @@ Accepted
 
 ## Context
 
-Für die Kommunikation zwischen Frontend und Backend werden bei einigen Endpunkten ein angemeldeter Nutzer erwartet. Eine Weise für die Authentifizierung ist dafür notwendig, welche auch mit Nutzung von API-Endpunkten kompatibel ist.
+Für die Kommunikation zwischen Frontend und Backend wird bei einigen Endpunkten ein angemeldeter Nutzer erwartet. Eine sichere und effiziente Methode zur Authentifizierung ist notwendig, die mit REST-API-Endpunkten kompatibel ist. Die Authentifizierung sollte sicherstellen, dass sensible Daten wie Passwörter nicht im Klartext übertragen werden.
 
 ## Decision
 
-Die Anmeldung und Registrierung des Nutzers wird mit Nutzername und Passwort bewerkstelligt. Wichtig ist dabei, dass das Passwort nicht als Klartext über das Netzwerk verschickt wird. Das Passwort wird im Frontend mit HMAC256 pseudonymisiert.
+Die Authentifizierung wird mittels JSON Web Tokens (JWT) umgesetzt. Der Prozess ist wie folgt:
 
-Das Backend erhält den Nutzername und das pseudonymisierte Passwort und gibt ein JSON Web Token an das Frontend zurück, sofern die Eingaben korrekt sind. Alle authentifierbare Anfragen werden mit diesem Token abgefertigt. Der Schlüssel zur Generierung von JWT wird als Umgebungsvariable gespeichert (Dies ist in der Datei docker-compose.yml hinterlegt).
+1. Anmeldung und Registrierung:
+    - Der Nutzer gibt seinen Nutzernamen und sein Passwort ein.
+    - Das Passwort wird im Frontend mit HMAC256 pseudonymisiert, bevor es an das Backend gesendet wird.
+
+2. Token-Generierung:
+    - Das Backend überprüft die Anmeldedaten und generiert ein JWT, wenn die Eingaben korrekt sind.
+    - Das JWT wird an das Frontend zurückgegeben und für zukünftige Anfragen verwendet.
+
+3. Token-Verwendung:
+    - Authentifizierte Anfragen enthalten das JWT im Header (Authorization: Bearer \<token>).
+    - Das Backend validiert das Token und gewährt Zugriff auf geschützte Ressourcen.
+
+4. Schlüsselverwaltung:
+    - Der Schlüssel zur Generierung von JWT wird als Umgebungsvariable in der Datei docker-compose.yml gespeichert.
+
+## Alternatives
+
+- Session-basierte Authentifizierung:  
+Diese Methode wurde verworfen, da sie zusätzliche Serverressourcen für die Verwaltung von Sitzungen erfordert und weniger skalierbar ist.
+- OAuth 2.0:  
+Eine komplexere Lösung, die für die Anforderungen des Projekts als überdimensioniert angesehen wurde.
 
 ## Consequences
 
-Die aktuelle Implementierung des Schlüssels zur Generierung von JWT ist sehr unsicher und soll zum nächstebesten Moment angepasst werden. Gegebenenfalls bietet es sich da an, den Schlüssel als Geheimnachricht in das Repository hinzuzufügen und Docker Compose bezieht sich die notwendigen Informationen von dem Repository.
+- Vorteile:
+    - JWT ist leichtgewichtig und gut für REST-APIs geeignet.
+    - Die Authentifizierung ist skalierbar und unabhängig vom Serverzustand.
+    - Passwörter werden nicht im Klartext übertragen, was die Sicherheit erhöht.
+
+- Nachteile:
+    - Die aktuelle Implementierung der Schlüsselverwaltung ist unsicher, da der Schlüssel in der docker-compose.yml hinterlegt ist.
+    - Es besteht ein Risiko, dass der Schlüssel kompromittiert wird, wenn er nicht sicher gespeichert wird.
+
+- Risikominderung:
+    - Der Schlüssel sollte in einem sicheren Geheimnis-Management-Tool (z. B. HashiCorp Vault oder AWS Secrets Manager) gespeichert werden.
+    - Alternativ kann der Schlüssel als Umgebungsvariable in einem sicheren CI/CD-System hinterlegt werden.

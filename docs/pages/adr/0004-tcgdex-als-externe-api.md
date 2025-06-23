@@ -9,12 +9,27 @@ Accepted
 
 ## Context
 
-Als Anforderung des Projektes wird die Anbinding des Backends an eine externe API für Informationen gebraucht. Das Projekt soll eine Simulation vom dem Öffnen von Kartenpacks wie aus dem Spiel Pokémon TCG Pocket sein, welches bereits in arc42 beschrieben wurde.
+Das Projekt benötigt eine externe API, um Informationen über Karten und Kartenpacks bereitzustellen. Diese Daten sind essenziell für die Simulation des Kartenpack-Öffnens.
 
 ## Decision
 
-Als externe API für die Informationen der Karten wird [TCGdex](https://tcgdex.dev/) verwendet. Ich habe es bereits im [Open Source Quickcheck](https://pokemon-tcg-simulator.readthedocs.io/de/latest/open_source/) geprüft, ob diese API geeignet für die Anwendung ist.
+Die Entscheidung fiel auf die Verwendung von **TCGdex** als externe API. Diese API bietet die notwendigen Informationen über Karten und Kartenpacks und ist Open Source.
+
+## Alternatives
+
+- **Pokémon TCG Developers**: Eine alternative API, die jedoch mit einem Entwicklerkonto zugänglich ist und nicht alle benötigten Daten bereitstellt.
 
 ## Consequences
 
-Über diese API ist nicht viel öffentlich zugänglich. Ebenso weiß ich nicht, ob die API DDoS-Schutz hat, was dazu führen kann, das meine Applikation ausgesperrt wird, wenn ich zu viele Anfragen zur API stelle.
+- Vorteile:
+    - TCGdex bietet eine umfassende Datenbasis für Karten und Kartenpacks.
+    - Die API ist Open Source und kostenlos nutzbar.
+
+- Nachteile:
+    - Begrenzte öffentliche Dokumentation.
+    - Unklarheit über DDoS-Schutz, was bei hoher Anfragefrequenz zu Problemen führen könnte.
+    - Abhängigkeit von der Verfügbarkeit der API.
+
+- Risikominderung:
+    - Implementierung eines Caching-Mechanismus, um die Anzahl der API-Anfragen zu reduzieren.
+    - Fallback-Mechanismen für den Fall, dass die API nicht verfügbar ist.

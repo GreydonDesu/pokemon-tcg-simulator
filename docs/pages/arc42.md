@@ -2,920 +2,696 @@
 
 ## 1. Einführung und Ziele
 
-Das Videospiel ["Pokémon TCG Pocket"](https://tcgpocket.pokemon.com/de-de/), welches seit ihrer Veröffentlichung am 30. Oktober 2024 auf mobilen Endgeräten spielbar ist, gewann schnell an Popularität, vor allem durch viele kostenlose Funktionen, das Sammeln von Karten und auch der Funktion vom Tauschen und dem Verwenden der Karten in PvP-Kartenspielen.
+Das Videospiel ["Pokémon TCG Pocket"](https://tcgpocket.pokemon.com/de-de/), das seit dem 30. Oktober 2024 auf mobilen Endgeräten verfügbar ist, hat durch seine kostenlosen Funktionen, das Sammeln und Tauschen von Karten sowie PvP-Kartenspiele schnell an Popularität gewonnen. Ein zentraler Aspekt des Spiels ist das Öffnen von Kartenpacks, die aus fünf zufälligen Karten bestehen. Diese Karten haben unterschiedliche Raritäten und erscheinen mit festgelegten Wahrscheinlichkeiten.
 
-Eines der wichtigsten Aspekte in dem Spiel ist das Öffnen von Kartenpacks, bestehend aus 5 zufälligen Karten, welche alle einer Rarität und einer bekannten Wahrscheinlichkeit im Pack erscheinen kann. Dadurch, dass der Spieler dazu gezwungen ist, 12 Stunden zu warten, um ein kostenloses Pack zu öffnen, ist eines der Punkte, wo die Entwickler etwas Geld verdienen können. Entwickler können durch das Beschleunigen der Wartezeit, der Möglichkeit, exklusive Packs für die Spieler, oder auch ganze Pakete mit weiteren kosmetischen Items Umsatz generieren.
+Das Ziel dieses Projekts ist die Entwicklung einer Simulation, die das Öffnen von Kartenpacks nachbildet. Dabei wird eine vereinfachte Version der Wahrscheinlichkeiten verwendet. Die Simulation dient ausschließlich Demonstrationszwecken und speichert die geöffneten Karten nur im Rahmen der Simulation.
 
-Dieses Projekt dient als eine Simulation (mit veränderter Wahrscheinlichkeit), welche Karten aus einem Paket möglich sind. Ziel dieses Projektes ist eine vereinfachte, nicht optimierte Version zur Simulation von dem Öffnen von Kartenpacks. Das Öffnen der Packs hat keinen Mehrwert und werden auch nur im Rahmen der Simulation gespeichert.
+Das Projekt soll folgende Funktionen bereitstellen:
 
-Das Projekt soll folgende Funktionen erfüllen:
+- Simulation des Öffnens von Kartenpacks mit fünf zufälligen Karten aus einem definierten Pool.
+- Speicherung der erhaltenen Karten in einem Nutzerprofil.
+- Bereitstellung von Login- und Registrierungsfunktionen für Nutzerprofile.
+- Gleichverteilung der Wahrscheinlichkeiten für alle Karten (abweichend von der Realität, in der Karten unterschiedliche Wahrscheinlichkeiten haben).
 
-- Das Öffnen von Kartenpacks, bestehend auf 5 zufälligen Karten aus einem Pool ermöglichen
-- Die gewonnenen Karten mittels eines Nutzerprofils speichern
-- Login und Registrierung für eben genanntes Nutzerprofil
-- Wahrscheinlichkeiten der Karten sind identisch (realistisch haben die Karten unterschiedliche Wahrscheinlichkeiten abhängig von ihrer Rarität)
-
-Technologie-Auswahl ist frei gestaltet und wird im Laufe der Dokumentation erläutert. Stakeholder des Projektes können Spieler sein, die an dem Spiel "Pokémon TCG Pocket" interessiert sind. Es ist wichtig anzumerken, dass das Projekt nicht konsequent weiter entwickelt wird. Das Projekt dient als Demo für potenzielle weitere Ideen. Es ist aufgrund dessen unter [MIT](https://github.com/GreydonDesu/pokemon-tcg-simulator/blob/master/LICENSE) lizensiert.
+Die Technologieauswahl ist flexibel und wird im weiteren Verlauf der Dokumentation erläutert. Stakeholder des Projekts sind potenzielle Spieler, die an "Pokémon TCG Pocket" interessiert sind. Das Projekt ist unter der [MIT-Lizenz](https://github.com/GreydonDesu/pokemon-tcg-simulator/blob/master/LICENSE) veröffentlicht und dient als Demo für mögliche zukünftige Ideen.
 
 ### 1.1 Aufgabenstellung
 
 #### Inhalt
 
-Der Nutzer kann in der Webapp aus einer Liste von verfügbaren Kartenpacks das Öffnen eines solchen Kartenpacks simulieren. Die erhaltenen Karten werden in das Profil des Nutzers gespeichert, womit es angemeldet ist. Das Öffnen der Kartenpacks kann nur mit angemeldetem Nutzerprofil getätigt werden.
+Der Nutzer kann in der Web-App aus einer Liste verfügbarer Kartenpacks ein Kartenpack auswählen und das Öffnen simulieren. Die erhaltenen Karten werden im Nutzerprofil gespeichert. Das Öffnen von Kartenpacks ist nur mit einem angemeldeten Nutzerprofil möglich.
 
 #### Motivation
 
-Das Öffnen von Kartenpacks erzeugt, ähnlich wie Wettspiele und Kasinos, Glücksmomente wie es [wissenschaftlich bewiesen ist](https://www.mdpi.com/2078-2489/14/7/399). In dem Handyspiel "Pokémon TCG Pocket" ist das Öffnen von Kartenpacks kostenfrei, aber es braucht eine Wartezeit von 12 Stunden. Diese Wartezeit kann durch das Kaufen von Beschleunigern verkürzt werden.
+Das Öffnen von Kartenpacks erzeugt Glücksmomente, ähnlich wie bei Glücksspielmechanismen, was [wissenschaftlich belegt ist](https://www.mdpi.com/2078-2489/14/7/399). In "Pokémon TCG Pocket" ist das Öffnen von Kartenpacks kostenfrei, jedoch mit einer Wartezeit von 12 Stunden verbunden. Diese Wartezeit kann durch den Kauf von Beschleunigern verkürzt werden.
 
-Dieses Projekt soll eine vereinfachte Simulation des Öffnen der Kartenpacks sein, ohne dass Zeit oder Geld darin investiert werden muss. Das Projekt dient aber auch nicht für eine realistische Repräsentation von der tatsächlichen Welt, da die Spiele noch tiefgreifende Algorithmen und Techniken haben, welche nicht immer öffentlich einsehbar sind.
+Dieses Projekt bietet eine vereinfachte Simulation des Kartenpack-Öffnens, ohne dass Zeit oder Geld investiert werden muss. Es dient jedoch nicht als realistische Nachbildung des tatsächlichen Spiels, da komplexe Algorithmen und Techniken des Originals nicht berücksichtigt werden.
 
 #### Form
 
-Das Projekt wird in Form einer Web-App erstellt werden. Eine Installation vom Nutzer, abgesehen von einem gebräuchlichen Browser (e.g. Google Chrome, Mozilla Firefox, ...) ist damit nicht nötig.
-Die Persistenz der Daten wie Nutzerdaten und das Inventar, sowie die Programmlogik wird in einem Backend getätigt. Die Kommunikation zwischen Frontend und Backend wird über REST-Abfragen bewerkstelligt.
+Das Projekt wird als Web-App umgesetzt, sodass keine Installation durch den Nutzer erforderlich ist. Die Persistenz von Daten wie Nutzerprofilen und Inventar sowie die Programmlogik werden im Backend realisiert. Die Kommunikation zwischen Frontend und Backend erfolgt über REST-APIs.
 
-### 1.2 Qualitätsziele {#_qualit_tsziele}
+### 1.2 Qualitätsziele
 
-::: formalpara-title
-**Inhalt**
-:::
+#### Inhalt
 
-Die Top-3 bis Top-5 der Qualitätsanforderungen für die Architektur,
-deren Erfüllung oder Einhaltung den maßgeblichen Stakeholdern besonders
-wichtig sind. Gemeint sind hier wirklich Qualitätsziele, die nicht
-unbedingt mit den Zielen des Projekts übereinstimmen. Beachten Sie den
-Unterschied.
+Basierend auf der Norm ISO 25010 wurden die folgenden Qualitätsziele für das Projekt definiert:
 
-Hier ein Überblick möglicher Themen (basierend auf dem ISO 25010
-Standard):
+- **Funktionale Eignung**: Die Funktionen des Projekts sind klar definiert und funktionsfähig.
+- **Benutzerfreundlichkeit**: Die Web-App ist intuitiv und ohne zusätzliche Anleitung nutzbar.
+- **Kompatibilität**: Die Web-App ist auf verschiedenen Endgeräten und Browsern funktionsfähig.
 
-![Kategorien von
-Qualitätsanforderungen](images/01_2_iso-25010-topics-DE.drawio.png)
+##### Funktionale Eignung
 
-::: formalpara-title
-**Motivation**
-:::
+- Die Funktionen sind selbsterklärend und einfach gehalten.
+- Der Fokus liegt auf der Simulation des Kartenpack-Öffnens.
+- Zusätzliche Funktionen können später hinzugefügt werden, sind jedoch nicht Teil des aktuellen Scopes.
 
-Weil Qualitätsziele grundlegende Architekturentscheidungen oft
-maßgeblich beeinflussen, sollten Sie die für Ihre Stakeholder relevanten
-Qualitätsziele kennen, möglichst konkret und operationalisierbar.
+##### Benutzerfreundlichkeit
 
-::: formalpara-title
-**Form**
-:::
+- Die Benutzeroberfläche ist so gestaltet, dass die Nutzung intuitiv und ohne Umwege möglich ist.
+- Fehlermeldungen sind verständlich und führen den Nutzer zur Lösung.
 
-Tabellarische Darstellung der Qualitätsziele mit möglichst konkreten
-Szenarien, geordnet nach Prioritäten.
+##### Kompatibilität
 
-### Stakeholder {#_stakeholder}
+- Die Web-App ist auf gängigen Endgeräten und Browsern nutzbar.
+- Das Design ist responsiv und passt sich an verschiedene Bildschirmgrößen an.
 
-::: formalpara-title
-**Inhalt**
-:::
+#### Motivation
 
-Expliziter Überblick über die Stakeholder des Systems -- über alle
-Personen, Rollen oder Organisationen --, die
+Die Definition von Qualitätszielen stellt sicher, dass alle Beteiligten ein gemeinsames Verständnis der Anforderungen und des angestrebten Qualitätsniveaus haben.
 
-- die Architektur kennen sollten oder
+#### Form
 
-- von der Architektur überzeugt werden müssen,
+| Funktionale Eignung | Benutzerfreundlichkeit | Kompatibilität |
+|:---:|:---:|:---:|
+| Funktionen sind funktionsfähig | Funktionen sind klar erkennbar | Projekt läuft auf gängigen Endgeräten |
+| Bedingungen für Funktionen sind abgesichert | Fehlermeldungen sind verständlich | Nutzung ist für die meisten Nutzer einfach |
 
-- mit der Architektur oder dem Code arbeiten (z.B. Schnittstellen
-    nutzen),
+### 1.3 Stakeholder
 
-- die Dokumentation der Architektur für ihre eigene Arbeit benötigen,
+#### Inhalt
 
-- Entscheidungen über das System und dessen Entwicklung treffen.
+Die Stakeholder des Projekts lassen sich in drei Gruppen einteilen: Endnutzer, Entwicklung und (optional) Business. Obwohl Business in diesem Projekt keine zentrale Rolle spielt, könnte es in zukünftigen Erweiterungen relevant werden.
 
-::: formalpara-title
-**Motivation**
-:::
+##### Endnutzer
 
-Sie sollten die Projektbeteiligten und -betroffenen kennen, sonst
-erleben Sie später im Entwicklungsprozess Überraschungen. Diese
-Stakeholder bestimmen unter anderem Umfang und Detaillierungsgrad der
-von Ihnen zu leistenden Arbeit und Ergebnisse.
+- Zielgruppe: Spieler, die an "Pokémon TCG Pocket" interessiert sind.
+- Erwartung: Die Web-App ist einfach zu bedienen und erfüllt die definierten Funktionen ohne technische Probleme.
 
-::: formalpara-title
-**Form**
-:::
+##### Entwicklung
 
-Tabelle mit Rollen- oder Personennamen, sowie deren Erwartungshaltung
-bezüglich der Architektur und deren Dokumentation.
+- Zielgruppe: Entwickler, die das Projekt umsetzen und erweitern.
+- Erwartung: Klare und verständliche Anforderungen sowie die Freiheit, eigene Ideen einzubringen.
 
-+-----------------+-----------------+-----------------------------------+
-| Rolle           | Kontakt         | Erwartungshaltung                 |
-+=================+=================+===================================+
-| *\<Rolle-1>*    | *\<Kontakt-1>*  | *\<Erwartung-1>*                  |
-+-----------------+-----------------+-----------------------------------+
-| *\<Rolle-2>*    | *\<Kontakt-2>*  | *\<Erwartung-2>*                  |
-+-----------------+-----------------+-----------------------------------+
+##### Business (optional)
 
-## Randbedingungen {#section-architecture-constraints}
+- Zielgruppe: Potenzielle Investoren oder Partner.
+- Erwartung: Möglichkeit, das Projekt in Zukunft zu einem Business-Case auszubauen.
 
-::: formalpara-title
-**Inhalt**
-:::
+#### Motivation
 
-Randbedingungen und Vorgaben, die ihre Freiheiten bezüglich Entwurf,
-Implementierung oder Ihres Entwicklungsprozesses einschränken. Diese
-Randbedingungen gelten manchmal organisations- oder firmenweit über die
-Grenzen einzelner Systeme hinweg.
+Die Identifikation der Stakeholder hilft, den Fokus des Projekts auf die relevanten Zielgruppen zu richten und deren Erwartungen zu erfüllen.
 
-::: formalpara-title
-**Motivation**
-:::
+#### Form
 
-Für eine tragfähige Architektur sollten Sie genau wissen, wo Ihre
-Freiheitsgrade bezüglich der Entwurfsentscheidungen liegen und wo Sie
-Randbedingungen beachten müssen. Sie können Randbedingungen vielleicht
-noch verhandeln, zunächst sind sie aber da.
+| Rolle | Kontakt | Erwartungshaltung |
+|:---:|:---:|---|
+| Endnutzer | / | Einfache Nutzung ohne technische Probleme |
+| Entwicklung | / | Klare Anforderungen und Freiheit für kreative Lösungen |
+| Business | / | Möglichkeit zur Erweiterung des Projekts für kommerzielle Zwecke (optional, nicht im aktuellen Scope) |
 
-::: formalpara-title
-**Form**
-:::
+## 2. Randbedingungen
 
-Einfache Tabellen der Randbedingungen mit Erläuterungen. Bei Bedarf
-unterscheiden Sie technische, organisatorische und politische
-Randbedingungen oder übergreifende Konventionen (beispielsweise
-Programmier- oder Versionierungsrichtlinien, Dokumentations- oder
-Namenskonvention).
+### Inhalt
 
-Siehe [Randbedingungen](https://docs.arc42.org/section-2/) in der
-online-Dokumentation (auf Englisch!).
+Die folgenden Randbedingungen schränken die Freiheiten in Bezug auf Entwurf, Implementierung und den Entwicklungsprozess ein. Diese Randbedingungen können technischer, organisatorischer oder politischer Natur sein und gelten für das gesamte Projekt.
 
-## Kontextabgrenzung {#section-context-and-scope}
+### Motivation
 
-::: formalpara-title
-**Inhalt**
-:::
+Um eine tragfähige Architektur zu gewährleisten, ist es wichtig, die bestehenden Einschränkungen und Vorgaben zu kennen. Diese Randbedingungen definieren den Rahmen, in dem das Projekt entwickelt wird, und helfen dabei, realistische und umsetzbare Entscheidungen zu treffen.
 
-Die Kontextabgrenzung grenzt das System gegen alle Kommunikationspartner
-(Nachbarsysteme und Benutzerrollen) ab. Sie legt damit die externen
-Schnittstellen fest und zeigt damit auch die Verantwortlichkeit (scope)
-Ihres Systems: Welche Verantwortung trägt das System und welche
-Verantwortung übernehmen die Nachbarsysteme?
+### Form
 
-Differenzieren Sie fachlichen (Ein- und Ausgaben) und technischen
-Kontext (Kanäle, Protokolle, Hardware), falls nötig.
+| Kategorie | Randbedingung | Erläuterung |
+|:---:|:---:|:---:|
+| **Technisch** | Web-App als Plattform | Das Projekt muss als Web-App umgesetzt werden, um eine plattformunabhängige Nutzung zu ermöglichen. |
+| |  REST-API für Backend-Kommunikation  | Die Kommunikation zwischen Frontend und Backend erfolgt ausschließlich über REST-APIs. |
+| | Datenbank für Persistenz | Eine relationale oder dokumentenbasierte Datenbank wird verwendet, um Nutzerdaten und Inventar zu speichern. |
+| **Organisatorisch** | Open-Source-Lizenz (MIT) | Das Projekt ist unter der MIT-Lizenz veröffentlicht, was die freie Nutzung, Modifikation und Verbreitung erlaubt. |
+| | Keine langfristige Weiterentwicklung | Das Projekt dient als Demo und wird nicht kontinuierlich weiterentwickelt. |
+| **Politisch** | Keine kommerzielle Nutzung | Das Projekt ist nicht für kommerzielle Zwecke gedacht und soll keine Einnahmen generieren. |
+| **Übergreifende Regeln** | Einhaltung von Coding-Standards | Der Code muss gut dokumentiert und den gängigen Coding-Standards (z. B. PSR-12 für PHP oder PEP 8 für Python) entsprechen. |
 
-::: formalpara-title
-**Motivation**
-:::
+## 3. Kontextabgrenzung
 
-Die fachlichen und technischen Schnittstellen zur Kommunikation gehören
-zu den kritischsten Aspekten eines Systems. Stellen Sie sicher, dass Sie
-diese komplett verstanden haben.
+### Inhalt
 
-::: formalpara-title
-**Form**
-:::
+Die Kontextabgrenzung definiert die Grenzen des Systems und beschreibt die Interaktionen mit externen Kommunikationspartnern, wie Nachbarsystemen und Benutzerrollen. Sie legt die externen Schnittstellen fest und verdeutlicht die Verantwortlichkeiten des Systems. Dabei wird unterschieden zwischen:
 
-Verschiedene Optionen:
+- **Fachlichem Kontext**: Ein- und Ausgaben des Systems, die für die Nutzer und Nachbarsysteme relevant sind.
+- **Technischem Kontext**: Kanäle, Protokolle und Hardware, die für die Kommunikation genutzt werden.
 
-- Diverse Kontextdiagramme
+### Motivation
 
-- Listen von Kommunikationsbeziehungen mit deren Schnittstellen
+Die fachlichen und technischen Schnittstellen eines Systems sind entscheidend für dessen Funktionalität und Integration in die Umgebung. Eine klare Definition und ein vollständiges Verständnis dieser Schnittstellen sind notwendig, um Missverständnisse und Fehler zu vermeiden.
 
-Siehe [Kontextabgrenzung](https://docs.arc42.org/section-3/) in der
-online-Dokumentation (auf Englisch!).
+### Form
 
-### Fachlicher Kontext {#_fachlicher_kontext}
+Die Kontextabgrenzung wird durch ein Kontextdiagramm und eine Liste der Kommunikationsbeziehungen dargestellt.
 
-::: formalpara-title
-**Inhalt**
-:::
+### 3.1 Fachlicher Kontext
 
-Festlegung **aller** Kommunikationsbeziehungen (Nutzer, IT-Systeme, ...)
-mit Erklärung der fachlichen Ein- und Ausgabedaten oder Schnittstellen.
-Zusätzlich (bei Bedarf) fachliche Datenformate oder Protokolle der
-Kommunikation mit den Nachbarsystemen.
+Das System interagiert mit den folgenden Benutzerrollen und Nachbarsystemen:
 
-::: formalpara-title
-**Motivation**
-:::
+| Benutzerrolle/Nachbarsystem | Beschreibung | Interaktion |
+|---|---|---|
+| **Endnutzer** | Spieler, die die Web-App nutzen, um Kartenpacks zu öffnen und ihre Karten zu verwalten. | - Anmeldung und Registrierung<br>- Auswahl und Öffnen von Kartenpacks<br>- Anzeige des Inventars |
+| **Backend** | Serverseitige Logik, die die Datenverarbeitung und Persistenz übernimmt. | - Speicherung und Abruf von Nutzerdaten und Karten<br>- Bereitstellung der Kartenpack-Simulation |
+| **Datenbank** | Persistenzschicht für Nutzerdaten, Karten und Inventar. | - Speicherung und Verwaltung von Nutzerprofilen und Karteninventar |
 
-Alle Beteiligten müssen verstehen, welche fachlichen Informationen mit
-der Umwelt ausgetauscht werden.
+### 3.2 Technischer Kontext {#_technischer_kontext}
 
-::: formalpara-title
-**Form**
-:::
+Die Kommunikation zwischen den Komponenten erfolgt über die folgenden Kanäle und Protokolle:
 
-Alle Diagrammarten, die das System als Blackbox darstellen und die
-fachlichen Schnittstellen zu den Nachbarsystemen beschreiben.
+| Komponente | Technologie/Protokoll | Beschreibung |
+|:---:|:---:|:---:|
+| **Frontend** | HTTP/HTTPS | Kommunikation mit dem Backend über REST-APIs. |
+| **Backend** | REST-API | Bereitstellung der Programmlogik und Schnittstellen für das Frontend. |
+| **Datenbank** | SQL/NoSQL | Speicherung und Verwaltung der Nutzerdaten und Karteninformationen. |
 
-Alternativ oder ergänzend können Sie eine Tabelle verwenden. Der Titel
-gibt den Namen Ihres Systems wieder; die drei Spalten sind:
-Kommunikationsbeziehung, Eingabe, Ausgabe.
+### 3.3 Kontextdiagramm
 
-**\<Diagramm und/oder Tabelle>**
+Das folgende Diagramm zeigt die Interaktionen zwischen dem System und seinen Nachbarsystemen sowie Benutzerrollen:
 
-**\<optional: Erläuterung der externen fachlichen Schnittstellen>**
+![Kontextdiagramm](assets/context_diagram.png)
 
-### Technischer Kontext {#_technischer_kontext}
+Falls Änderungen am Diagramm erforderlich sind, kann die editierbare Version hier heruntergeladen werden:
+[Editierbare Version des Diagramms (draw.io)](assets/context_diagram.drawio)
 
-::: formalpara-title
-**Inhalt**
-:::
+## 4. Lösungsstrategie
 
-Technische Schnittstellen (Kanäle, Übertragungsmedien) zwischen dem
-System und seiner Umwelt. Zusätzlich eine Erklärung (*mapping*), welche
-fachlichen Ein- und Ausgaben über welche technischen Kanäle fließen.
+### Inhalt
 
-::: formalpara-title
-**Motivation**
-:::
+Die Lösungsstrategie beschreibt die grundlegenden Entscheidungen und Ansätze, die den Entwurf und die Implementierung des Systems prägen. Diese umfassen:
 
-Viele Stakeholder treffen Architekturentscheidungen auf Basis der
-technischen Schnittstellen des Systems zu seinem Kontext.
+- **Technologieentscheidungen**: Auswahl der Technologien für Frontend, Backend und Datenbank.
+- **Architekturmuster**: Strukturierung des Systems basierend auf den Anforderungen.
+- **Qualitätsanforderungen**: Maßnahmen zur Sicherstellung der definierten Qualitätsziele.
+- **Organisatorische Entscheidungen**: Festlegung von Entwicklungsprozessen, Tools und Verantwortlichkeiten.
 
-Insbesondere bei der Entwicklung von Infrastruktur oder Hardware sind
-diese technischen Schnittstellen durchaus entscheidend.
+### Motivation
 
-::: formalpara-title
-**Form**
-:::
+Die hier getroffenen Entscheidungen bilden die Grundlage für die gesamte Architektur des Systems. Sie beeinflussen sowohl die technische Umsetzung als auch die organisatorischen Abläufe und stellen sicher, dass die definierten Anforderungen und Qualitätsziele erreicht werden.
 
-Beispielsweise UML Deployment-Diagramme mit den Kanälen zu
-Nachbarsystemen, begleitet von einer Tabelle, die Kanäle auf
-Ein-/Ausgaben abbildet.
+### Form
 
-**\<Diagramm oder Tabelle>**
+Die zentralen Entwurfsentscheidungen werden im Folgenden kurz zusammengefasst und begründet.
 
-**\<optional: Erläuterung der externen technischen Schnittstellen>**
+### 4.1 Technologieentscheidungen
 
-**\<Mapping fachliche auf technische Schnittstellen>**
+- Frontend:  
+Das Frontend wird mit **Kotlin Multiplatform** entwickelt. Diese Technologie ermöglicht die Wiederverwendbarkeit von Code und bietet eine moderne, flexible Lösung für die plattformübergreifende Entwicklung. Die Wahl basiert auf der Erfahrung des Entwicklers mit Android Compose, das ähnliche Konzepte verwendet.
+- Backend:  
+Das Backend wird mit **Spring Boot** in **Kotlin** umgesetzt. Spring Boot bietet eine robuste Grundlage für die Entwicklung von REST-APIs und ist durch den Spring Initializer leicht erweiterbar. Die Wahl von Kotlin als Programmiersprache basiert auf der Präferenz des Entwicklers und der besseren Lesbarkeit im Vergleich zu Java.
+- Datenbank:  
+Für die Persistenz wird **MongoDB** verwendet. MongoDB ist eine dokumentenbasierte NoSQL-Datenbank, die sich durch Flexibilität und einfache Integration mit Spring Boot auszeichnet.
+- Externe API:  
+Die Karteninformationen werden über die externe API **TCGdex** bezogen. Diese API bietet die notwendigen Daten für die Simulation des Kartenpack-Öffnens.
+- Kommunikation:  
+Die Kommunikation zwischen Frontend und Backend erfolgt über **REST-APIs** mit JSON als Datenaustauschformat.
 
-## Lösungsstrategie {#section-solution-strategy}
+### 4.2 Architekturmuster
 
-::: formalpara-title
-**Inhalt**
-:::
+Das System folgt einer **Client-Server-Architektur**, die die Trennung von Frontend und Backend ermöglicht. Dies erleichtert die Wartung und zukünftige Erweiterungen. Die wichtigsten Komponenten sind:
 
-Kurzer Überblick über die grundlegenden Entscheidungen und
-Lösungsansätze, die Entwurf und Implementierung des Systems prägen.
-Hierzu gehören:
+- **Frontend**: Präsentationsschicht, die die Benutzeroberfläche bereitstellt.
+- **Backend**: Logik- und Verarbeitungsschicht, die die Geschäftslogik und Datenverarbeitung übernimmt.
+- **Datenbank**: Persistenzschicht, die Nutzerdaten und Karteninformationen speichert.
+- **Externe API**: Datenquelle für Karteninformationen.
 
-- Technologieentscheidungen
+### 4.3 Maßnahmen zur Erreichung der Qualitätsanforderungen
 
-- Entscheidungen über die Top-Level-Zerlegung des Systems,
-    beispielsweise die Verwendung gesamthaft prägender Entwurfs- oder
-    Architekturmuster,
+- Funktionale Eignung:
+    - Die definierten Funktionen werden durch Unit-Tests und Integrationstests sichergestellt.
+    - Die API-Endpunkte zwischen Frontend und Backend sind klar dokumentiert, um eine reibungslose Kommunikation zu gewährleisten.
+- Benutzerfreundlichkeit:
+    - Das Frontend wird mit einem responsiven Design entwickelt, um eine optimale Nutzung auf verschiedenen Endgeräten zu ermöglichen.
+    - Die Benutzeroberfläche wird intuitiv gestaltet, um eine einfache Bedienung zu gewährleisten.
+- Kompatibilität:
+    - Die Web-App wird in gängigen Browsern (z. B. Chrome, Firefox, Safari) getestet.
+    - Die Integration von Kotlin Multiplatform ermöglicht eine plattformübergreifende Nutzung.
+- Codequalität:
+    - **Codacy** wird als Tool für die Code-Qualitätssicherung verwendet. Es bietet Linting und Code-Analyse für Kotlin und ist kostenlos für Open-Source-Projekte.
+    - **JaCoCo** wird für die Testabdeckung eingesetzt und liefert Berichte, die in Codacy integriert werden können.
 
-- Entscheidungen zur Erreichung der wichtigsten Qualitätsanforderungen
-    sowie
+### 4.4 Organisatorische Entscheidungen
 
-- relevante organisatorische Entscheidungen, beispielsweise für
-    bestimmte Entwicklungsprozesse oder Delegation bestimmter Aufgaben
-    an andere Stakeholder.
+- Entwicklungsprozess:  
+Es wird ein agiler Entwicklungsprozess (z. B. Scrum oder Kanban) verwendet, um flexibel auf Änderungen reagieren zu können.
+- Versionierung:  
+Der Code wird in einem **Git-Repository** verwaltet, um eine klare Nachverfolgbarkeit von Änderungen zu gewährleisten.
+- Dokumentation:  
+Die API-Endpunkte und Datentypen werden klar dokumentiert, um die Zusammenarbeit zwischen Frontend und Backend zu erleichtern.
+- Verantwortlichkeiten:  
+    - Das Frontend wird von Entwicklern mit Erfahrung in Kotlin Multiplatform umgesetzt.
+    - Das Backend wird von Entwicklern mit Erfahrung in Spring Boot und MongoDB entwickelt.
+    - Die Qualitätssicherung wird durch die Integration von Codacy und JaCoCo sichergestellt.
 
-::: formalpara-title
-**Motivation**
-:::
+## 5. Bausteinsicht
 
-Diese wichtigen Entscheidungen bilden wesentliche „Eckpfeiler" der
-Architektur. Von ihnen hängen viele weitere Entscheidungen oder
-Implementierungsregeln ab.
+### 5.1 Whitebox Gesamtsystem
 
-::: formalpara-title
-**Form**
-:::
+#### Übersichtsdiagramm
 
-Fassen Sie die zentralen Entwurfsentscheidungen **kurz** zusammen.
-Motivieren Sie, ausgehend von Aufgabenstellung, Qualitätszielen und
-Randbedingungen, was Sie entschieden haben und warum Sie so entschieden
-haben. Vermeiden Sie redundante Beschreibungen und verweisen Sie eher
-auf weitere Ausführungen in Folgeabschnitten.
+Das folgende Diagramm zeigt die statische Zerlegung des Systems in seine Hauptbausteine und die Kommunikationsflüsse:
 
-Siehe [Lösungsstrategie](https://docs.arc42.org/section-4/) in der
-online-Dokumentation (auf Englisch!).
+![Übersichtsdiagramm](assets/overview_diagram.png)
 
-## Bausteinsicht {#section-building-block-view}
+Falls Änderungen am Diagramm erforderlich sind, kann die editierbare Version hier heruntergeladen werden:
+[Editierbare Version des Diagramms (draw.io)](assets/overview_diagram.drawio)
 
-::: formalpara-title
-**Inhalt**
-:::
+##### Erklärung der Pfeile
 
-Die Bausteinsicht zeigt die statische Zerlegung des Systems in Bausteine
-(Module, Komponenten, Subsysteme, Klassen, Schnittstellen, Pakete,
-Bibliotheken, Frameworks, Schichten, Partitionen, Tiers, Funktionen,
-Makros, Operationen, Datenstrukturen, ...) sowie deren Abhängigkeiten
-(Beziehungen, Assoziationen, ...)
+- Frontend ↔ Backend:  
+Das Frontend kommuniziert mit dem Backend über REST-API-Endpunkte, z. B. für die Anmeldung, das Abrufen des Inventars oder das Öffnen von Kartenpacks.
+- Backend ↔ Datenbank:  
+Das Backend speichert und liest Daten (z. B. Nutzerinformationen, Karten und Sets) in der Datenbank.
+- Backend ↔ Externe API (TCGdex):  
+Das Backend ruft Daten (z. B. Kartensets und Karteninformationen) von der externen API ab und verarbeitet diese, bevor sie in der Datenbank gespeichert oder an das Frontend weitergeleitet werden.
 
-Diese Sicht sollte in jeder Architekturdokumentation vorhanden sein. In
-der Analogie zum Hausbau bildet die Bausteinsicht den *Grundrissplan*.
+#### Begründung der Zerlegung
 
-::: formalpara-title
-**Motivation**
-:::
+Das System wurde in folgende Hauptbausteine zerlegt, um die Verantwortlichkeiten klar zu trennen und die Wartbarkeit sowie Erweiterbarkeit zu gewährleisten:
 
-Behalten Sie den Überblick über den Quellcode, indem Sie die statische
-Struktur des Systems durch Abstraktion verständlich machen.
+- **Frontend**: Präsentationsschicht, die die Benutzeroberfläche bereitstellt und mit dem Backend kommuniziert.
+- **Backend**: Logik- und Verarbeitungsschicht, die die Geschäftslogik übernimmt, Daten aus der externen API (TCGdex) bezieht und mit der Datenbank interagiert.
+- **Datenbank**: Persistenzschicht, die Nutzerdaten, Karten und Inventar speichert.
+- **Externe API (TCGdex)**: Datenquelle für Karteninformationen, die vom Backend abgerufen werden.
 
-Damit ermöglichen Sie Kommunikation auf abstrakterer Ebene, ohne zu
-viele Implementierungsdetails offenlegen zu müssen.
+### 5.2 Enthaltene Bausteine
 
-::: formalpara-title
-**Form**
-:::
+| Name | Verantwortung |
+|:---:|:---:|
+| **Frontend** | Präsentation der Benutzeroberfläche und Kommunikation mit dem Backend. |
+| **Backend** | Verarbeitung der Geschäftslogik, Authentifizierung, Kommunikation mit der Datenbank und der externen API. |
+| **Datenbank** | Speicherung von Nutzerdaten, Karten und Inventar. |
+| **Externe API** | Bereitstellung von Karteninformationen für die Simulation des Kartenpack-Öffnens. |
 
-Die Bausteinsicht ist eine hierarchische Sammlung von Blackboxen und
-Whiteboxen (siehe Abbildung unten) und deren Beschreibungen.
+### 5.3 Blackbox-Beschreibungen
 
-![Hierarchie in der Bausteinsicht](images/05_building_blocks-DE.png)
+#### Frontend
 
-**Ebene 1** ist die Whitebox-Beschreibung des Gesamtsystems, zusammen
-mit Blackbox-Beschreibungen der darin enthaltenen Bausteine.
+- **Zweck/Verantwortung**:  
+Das Frontend stellt die Benutzeroberfläche bereit und ermöglicht Nutzern die Anmeldung, das Öffnen von Kartenpacks und die Verwaltung ihres Inventars.
+- **Schnittstellen**:
+    - REST-API-Aufrufe an das Backend.
 
-**Ebene 2** zoomt in einige Bausteine der Ebene 1 hinein. Sie enthält
-somit die Whitebox-Beschreibungen ausgewählter Bausteine der Ebene 1,
-jeweils zusammen mit Blackbox-Beschreibungen darin enthaltener
-Bausteine.
+#### Backend
 
-**Ebene 3** zoomt in einige Bausteine der Ebene 2 hinein, usw.
+- **Zweck/Verantwortung**:  
+Das Backend verarbeitet die Geschäftslogik, authentifiziert Nutzer, kommuniziert mit der Datenbank und ruft Daten von der externen API (TCGdex) ab.
+- **Schnittstellen**:
+    - REST-APIs für das Frontend (z. B. /api/accounts/login, /api/packs/open).
+    - Datenbankzugriff (MongoDB).
+    - HTTP-Kommunikation mit der externen API (TCGdex).
 
-Siehe [Bausteinsicht](https://docs.arc42.org/section-5/) in der
-online-Dokumentation (auf Englisch!).
+#### Datenbank
 
-### Whitebox Gesamtsystem {#_whitebox_gesamtsystem}
+- **Zweck/Verantwortung**:  
+Die Datenbank speichert Nutzerdaten, Karten und Inventar.
+- **Schnittstellen**:
+    - Zugriff durch das Backend über MongoDB-Treiber.
 
-An dieser Stelle beschreiben Sie die Zerlegung des Gesamtsystems anhand
-des nachfolgenden Whitebox-Templates. Dieses enthält:
+#### Externe API (TCGdex)
 
-- Ein Übersichtsdiagramm
+- **Zweck/Verantwortung**:  
+Die API stellt Informationen über Karten und Kartensets bereit, die vom Backend abgerufen werden.
+- **Schnittstellen**:
+    - HTTP-REST-API-Aufrufe durch das Backend.
 
-- die Begründung dieser Zerlegung
+### 5.4 Begründung der Zerlegung
 
-- Blackbox-Beschreibungen der hier enthaltenen Bausteine. Dafür haben
-    Sie verschiedene Optionen:
+Die Zerlegung in Frontend, Backend, Datenbank und externe API wurde gewählt, um folgende Ziele zu erreichen:
 
-  - in *einer* Tabelle, gibt einen kurzen und pragmatischen
-        Überblick über die enthaltenen Bausteine sowie deren
-        Schnittstellen.
+- **Trennung der Verantwortlichkeiten**: Jede Komponente hat klar definierte Aufgaben, was die Wartbarkeit und Erweiterbarkeit erleichtert.
+- **Skalierbarkeit**: Die Architektur ermöglicht eine einfache horizontale Skalierung, insbesondere durch die Trennung von Backend und Datenbank.
+- **Flexibilität**: Die Integration der externen API (TCGdex) ermöglicht die Nutzung aktueller Kartendaten ohne eigene Datenpflege.
 
-  - als Liste von Blackbox-Beschreibungen der Bausteine, gemäß dem
-        Blackbox-Template (siehe unten). Diese Liste können Sie, je nach
-        Werkzeug, etwa in Form von Unterkapiteln (Text), Unter-Seiten
-        (Wiki) oder geschachtelten Elementen (Modellierungswerkzeug)
-        darstellen.
+## 6. Laufzeitsicht
 
-- (optional:) wichtige Schnittstellen, die nicht bereits im
-    Blackbox-Template eines der Bausteine erläutert werden, aber für das
-    Verständnis der Whitebox von zentraler Bedeutung sind. Aufgrund der
-    vielfältigen Möglichkeiten oder Ausprägungen von Schnittstellen
-    geben wir hierzu kein weiteres Template vor. Im schlimmsten Fall
-    müssen Sie Syntax, Semantik, Protokolle, Fehlerverhalten,
-    Restriktionen, Versionen, Qualitätseigenschaften, notwendige
-    Kompatibilitäten und vieles mehr spezifizieren oder beschreiben. Im
-    besten Fall kommen Sie mit Beispielen oder einfachen Signaturen
-    zurecht.
+### 6.1 Szenario 1: Anmeldung eines Nutzers
 
-***\<Übersichtsdiagramm>***
+#### Ablaufbeschreibung
 
-Begründung
+1. Der Nutzer gibt seinen Nutzernamen und sein Passwort im Frontend ein.
+2. Das Frontend sendet die Anmeldedaten (Nutzername und gehashtes Passwort) an den Endpunkt /api/accounts/login des Backends.
+3. Das Backend validiert die Anmeldedaten:
+    - Es überprüft, ob der Nutzername in der Datenbank existiert.
+    - Es vergleicht das gehashte Passwort mit dem in der Datenbank gespeicherten Hash.
+4. Bei erfolgreicher Validierung generiert das Backend ein JWT (JSON Web Token) und sendet es an das Frontend.
+5. Das Frontend speichert das JWT und verwendet es für zukünftige Anfragen.
 
-:   *\<Erläuternder Text>*
+#### Sequenzdiagramm
 
-Enthaltene Bausteine
+![Szenario 1](assets/scenario1.png)
 
-:   *\<Beschreibung der enthaltenen Bausteine (Blackboxen)>*
+Falls Änderungen am Diagramm erforderlich sind, kann die editierbare Version hier heruntergeladen werden:
+[Editierbare Version des Diagramms (draw.io)](assets/scenario1.drawio)
 
-Wichtige Schnittstellen
+### 6.2 Szenario 2: Öffnen eines Kartenpacks
 
-:   *\<Beschreibung wichtiger Schnittstellen>*
+#### Ablaufbeschreibung
 
-Hier folgen jetzt Erläuterungen zu Blackboxen der Ebene 1.
+1. Der Nutzer wählt ein Kartenpack im Frontend aus und sendet die Anfrage an den Endpunkt /api/packs/open des Backends. Die Anfrage enthält:
+    - Das JWT zur Authentifizierung.
+    - Die ID des ausgewählten Kartensets.
+2. Das Backend validiert das JWT und extrahiert den Nutzernamen.
+3. Das Backend generiert eine zufällige Auswahl von Karten aus dem angegebenen Kartenset.
+4. Die ausgewählten Karten werden im Inventar des Nutzers in der Datenbank gespeichert.
+5. Das Backend sendet die Karteninformationen an das Frontend.
+6. Das Frontend zeigt die Karten dem Nutzer an.
 
-Falls Sie die tabellarische Beschreibung wählen, so werden Blackboxen
-darin nur mit Name und Verantwortung nach folgendem Muster beschrieben:
+#### Sequenzdiagramm
 
-+-----------------------+-----------------------------------------------+
-| **Name**              | **Verantwortung**                             |
-+=======================+===============================================+
-| *\<Blackbox 1>*       |  *\<Text>*                                    |
-+-----------------------+-----------------------------------------------+
-| *\<Blackbox 2>*       |  *\<Text>*                                    |
-+-----------------------+-----------------------------------------------+
+![Szenario 2](assets/scenario2.png)
 
-Falls Sie die ausführliche Liste von Blackbox-Beschreibungen wählen,
-beschreiben Sie jede wichtige Blackbox in einem eigenen
-Blackbox-Template. Dessen Überschrift ist jeweils der Namen dieser
-Blackbox.
+Falls Änderungen am Diagramm erforderlich sind, kann die editierbare Version hier heruntergeladen werden:
+[Editierbare Version des Diagramms (draw.io)](assets/scenario2.drawio)
 
-#### \<Name Blackbox 1> {#__name_blackbox_1}
+### 6.3 Szenario 3: Abruf des Inventars
 
-Beschreiben Sie die \<Blackbox 1> anhand des folgenden
-Blackbox-Templates:
+#### Ablaufbeschreibung
 
-- Zweck/Verantwortung
+1. Der Nutzer sendet eine Anfrage an den Endpunkt /api/accounts/inventory des Backends. Die Anfrage enthält das JWT zur Authentifizierung.
+2. Das Backend validiert das JWT und extrahiert den Nutzernamen.
+3. Das Backend ruft das Inventar des Nutzers aus der Datenbank ab.
+4. Das Backend sendet die Inventardaten an das Frontend.
+5. Das Frontend zeigt das Inventar dem Nutzer an.
 
-- Schnittstelle(n), sofern diese nicht als eigenständige
-    Beschreibungen herausgezogen sind. Hierzu gehören eventuell auch
-    Qualitäts- und Leistungsmerkmale dieser Schnittstelle.
+#### Sequenzdiagramm
 
-- (Optional) Qualitäts-/Leistungsmerkmale der Blackbox, beispielsweise
-    Verfügbarkeit, Laufzeitverhalten o. Ä.
+> WIP
 
-- (Optional) Ablageort/Datei(en)
+<!-- ![Szenario 3](assets/scenario3.png)
 
-- (Optional) Erfüllte Anforderungen, falls Sie Traceability zu
-    Anforderungen benötigen.
+Falls Änderungen am Diagramm erforderlich sind, kann die editierbare Version hier heruntergeladen werden:
+[Editierbare Version des Diagramms (draw.io)](assets/scenario3.drawio) -->
 
-- (Optional) Offene Punkte/Probleme/Risiken
+### 6.4 Szenario 4: Abruf von Kartensets
 
-*\<Zweck/Verantwortung>*
+#### Ablaufbeschreibung
 
-*\<Schnittstelle(n)>*
+1. Das Frontend sendet eine Anfrage an den Endpunkt /api/sets des Backends, um die verfügbaren Kartensets abzurufen.
+2. Das Backend ruft die Kartenset-Daten aus der Datenbank ab.
+3. Das Backend sendet die Kartenset-Daten an das Frontend.
+4. Das Frontend zeigt die Kartensets dem Nutzer an.
 
-*\<(Optional) Qualitäts-/Leistungsmerkmale>*
+#### Sequenzdiagramm
 
-*\<(Optional) Ablageort/Datei(en)>*
+> WIP
 
-*\<(Optional) Erfüllte Anforderungen>*
+<!-- ![Szenario 4](assets/scenario4.png)
 
-*\<(optional) Offene Punkte/Probleme/Risiken>*
+Falls Änderungen am Diagramm erforderlich sind, kann die editierbare Version hier heruntergeladen werden:
+[Editierbare Version des Diagramms (draw.io)](assets/scenario4.drawio) -->
 
-#### \<Name Blackbox 2> {#__name_blackbox_2}
+### 6.5 Szenario 5: Abruf von Kartenbildern
 
-*\<Blackbox-Template>*
+#### Ablaufbeschreibung
 
-#### \<Name Blackbox n> {#__name_blackbox_n}
+1. Das Frontend sendet eine Anfrage an den Endpunkt /images/{fileName} des Backends, um ein Kartenbild abzurufen.
+2. Das Backend sucht das angeforderte Bild im lokalen Dateisystem.
+3. Das Backend sendet das Bild an das Frontend.
+4. Das Frontend zeigt das Bild dem Nutzer an.
 
-*\<Blackbox-Template>*
+#### Sequenzdiagramm
 
-#### \<Name Schnittstelle 1> {#__name_schnittstelle_1}
+> WIP
 
-...
+<!-- ![Szenario 5](assets/scenario5.png)
 
-#### \<Name Schnittstelle m> {#__name_schnittstelle_m}
+Falls Änderungen am Diagramm erforderlich sind, kann die editierbare Version hier heruntergeladen werden:
+[Editierbare Version des Diagramms (draw.io)](assets/scenario5.drawio) -->
 
-### Ebene 2 {#_ebene_2}
+## 7. Verteilungssicht
 
-Beschreiben Sie den inneren Aufbau (einiger) Bausteine aus Ebene 1 als
-Whitebox.
+### 7.1 Infrastruktur Ebene 1
 
-Welche Bausteine Ihres Systems Sie hier beschreiben, müssen Sie selbst
-entscheiden. Bitte stellen Sie dabei Relevanz vor Vollständigkeit.
-Skizzieren Sie wichtige, überraschende, riskante, komplexe oder
-besonders volatile Bausteine. Normale, einfache oder standardisierte
-Teile sollten Sie weglassen.
+#### Übersichtsdiagramm
 
-#### Whitebox *\<Baustein 1>* {#_whitebox_emphasis_baustein_1_emphasis}
+Das folgende Verteilungsdiagramm zeigt die Verteilung des Systems auf die technische Infrastruktur. Es umfasst die Entwicklungs-, Test- und Produktionsumgebungen sowie die Zuordnung der Softwarebausteine zu den Infrastrukturkomponenten.
 
-...zeigt das Innenleben von *Baustein 1*.
+![Verteilungssicht](assets/distributed_diagram.png)
 
-*\<Whitebox-Template>*
+Falls Änderungen am Diagramm erforderlich sind, kann die editierbare Version hier heruntergeladen werden:
+[Editierbare Version des Diagramms (draw.io)](assets/distributed_diagram.drawio)
 
-#### Whitebox *\<Baustein 2>* {#_whitebox_emphasis_baustein_2_emphasis}
+#### Beschreibung der Infrastruktur
 
-*\<Whitebox-Template>*
+1. **Endnutzer (Client)**:
+    - **Typ**: Browser oder mobiler Client.
+    - **Funktion**: Verbindung zum Frontend-Server über HTTPS, um die Benutzeroberfläche zu nutzen.
+    - **Beispielumgebung**: Lokaler Rechner des Nutzers oder mobiles Endgerät.
 
-...
+2. **Frontend-Server**:
+    - **Typ**: Server, auf dem das Frontend (z. B. eine React- oder Angular-Anwendung) gehostet wird.
+    - **Funktion**: Bereitstellung der Benutzeroberfläche als Website, die über HTTPS erreichbar ist.
+    - **Beispielumgebung**: Cloud-Server (z. B. AWS S3 mit CloudFront, Azure Static Web Apps) oder lokaler Webserver.
 
-#### Whitebox *\<Baustein m>* {#_whitebox_emphasis_baustein_m_emphasis}
+3. **Backend-Server**:
+    - **Typ**: Server, auf dem die Spring Boot-Anwendung läuft.
+    - **Funktion**: Verarbeitung der Geschäftslogik, Authentifizierung, Kommunikation mit der Datenbank und der externen API.
+    - **Beispielumgebung**: Cloud-Server (z. B. AWS EC2, Azure VM) oder lokaler Server.
 
-*\<Whitebox-Template>*
+4. **Datenbank-Host**:
+    - **Typ**: Server, auf dem MongoDB läuft.
+    - **Funktion**: Speicherung von Nutzerdaten, Karten und Inventar.
+    - **Beispielumgebung**: Cloud-Datenbank (z. B. MongoDB Atlas) oder lokaler Datenbankserver.
 
-### Ebene 3 {#_ebene_3}
+5. **Externe API (TCGdex)**:
+    - **Typ**: Externer Dienst.
+    - **Funktion**: Bereitstellung von Karten- und Kartenset-Daten.
+    - **Beispielumgebung**: Öffentliche API, erreichbar über das Internet.
 
-Beschreiben Sie den inneren Aufbau (einiger) Bausteine aus Ebene 2 als
-Whitebox.
+#### Begründung der Verteilungsstruktur
 
-Bei tieferen Gliederungen der Architektur kopieren Sie diesen Teil von
-arc42 für die weiteren Ebenen.
+- **Trennung der Verantwortlichkeiten**:  
+Die Verteilung auf separate Server ermöglicht eine klare Trennung der Präsentations-, Geschäfts- und Persistenzschichten.
+- **Skalierbarkeit**:  
+Die Architektur erlaubt eine horizontale Skalierung, z. B. durch das Hinzufügen weiterer Backend- oder Frontend-Server.
+- **Flexibilität**:  
+Die Nutzung einer externen API (TCGdex) reduziert den Wartungsaufwand für Kartendaten und ermöglicht die Integration aktueller Informationen.
 
-#### Whitebox \<\_Baustein x.1\_\> {#_whitebox_baustein_x_1}
+#### Qualitäts- und Leistungsmerkmale
 
-...zeigt das Innenleben von *Baustein x.1*.
+- **Verfügbarkeit**:  
+    - Die Infrastruktur ist so ausgelegt, dass sie eine hohe Verfügbarkeit gewährleistet, z. B. durch den Einsatz von Cloud-Diensten mit automatischer Skalierung.
+- **Sicherheit**:  
+    - Die Kommunikation zwischen den Komponenten erfolgt über HTTPS, um die Datenintegrität und Vertraulichkeit zu gewährleisten.
+    - JWT-basierte Authentifizierung schützt die Backend-Endpunkte vor unbefugtem Zugriff.
+- **Performance**:
+    - Das Frontend wird als statische Website gehostet, was schnelle Ladezeiten ermöglicht.
+    - Die Datenbank (MongoDB) ist für schnelle Lese- und Schreiboperationen optimiert.
+    - Die externe API (TCGdex) wird nur bei Bedarf abgefragt, um die Latenz zu minimieren.
 
-*\<Whitebox-Template>*
+### 7.2 Infrastruktur Ebene 2
 
-#### Whitebox \<\_Baustein x.2\_\> {#_whitebox_baustein_x_2}
+#### Frontend-Server
 
-*\<Whitebox-Template>*
+Das Frontend wird auf einem Server gehostet, der folgende Eigenschaften aufweist:
 
-#### Whitebox \<\_Baustein y.1\_\> {#_whitebox_baustein_y_1}
+- **Bereitstellung**:
+    - Das Frontend wird als statische Website (z. B. React, Angular) bereitgestellt.
+    - Der Server ist über HTTPS erreichbar.
+- **Beispielumgebung**:
+    - Cloud-Hosting (z. B. AWS S3 mit CloudFront, Azure Static Web Apps).
+    - Alternativ: Ein dedizierter Webserver (z. B. Nginx oder Apache).
+- **Sicherheitsmaßnahmen**:
+    - HTTPS für die Kommunikation mit den Nutzern.
+    - Firewall-Regeln, um den Zugriff auf den Server zu beschränken.
 
-*\<Whitebox-Template>*
+#### Backend-Server
 
-## Laufzeitsicht {#section-runtime-view}
+Das Backend wird auf einem Server ausgeführt, der folgende Komponenten umfasst:
 
-::: formalpara-title
-**Inhalt**
-:::
+- **Spring Boot-Anwendung**:
+    - Bereitstellung der REST-APIs.
+    - Verarbeitung der Geschäftslogik.
+    - Kommunikation mit der Datenbank und der externen API.
+- **Sicherheitsmaßnahmen**:
+    - HTTPS für die Kommunikation mit dem Frontend.
+    - Firewall-Regeln, um den Zugriff auf die Backend-Server zu beschränken.
 
-Diese Sicht erklärt konkrete Abläufe und Beziehungen zwischen Bausteinen
-in Form von Szenarien aus den folgenden Bereichen:
+#### Datenbank-Host
 
-- Wichtige Abläufe oder *Features*: Wie führen die Bausteine der
-    Architektur die wichtigsten Abläufe durch?
+Die Datenbank (MongoDB) wird auf einem separaten Server oder in einer Cloud-Umgebung (z. B. MongoDB Atlas) ausgeführt:
 
-- Interaktionen an kritischen externen Schnittstellen: Wie arbeiten
-    Bausteine mit Nutzern und Nachbarsystemen zusammen?
+- **Datenstruktur**:
+    - Speicherung von Nutzerdaten, Karten und Kartensets.
+    - Optimierung für schnelle Abfragen und Schreiboperationen.
+- **Sicherheitsmaßnahmen**:
+    - Zugriff nur über das Backend.
+    - Authentifizierung und Verschlüsselung der Daten.
 
-- Betrieb und Administration: Inbetriebnahme, Start, Stop.
+## 8. Querschnittliche Konzepte
 
-- Fehler- und Ausnahmeszenarien
+### 8.1 Fachliche Konzepte
 
-Anmerkung: Das Kriterium für die Auswahl der möglichen Szenarien (d.h.
-Abläufe) des Systems ist deren Architekturrelevanz. Es geht nicht darum,
-möglichst viele Abläufe darzustellen, sondern eine angemessene Auswahl
-zu dokumentieren.
+#### Modellierung der Karten und Kartensets
 
-::: formalpara-title
-**Motivation**
-:::
+- **Beschreibung**:  
+Karten und Kartensets sind zentrale fachliche Entitäten des Systems. Sie werden in der Datenbank als Dokumente gespeichert und enthalten Attribute wie `id`, `name`, `image` (für Karten) und `totalCards`, `releaseDate` (für Kartensets).
+- **Ziel**:  
+Einheitliche Modellierung und Verarbeitung dieser Entitäten im gesamten System.
+- **Umsetzung**:  
+    - Verwendung von **DTOs (Data Transfer Objects)**, um die Daten zwischen Backend und Frontend zu übertragen.
+    - Speicherung der Entitäten in **MongoDB** als JSON-Dokumente.
 
-Sie sollten verstehen, wie (Instanzen von) Bausteine(n) Ihres Systems
-ihre jeweiligen Aufgaben erfüllen und zur Laufzeit miteinander
-kommunizieren.
+### 8.2 Sicherheitskonzepte
 
-Nutzen Sie diese Szenarien in der Dokumentation hauptsächlich für eine
-verständlichere Kommunikation mit denjenigen Stakeholdern, die die
-statischen Modelle (z.B. Bausteinsicht, Verteilungssicht) weniger
-verständlich finden.
+#### JWT-basierte Authentifizierung
 
-::: formalpara-title
-**Form**
-:::
+- **Beschreibung**:  
+Die Authentifizierung erfolgt über JSON Web Tokens (JWT), die bei der Anmeldung eines Nutzers generiert werden. Diese Tokens werden für alle nachfolgenden Anfragen verwendet, um den Nutzer zu identifizieren.
+- **Ziel**:  
+Schutz der REST-APIs vor unbefugtem Zugriff.
+- **Umsetzung**:
+    - **Token-Generierung**: Beim erfolgreichen Login wird ein JWT generiert und an den Client zurückgegeben.
+    - **Token-Validierung**: Bei jeder Anfrage wird das JWT im Header (Authorization: `Bearer <Token>`) überprüft.
+    - **Sicherheitsmaßnahmen**:
+        - Tokens sind zeitlich begrenzt gültig.
+        - Die Signatur des Tokens wird mit einem geheimen Schlüssel validiert.
 
-Für die Beschreibung von Szenarien gibt es zahlreiche
-Ausdrucksmöglichkeiten. Nutzen Sie beispielsweise:
+### 8.3 Architektur- und Entwurfsmuster
 
-- Nummerierte Schrittfolgen oder Aufzählungen in Umgangssprache
+#### Schichtenarchitektur
 
-- Aktivitäts- oder Flussdiagramme
+- **Beschreibung**:  
+Das System folgt einer Schichtenarchitektur, die die Verantwortlichkeiten klar trennt:
+    - **Präsentationsschicht**: Frontend (React/Angular).
+    - **Geschäftslogik**: Backend (Spring Boot).
+    - **Persistenzschicht**: Datenbank (MongoDB).
+- **Ziel**:
+    - Verbesserung der Wartbarkeit und Erweiterbarkeit.
+    - Klare Trennung der Verantwortlichkeiten.
 
-- Sequenzdiagramme
+#### DTOs (Data Transfer Objects)
 
-- BPMN (Geschäftsprozessmodell und -notation) oder EPKs
-    (Ereignis-Prozessketten)
+- **Beschreibung**:  
+DTOs werden verwendet, um Daten zwischen Backend und Frontend zu übertragen. Sie enthalten nur die notwendigen Informationen und abstrahieren die internen Datenmodelle.
+- **Ziel**:
+    - Reduzierung der Datenmenge, die über das Netzwerk übertragen wird.
+    - Schutz der internen Datenstrukturen vor direktem Zugriff.
 
-- Zustandsautomaten
+### 8.4 Entwicklungskonzepte
 
-- ...
+#### Code-Qualität und Standards
 
-Siehe [Laufzeitsicht](https://docs.arc42.org/section-6/) in der
-online-Dokumentation (auf Englisch!).
+- **Beschreibung**:  
+Einheitliche Code-Standards und Best Practices werden im gesamten Projekt angewendet.
+- **Ziel**:
+    - Verbesserung der Lesbarkeit und Wartbarkeit des Codes.
+    - Vermeidung von Fehlern durch inkonsistente Implementierungen.
+- **Umsetzung**:
+    - Verwendung von Code-Linter (z. B. ESLint für das Frontend, Checkstyle für das Backend).
+    - Automatische Code-Formatierung (z. B. Prettier, Google Java Format).
 
-### *\<Bezeichnung Laufzeitszenario 1>* {#__emphasis_bezeichnung_laufzeitszenario_1_emphasis}
+#### Teststrategie
 
-- \<hier Laufzeitdiagramm oder Ablaufbeschreibung einfügen>
+- **Beschreibung**:  
+Das System wird durch automatisierte Tests abgesichert.
+- **Ziel**:
+    - Sicherstellung der Funktionalität und Vermeidung von Regressionen.
+- **Umsetzung**:
+    - **Unit-Tests**: Für einzelne Komponenten (z. B. Services, Controller).
+    - **Integrationstests**: Für die Interaktion zwischen Backend und Datenbank.
+    - **End-to-End-Tests**: Für die vollständige Benutzerinteraktion (z. B. Cypress für das Frontend).
 
-- \<hier Besonderheiten bei dem Zusammenspiel der Bausteine in diesem
-    Szenario erläutern>
+## 9. Architekturentscheidungen
 
-### *\<Bezeichnung Laufzeitszenario 2>* {#__emphasis_bezeichnung_laufzeitszenario_2_emphasis}
+### Inhalt
 
-...
+Dieser Abschnitt dokumentiert die wichtigsten Architekturentscheidungen, die während der Entwicklung des Pokémon TCG-Simulators getroffen wurden. Die Entscheidungen wurden in Form von Architecture Decision Records (ADRs) festgehalten, um die Auswahl zwischen Alternativen und die zugrunde liegenden Kriterien nachvollziehbar zu machen.
 
-### *\<Bezeichnung Laufzeitszenario n>* {#__emphasis_bezeichnung_laufzeitszenario_n_emphasis}
+Die vollständige Liste der ADRs ist unter folgendem Link verfügbar: [ADRs](https://pokemon-tcg-simulator.readthedocs.io/de/latest/adr/0001-record-architecture-decisions/)
 
-...
+### Übersicht der wichtigsten Entscheidungen
 
-## Verteilungssicht {#section-deployment-view}
+| Entscheidung | Begründung | Alternativen |
+|:---:|:---:|---|
+| **Wahl von Spring Boot** | Robuste Grundlage für REST-APIs, große Community, einfache Integration. | Micronaut, Quarkus |
+| **Verwendung von MongoDB** | Flexibilität für dokumentenbasierte Daten, einfache Skalierbarkeit. | PostgreSQL, Cassandra |
+| **Rest als API-Standard** | Einfachheit, breite Unterstützung in Tools und Frameworks. | GraphQL, gRPC |
+| **JWT-basierte Authentifizierung** | Sicherer und standardisierter Ansatz für die Nutzeridentifikation. | Session-basierte Authentifizierung |
+| **Docker für Containerisierung** | Standardlösung für Containerisierung, breite Unterstützung. | Podman, VMs |
 
-::: formalpara-title
-**Inhalt**
-:::
+### Motivation
 
-Die Verteilungssicht beschreibt:
+Die Dokumentation der Architekturentscheidungen dient mehreren Zwecken:
 
-1. die technische Infrastruktur, auf der Ihr System ausgeführt wird,
-    mit Infrastrukturelementen wie Standorten, Umgebungen, Rechnern,
-    Prozessoren, Kanälen und Netztopologien sowie sonstigen
-    Bestandteilen, und
+- **Nachvollziehbarkeit**: Stakeholder können die Gründe für die Entscheidungen verstehen und bewerten.
+- **Wissensmanagement**: Entscheidungen und ihre Begründungen bleiben auch bei Personalwechsel erhalten.
+- **Risikomanagement**: Risiken und Alternativen werden explizit gemacht, um fundierte Entscheidungen zu treffen.
+- **Kommunikation**: Entscheidungen können klar und einheitlich kommuniziert werden.
 
-2. die Abbildung von (Software-)Bausteinen auf diese Infrastruktur.
+### Form
 
-Häufig laufen Systeme in unterschiedlichen Umgebungen, beispielsweise
-Entwicklung-/Test- oder Produktionsumgebungen. In solchen Fällen sollten
-Sie alle relevanten Umgebungen aufzeigen.
+Die Architekturentscheidungen wurden in Form von ADRs dokumentiert. Ein ADR enthält:
 
-Nutzen Sie die Verteilungssicht insbesondere dann, wenn Ihre Software
-auf mehr als einem Rechner, Prozessor, Server oder Container abläuft
-oder Sie Ihre Hardware sogar selbst konstruieren.
+- **Titel**: Kurzbeschreibung der Entscheidung.
+- **Kontext**: Beschreibung der Situation, die zur Entscheidung geführt hat.
+- **Entscheidung**: Die getroffene Wahl.
+- **Begründung**: Warum wurde diese Wahl getroffen?
+- **Alternativen**: Welche Alternativen wurden in Betracht gezogen und warum wurden sie verworfen?
 
-Aus Softwaresicht genügt es, auf die Aspekte zu achten, die für die
-Softwareverteilung relevant sind. Insbesondere bei der
-Hardwareentwicklung kann es notwendig sein, die Infrastruktur mit
-beliebigen Details zu beschreiben.
+Beispiel für ein ADR: [1 - Record architecture decisions](https://pokemon-tcg-simulator.readthedocs.io/de/latest/adr/0001-record-architecture-decisions/)
 
-::: formalpara-title
-**Motivation**
-:::
+## 10. Qualitätsanforderungen
 
-Software läuft nicht ohne Infrastruktur. Diese zugrundeliegende
-Infrastruktur beeinflusst Ihr System und/oder querschnittliche
-Lösungskonzepte, daher müssen Sie diese Infrastruktur kennen.
+### Inhalt
 
-::: formalpara-title
-**Form**
-:::
+Dieser Abschnitt beschreibt die Qualitätsanforderungen des Pokémon TCG-Simulators. Die wichtigsten Qualitätsziele wurden bereits in Abschnitt 1.2 (Qualitätsziele) hervorgehoben. Hier werden diese Anforderungen weiter verfeinert und durch zusätzliche Anforderungen ergänzt, die eine geringere Priorität haben, aber dennoch relevant sind.
 
-Das oberste Verteilungsdiagramm könnte bereits in Ihrem technischen
-Kontext enthalten sein, mit Ihrer Infrastruktur als EINE Blackbox. Jetzt
-zoomen Sie in diese Infrastruktur mit weiteren Verteilungsdiagrammen
-hinein:
+Die Qualitätsanforderungen werden in Form eines Qualitätsbaums dargestellt und durch konkrete Qualitätsszenarien operationalisiert.
 
-- Die UML stellt mit Verteilungsdiagrammen (Deployment diagrams) eine
-    Diagrammart zur Verfügung, um diese Sicht auszudrücken. Nutzen Sie
-    diese, evtl. auch geschachtelt, wenn Ihre Verteilungsstruktur es
-    verlangt.
+### Motivation
 
-- Falls Ihre Infrastruktur-Stakeholder andere Diagrammarten
-    bevorzugen, die beispielsweise Prozessoren und Kanäle zeigen, sind
-    diese hier ebenfalls einsetzbar.
+Qualitätsanforderungen beeinflussen maßgeblich die Architekturentscheidungen und die technische Umsetzung des Systems. Sie stellen sicher, dass die Erwartungen der Stakeholder erfüllt werden und das System langfristig wartbar, erweiterbar und benutzerfreundlich bleibt.
 
-Siehe [Verteilungssicht](https://docs.arc42.org/section-7/) in der
-online-Dokumentation (auf Englisch!).
+### 10.2 Qualitätsbaum
 
-### Infrastruktur Ebene 1 {#_infrastruktur_ebene_1}
+Der folgende Qualitätsbaum gibt einen Überblick über die Qualitätsanforderungen des Systems. Die Wurzel des Baums ist der Begriff „Qualität“, der in verschiedene Hauptzweige (z. B. Funktionalität, Benutzerfreundlichkeit, Kompatibilität) unterteilt wird. Die Blätter des Baums enthalten konkrete Qualitätsszenarien.
 
-An dieser Stelle beschreiben Sie (als Kombination von Diagrammen mit
-Tabellen oder Texten):
+#### Qualitätsbaum (Übersicht)
 
-- die Verteilung des Gesamtsystems auf mehrere Standorte, Umgebungen,
-    Rechner, Prozessoren o. Ä., sowie die physischen Verbindungskanäle
-    zwischen diesen,
+- **Qualität**
+    - **Funktionalität**
+        - Das System ermöglicht die Simulation des Kartenpack-Öffnens.
+        - Die REST-API-Endpunkte sind funktionsfähig und liefern korrekte Ergebnisse.
+    - **Benutzerfreundlichkeit**
+        - Die Web-App ist intuitiv bedienbar.
+        - Fehlermeldungen sind verständlich und führen den Nutzer zur Lösung.
+    - **Kompatibilität**
+        - Die Web-App funktioniert auf gängigen Browsern und Endgeräten.
+        - Das Design ist responsiv und passt sich an verschiedene Bildschirmgrößen an.
+    - **Performance**
+        - API-Anfragen werden innerhalb von 500 ms beantwortet.
+        - Die Web-App lädt innerhalb von 2 Sekunden auf einem durchschnittlichen Gerät.
+    - **Sicherheit**
+        - Die Authentifizierung erfolgt über JWT und schützt vor unbefugtem Zugriff.
+        - Sensible Daten werden verschlüsselt übertragen.
+    - **Wartbarkeit**
+        - Der Code ist gut dokumentiert und folgt gängigen Standards.
+        - Neue Funktionen können innerhalb von 2 Tagen implementiert werden.
 
-- wichtige Begründungen für diese Verteilungsstruktur,
+### 10.3 Qualitätsszenarien
 
-- Qualitäts- und/oder Leistungsmerkmale dieser Infrastruktur,
+Qualitätsszenarien konkretisieren die Anforderungen und beschreiben, wie das System auf bestimmte Auslöser reagieren soll. Sie werden in zwei Kategorien unterteilt:
 
-- Zuordnung von Softwareartefakten zu Bestandteilen der Infrastruktur
+1. **Nutzungsszenarien**: Beschreiben, wie das System zur Laufzeit auf einen bestimmten Stimulus reagiert.
+2. **Änderungsszenarien**: Beschreiben, wie das System auf Änderungen in der Umgebung oder den Anforderungen reagiert.
 
-Für mehrere Umgebungen oder alternative Deployments kopieren Sie diesen
-Teil von arc42 für alle wichtigen Umgebungen/Varianten.
+#### 10.3.1 Nutzungsszenarien
 
-***\<Übersichtsdiagramm>***
+| ID | Szenario | Stimulus | Reaktion | Messkriterium |
+|:---:|:---:|---|---|---|
+| N1 | Ein Nutzer meldet sich an. | Der Nutzer sendet Anmeldedaten an die API. | Das System validiert die Daten und gibt ein JWT zurück. | Antwortzeit < 500 ms. |
+| N2 | Ein Nutzer öffnet ein Kartenpack. | Der Nutzer sendet eine Anfrage an die API. | Das System generiert Karten, speichert sie im Inventar und gibt die Karteninformationen zurück. | Antwortzeit < 500 ms. |
+| N3 | Ein Nutzer ruft sein Inventar ab. | Der Nutzer sendet eine Anfrage an die API. | Das System liefert die gespeicherten Karten aus der Datenbank. | Antwortzeit < 500 ms. |
+| N4 | Ein Nutzer greift auf die Web-App zu. | Der Nutzer öffnet die Web-App im Browser. | Die Web-App wird geladen und ist innerhalb von 2 Sekunden nutzbar. | Ladezeit < 2 Sekunden. |
+| N5 | Ein Nutzer versucht, ohne Authentifizierung auf einen geschützten Endpunkt zuzugreifen. | Der Nutzer sendet eine Anfrage ohne JWT. | Das System verweigert den Zugriff und gibt den HTTP-Statuscode 403 zurück. | Zugriff wird verweigert (403). |
 
-Begründung
+#### 10.3.2 Änderungsszenarien
 
-:   *\<Erläuternder Text>*
+| ID | Szenario | Stimulus | Reaktion | Messkriterium |
+|:---:|:---:|---|---|---|
+| A1 | Eine neue Kartenrarität wird hinzugefügt. | Eine neue Kartenrarität wird definiert. | Das System wird angepasst, um die neue Rarität zu unterstützen. | Implementierung in < 2 Tagen. |
+| A2 | Ein neuer Endpunkt für die API wird benötigt. | Eine neue Funktionalität wird angefordert. | Der Endpunkt wird implementiert und dokumentiert. | Implementierung in < 2 Tagen. |
+| A3 | Die Datenbank wird von MongoDB auf PostgreSQL umgestellt. | Die Datenbanktechnologie wird geändert. | Das System wird angepasst, um die neue Datenbank zu unterstützen. | Migration in < 5 Tagen. |
+| A4 | Ein neues Frontend-Framework wird eingeführt. | Das Frontend wird auf ein neues Framework migriert. | Die Web-App wird mit dem neuen Framework umgesetzt. | Migration in < 10 Tagen. |
 
-Qualitäts- und/oder Leistungsmerkmale
-
-:   *\<Erläuternder Text>*
-
-Zuordnung von Bausteinen zu Infrastruktur
-
-:   *\<Beschreibung der Zuordnung>*
-
-### Infrastruktur Ebene 2 {#_infrastruktur_ebene_2}
-
-An dieser Stelle können Sie den inneren Aufbau (einiger)
-Infrastrukturelemente aus Ebene 1 beschreiben.
-
-Für jedes Infrastrukturelement kopieren Sie die Struktur aus Ebene 1.
-
-#### *\<Infrastrukturelement 1>* {#__emphasis_infrastrukturelement_1_emphasis}
-
-*\<Diagramm + Erläuterungen>*
-
-#### *\<Infrastrukturelement 2>* {#__emphasis_infrastrukturelement_2_emphasis}
-
-*\<Diagramm + Erläuterungen>*
-
-...
-
-#### *\<Infrastrukturelement n>* {#__emphasis_infrastrukturelement_n_emphasis}
-
-*\<Diagramm + Erläuterungen>*
-
-## Querschnittliche Konzepte {#section-concepts}
-
-::: formalpara-title
-**Inhalt**
-:::
-
-Dieser Abschnitt beschreibt übergreifende, prinzipielle Regelungen und
-Lösungsansätze, die an mehreren Stellen (=*querschnittlich*) relevant
-sind.
-
-Solche Konzepte betreffen oft mehrere Bausteine. Dazu können vielerlei
-Themen gehören, beispielsweise:
-
-- Modelle, insbesondere fachliche Modelle
-
-- Architektur- oder Entwurfsmuster
-
-- Regeln für den konkreten Einsatz von Technologien
-
-- prinzipielle --- meist technische --- Festlegungen übergreifender
-    Art
-
-- Implementierungsregeln
-
-::: formalpara-title
-**Motivation**
-:::
-
-Konzepte bilden die Grundlage für *konzeptionelle Integrität*
-(Konsistenz, Homogenität) der Architektur und damit eine wesentliche
-Grundlage für die innere Qualität Ihrer Systeme.
-
-Manche dieser Themen lassen sich nur schwer als Baustein in der
-Architektur unterbringen (z.B. das Thema „Sicherheit").
-
-::: formalpara-title
-**Form**
-:::
-
-Kann vielfältig sein:
-
-- Konzeptpapiere mit beliebiger Gliederung,
-
-- übergreifende Modelle/Szenarien mit Notationen, die Sie auch in den
-    Architektursichten nutzen,
-
-- beispielhafte Implementierung speziell für technische Konzepte,
-
-- Verweise auf „übliche" Nutzung von Standard-Frameworks
-    (beispielsweise die Nutzung von Hibernate als Object/Relational
-    Mapper).
-
-::: formalpara-title
-**Struktur**
-:::
-
-Eine mögliche (nicht aber notwendige!) Untergliederung dieses
-Abschnittes könnte wie folgt aussehen (wobei die Zuordnung von Themen zu
-den Gruppen nicht immer eindeutig ist):
-
-- Fachliche Konzepte
-
-- User Experience (UX)
-
-- Sicherheitskonzepte (Safety und Security)
-
-- Architektur- und Entwurfsmuster
-
-- Unter-der-Haube
-
-- Entwicklungskonzepte
-
-- Betriebskonzepte
-
-![Possible topics for crosscutting
-concepts](images/08-concepts-DE.drawio.png)
-
-Siehe [Querschnittliche Konzepte](https://docs.arc42.org/section-8/) in
-der online-Dokumentation (auf Englisch).
-
-### *\<Konzept 1>* {#__emphasis_konzept_1_emphasis}
-
-*\<Erklärung>*
-
-### *\<Konzept 2>* {#__emphasis_konzept_2_emphasis}
-
-*\<Erklärung>*
-
-...
-
-### *\<Konzept n>* {#__emphasis_konzept_n_emphasis}
-
-*\<Erklärung>*
-
-## Architekturentscheidungen {#section-design-decisions}
-
-::: formalpara-title
-**Inhalt**
-:::
-
-Wichtige, teure, große oder riskante Architektur- oder
-Entwurfsentscheidungen inklusive der jeweiligen Begründungen. Mit
-\"Entscheidungen\" meinen wir hier die Auswahl einer von mehreren
-Alternativen unter vorgegebenen Kriterien.
-
-Wägen Sie ab, inwiefern Sie Entscheidungen hier zentral beschreiben,
-oder wo eine lokale Beschreibung (z.B. in der Whitebox-Sicht von
-Bausteinen) sinnvoller ist. Vermeiden Sie Redundanz. Verweisen Sie evtl.
-auf Abschnitt 4, wo schon grundlegende strategische Entscheidungen
-beschrieben wurden.
-
-::: formalpara-title
-**Motivation**
-:::
-
-Stakeholder des Systems sollten wichtige Entscheidungen verstehen und
-nachvollziehen können.
-
-::: formalpara-title
-**Form**
-:::
-
-Verschiedene Möglichkeiten:
-
-- ADR ([Documenting Architecture
-    Decisions](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions))
-    für jede wichtige Entscheidung
-
-- Liste oder Tabelle, nach Wichtigkeit und Tragweite der
-    Entscheidungen geordnet
-
-- ausführlicher in Form einzelner Unterkapitel je Entscheidung
-
-Siehe [Architekturentscheidungen](https://docs.arc42.org/section-9/) in
-der arc42 Dokumentation (auf Englisch!). Dort finden Sie Links und
-Beispiele zum Thema ADR.
-
-## Qualitätsanforderungen {#section-quality-scenarios}
-
-::: formalpara-title
-**Inhalt**
-:::
-
-Dieser Abschnitt enthält möglichst alle Qualitätsanforderungen als
-Qualitätsbaum mit Szenarien. Die wichtigsten davon haben Sie bereits in
-Abschnitt 1.2 (Qualitätsziele) hervorgehoben.
-
-Nehmen Sie hier auch Qualitätsanforderungen geringerer Priorität auf,
-deren Nichteinhaltung oder -erreichung geringe Risiken birgt.
-
-::: formalpara-title
-**Motivation**
-:::
-
-Weil Qualitätsanforderungen die Architekturentscheidungen oft maßgeblich
-beeinflussen, sollten Sie die für Ihre Stakeholder relevanten
-Qualitätsanforderungen kennen, möglichst konkret und operationalisiert.
-
-::: formalpara-title
-**Weiterführende Informationen**
-:::
-
-Siehe [Qualitätsanforderungen](https://docs.arc42.org/section-10/) in
-der online-Dokumentation (auf Englisch!).
-
-### Qualitätsbaum {#_qualit_tsbaum}
-
-::: formalpara-title
-**Inhalt**
-:::
-
-Der Qualitätsbaum (à la ATAM) mit Qualitätsszenarien an den Blättern.
-
-::: formalpara-title
-**Motivation**
-:::
-
-Die mit Prioritäten versehene Baumstruktur gibt Überblick über
-die --- oftmals zahlreichen --- Qualitätsanforderungen.
-
-- Baumartige Verfeinerung des Begriffes „Qualität", mit „Qualität"
-    oder „Nützlichkeit" als Wurzel.
-
-- Mindmap mit Qualitätsoberbegriffen als Hauptzweige
-
-In jedem Fall sollten Sie hier Verweise auf die Qualitätsszenarien des
-folgenden Abschnittes aufnehmen.
-
-### Qualitätsszenarien {#_qualit_tsszenarien}
-
-::: formalpara-title
-**Inhalt**
-:::
-
-Konkretisierung der (in der Praxis oftmals vagen oder impliziten)
-Qualitätsanforderungen durch (Qualitäts-)Szenarien.
-
-Diese Szenarien beschreiben, was beim Eintreffen eines Stimulus auf ein
-System in bestimmten Situationen geschieht.
-
-Wesentlich sind zwei Arten von Szenarien:
-
-- Nutzungsszenarien (auch bekannt als Anwendungs- oder
-    Anwendungsfallszenarien) beschreiben, wie das System zur Laufzeit
-    auf einen bestimmten Auslöser reagieren soll. Hierunter fallen auch
-    Szenarien zur Beschreibung von Effizienz oder Performance. Beispiel:
-    Das System beantwortet eine Benutzeranfrage innerhalb einer Sekunde.
-
-- Änderungsszenarien beschreiben eine Modifikation des Systems oder
-    seiner unmittelbaren Umgebung. Beispiel: Eine zusätzliche
-    Funktionalität wird implementiert oder die Anforderung an ein
-    Qualitätsmerkmal ändert sich.
-
-::: formalpara-title
-**Motivation**
-:::
-
-Szenarien operationalisieren Qualitätsanforderungen und machen deren
-Erfüllung mess- oder entscheidbar.
-
-Insbesondere wenn Sie die Qualität Ihrer Architektur mit Methoden wie
-ATAM überprüfen wollen, bedürfen die in Abschnitt 1.2 genannten
-Qualitätsziele einer weiteren Präzisierung bis auf die Ebene von
-diskutierbaren und nachprüfbaren Szenarien.
-
-::: formalpara-title
-**Form**
-:::
-
-Entweder tabellarisch oder als Freitext.
-
-## Risiken und technische Schulden {#section-technical-risks}
+## 11. Risiken und technische Schulden
 
 ::: formalpara-title
 **Inhalt**
@@ -944,7 +720,7 @@ Siehe [Risiken und technische
 Schulden](https://docs.arc42.org/section-11/) in der
 online-Dokumentation (auf Englisch!).
 
-## Glossar {#section-glossary}
+## 12. Glossar
 
 ::: formalpara-title
 **Inhalt**
