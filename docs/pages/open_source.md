@@ -1,4 +1,4 @@
-# Open Source Quickcheck
+# Externe API
 
 ## Library: TCGdex
 

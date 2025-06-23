@@ -1,0 +1,10 @@
+nav:
+  - Start: index.md
+  - Einführung: introduction.md
+  - Installation: installation.md
+  - API-Dokumentation: api.md
+  - Lizenz: license.md
+  - Externe API: open_source.md
+  - arc42: arc42.md
+  - ADRs:
+    - adr/*

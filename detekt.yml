@@ -2,6 +2,7 @@ complexity:
   LongMethod:
     active: true
     ignoreAnnotated: [ "Composable" ]
+
 naming:
   FunctionNaming:
     active: true
@@ -9,6 +10,7 @@ naming:
     ignoreAnnotated: [ "Composable" ]
     excludes: 
       - "**/*Test.kt"
+
 style:
   MagicNumber:
     active: true

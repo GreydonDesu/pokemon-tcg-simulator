@@ -1,0 +1,46 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0" version="27.1.6">
+  <diagram name="Page-1" id="g7Ssq3rno021a8BKvzXW">
+    <mxGraphModel dx="1152" dy="662" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="400" pageHeight="400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="7r4nwtjtc1UGb26l-Wf9-3" value="&lt;div align=&quot;left&quot;&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=12 12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="170" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="bJMoE8F6jw5ZK1IdAzWe-2" value="Frontend" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bJMoE8F6jw5ZK1IdAzWe-4" value="Backend" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="180" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bJMoE8F6jw5ZK1IdAzWe-5" value="Datenbank" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" parent="1" vertex="1">
+          <mxGeometry x="80" y="280" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bJMoE8F6jw5ZK1IdAzWe-7" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" source="bJMoE8F6jw5ZK1IdAzWe-2" target="bJMoE8F6jw5ZK1IdAzWe-4" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="490" y="150" as="sourcePoint" />
+            <mxPoint x="300" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bJMoE8F6jw5ZK1IdAzWe-8" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" source="bJMoE8F6jw5ZK1IdAzWe-4" target="bJMoE8F6jw5ZK1IdAzWe-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="290" y="170" as="sourcePoint" />
+            <mxPoint x="290" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7r4nwtjtc1UGb26l-Wf9-1" value="Externe API&lt;br&gt;(TCGdex)" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="180" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7r4nwtjtc1UGb26l-Wf9-2" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="bJMoE8F6jw5ZK1IdAzWe-4" target="7r4nwtjtc1UGb26l-Wf9-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="370" as="sourcePoint" />
+            <mxPoint x="250" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7r4nwtjtc1UGb26l-Wf9-4" value="pokemon-tcg-simulator" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="140" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

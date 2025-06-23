@@ -6,7 +6,7 @@ COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 
 # Build the project
-RUN gradle build -x test
+RUN gradle build
 
 # Stage 2: Create a lightweight runtime container
 FROM eclipse-temurin:21-jdk-alpine
