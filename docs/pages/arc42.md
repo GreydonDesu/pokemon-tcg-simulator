@@ -693,69 +693,50 @@ Qualitätsszenarien konkretisieren die Anforderungen und beschreiben, wie das Sy
 
 ## 11. Risiken und technische Schulden
 
-::: formalpara-title
-**Inhalt**
-:::
+### Inhalt
 
-Eine nach Prioritäten geordnete Liste der erkannten Architekturrisiken
-und/oder technischen Schulden.
+Dieser Abschnitt listet die identifizierten Architekturrisiken und technischen Schulden des Pokémon TCG-Simulators auf. Die Risiken und Schulden werden priorisiert und, falls möglich, mit Maßnahmen zur Risikovermeidung oder -minimierung sowie zum Abbau der technischen Schulden versehen.
 
-> Risikomanagement ist Projektmanagement für Erwachsene.
->
-> ---  Tim Lister Atlantic Systems Guild
+### 11.1 Risiken
 
-Unter diesem Motto sollten Sie Architekturrisiken und/oder technische
-Schulden gezielt ermitteln, bewerten und Ihren Management-Stakeholdern
-(z.B. Projektleitung, Product-Owner) transparent machen.
+| ID | Risiko | Auswirkung | Wahrscheinlichkeit | Priorität | Maßnahmen |
+|:---:|:---:|---|---|---|---|
+| R1 | **Externe API (TCGdex) ist nicht verfügbar** | Die Karteninformationen können nicht abgerufen werden, was die Simulation blockiert. | Mittel | Hoch | - Caching der Kartendaten im Backend<br>- Fallback-Datenbank mit häufig genutzten Karten |
+| R2 | **Skalierungsprobleme bei hoher Nutzerlast** | Die Performance des Systems sinkt, was zu langen Ladezeiten oder Ausfällen führt. | Hoch | Hoch | - Lasttests durchführen<br>- Horizontale Skalierung des Backends<br>- Nutzung des Load-Balancers |
+| R3 | **Sicherheitslücken in der JWT-Authentifizierung** | Unbefugter Zugriff auf geschützte Endpunkte, was sensible Nutzerdaten gefährden könnte. | Mittel | Hoch | - Regelmäßige Sicherheitsprüfungen<br>- Tokens mit kurzer Lebensdauer<br>- Einsatz von HTTPS |
+| R4 | **Datenverlust durch fehlerhafte Datenbankkonfiguration** | Nutzerdaten und Inventare könnten verloren gehen. | Mittel | Mittel | - Regelmäßige Backups<br>- Replikation der Datenbank<br>- Monitoring der Datenbankintegrität |
+| R5 | **Technologieabhängigkeit von MongoDB** | Ein Wechsel der Datenbanktechnologie könnte aufwendig und teuer sein. | Niedrig | Mittel | - Abstraktion der Datenbankzugriffe<br>- Dokumentation der Datenbankstruktur |
+| R6 | **Fehlende Browserkompatibilität** | Die Web-App funktioniert nicht auf allen gängigen Browsern. | Mittel | Mittel | - Cross-Browser-Tests<br>- Nutzung von standardkonformen Technologien |
 
-::: formalpara-title
-**Form**
-:::
+### 11.2 Schulden
 
-Liste oder Tabelle von Risiken und/oder technischen Schulden, eventuell
-mit vorgeschlagenen Maßnahmen zur Risikovermeidung, Risikominimierung
-oder dem Abbau der technischen Schulden.
-
-Siehe [Risiken und technische
-Schulden](https://docs.arc42.org/section-11/) in der
-online-Dokumentation (auf Englisch!).
+| ID | Technische Schuld | Auswirkung | Priorität | Maßnahmen |
+|:---:|:---:|---|---|---|
+| T1 | **Fehlende Testabdeckung für Integrationstests** | Fehler in der Kommunikation zwischen Backend und Datenbank könnten unentdeckt bleiben. | Hoch | - Einführung von Integrationstests<br>- Nutzung von Test-Frameworks wie JUnit und Mockito |
+| T2 | **Hardcodierte Konfigurationswerte** | Änderungen an Umgebungsvariablen erfordern Codeänderungen. | Mittel | - Nutzung eines Konfigurationsmanagements (z. B. Spring Profiles) |
+| T3 | **Unzureichende Dokumentation der REST-API** | Entwickler könnten Schwierigkeiten bei der Nutzung oder Erweiterung der API haben. | Mittel | - Erstellung einer API-Dokumentation mit Swagger oder OpenAPI |
+| T4 | **Monolithische Struktur des Backends** | Die Wartbarkeit und Skalierbarkeit des Systems wird erschwert. | Mittel | - Modularisierung des Backends<br>- Einführung von Microservices bei Bedarf |
+| T5 | **Veraltete Abhängigkeiten** | Sicherheits- und Kompatibilitätsprobleme durch veraltete Bibliotheken. | Mittel | - Regelmäßige Updates der Abhängigkeiten<br>- Nutzung von Tools wie Dependabot |
+| T6 | **Fehlende Automatisierung im Deployment** | Manuelle Deployments sind fehleranfällig und zeitaufwendig. | Mittel | - Einführung von CI/CD-Pipelines (z. B. mit GitHub Actions oder Jenkins) |
 
 ## 12. Glossar
 
-::: formalpara-title
-**Inhalt**
-:::
+### Inhalt
 
-Die wesentlichen fachlichen und technischen Begriffe, die Stakeholder im
-Zusammenhang mit dem System verwenden.
+Das Glossar definiert die wesentlichen fachlichen und technischen Begriffe, die im Zusammenhang mit dem Pokémon TCG-Simulator verwendet werden. Es dient als Referenz, um sicherzustellen, dass alle Stakeholder die Begriffe einheitlich verstehen.
 
-Nutzen Sie das Glossar ebenfalls als Übersetzungsreferenz, falls Sie in
-mehrsprachigen Teams arbeiten.
-
-::: formalpara-title
-**Motivation**
-:::
-
-Sie sollten relevante Begriffe klar definieren, so dass alle Beteiligten
-
-- diese Begriffe identisch verstehen, und
-
-- vermeiden, mehrere Begriffe für die gleiche Sache zu haben.
-
-Zweispaltige Tabelle mit \<Begriff> und \<Definition>.
-
-Eventuell weitere Spalten mit Übersetzungen, falls notwendig.
-
-Siehe [Glossar](https://docs.arc42.org/section-12/) in der
-online-Dokumentation (auf Englisch!).
-
-+-----------------------+-----------------------------------------------+
-| Begriff               | Definition                                    |
-+=======================+===============================================+
-| *\<Begriff-1>*        | *\<Definition-1>*                             |
-+-----------------------+-----------------------------------------------+
-| *\<Begriff-2*         | *\<Definition-2>*                             |
-+-----------------------+-----------------------------------------------+
+| Begriff | Definition |
+|:---:|---|
+| Kartenpack | Eine Sammlung von fünf zufälligen Karten, die der Nutzer in der Simulation öffnen kann. |
+| Kartenrarität | Die Seltenheit einer Karte, z. B. „Common“, „Rare“, „Ultra Rare“. |
+| JWT (JSON Web Token) | Ein Token-Format zur Authentifizierung, das Informationen über den Nutzer enthält. |
+| REST-API | Eine API, die auf den Prinzipien von REST (Representational State Transfer) basiert. |
+| MongoDB | Eine dokumentenbasierte NoSQL-Datenbank, die für die Speicherung von Nutzerdaten verwendet wird. |
+| Frontend | Die Benutzeroberfläche der Web-App, die im Browser ausgeführt wird. |
+| Backend | Die serverseitige Logik, die die Geschäftslogik und Datenverarbeitung übernimmt. |
+| Swagger/OpenAPI | Tools zur Dokumentation und Visualisierung von REST-APIs. |
+| CI/CD | Continuous Integration/Continuous Deployment, ein Prozess zur Automatisierung von Builds, Tests und Deployments. |
+| TCGdex | Eine externe API, die Karten- und Kartenset-Daten für die Simulation bereitstellt. |
 
 ## Über arc42
 
