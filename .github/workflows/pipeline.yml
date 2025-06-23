@@ -32,6 +32,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup
 
+    services:
+      mongo:
+        image: mongo:8.0
+        ports:
+          - 27017:27017
+        options: >-
+          --bind_ip 0.0.0.0
+          --replSet rs0
+          --oplogSize 128
+          --quiet
+
     steps:
       # Step 1: Checkout Repository
       - name: Checkout Repository
@@ -41,12 +52,17 @@ jobs:
       - name: Ensure Gradle Wrapper is Executable
         run: chmod +x backend/gradlew
 
-      # Step 3: Build and Test Backend
+      # Step 3: Start MongoDB Replica Set
+      - name: Start MongoDB Replica Set
+        run: |
+          mongo --eval "rs.initiate()"
+
+      # Step 4: Build and Test Backend
       - name: Build and Test Backend
         working-directory: backend
         run: ./gradlew test jacocoTestReport --continue
 
-      # Step 4: Save Backend Coverage Report
+      # Step 5: Save Backend Coverage Report
       - name: Save Backend Coverage Report
         uses: actions/upload-artifact@v4
         with:
@@ -73,19 +89,11 @@ jobs:
         working-directory: application
         run: ./gradlew wasmJsBrowserDistribution --continue
 
-      # Step 3: Save Application Coverage Preparation
-#      - name: Save Application Coverage Preparation
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: application-coverage
-#          path: application/build # Save build artifacts for future tests
-
   # Stage 4: Merge Coverage Reports and Upload to Codacy
   merge-and-upload-coverage:
     name: Merge Coverage Reports and Upload to Codacy
     runs-on: ubuntu-latest
     needs: [build-backend]
-#    needs: [build-backend, build-application]
 
     steps:
       # Step 1: Download Backend Coverage Report
@@ -95,25 +103,10 @@ jobs:
           name: backend-coverage
           path: coverage/backend
 
-      # Step 2: Download Application Coverage Preparation
-#      - name: Download Application Coverage Preparation
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: application-coverage
-#          path: coverage/application
-
-      # Step 3: Merge Coverage Reports
-#      - name: Merge Coverage Reports
-#        run: |
-#          mkdir -p coverage/merged
-#          cp coverage/backend/jacocoTestReport.xml coverage/merged/combined-coverage.xml
-          # Placeholder for merging logic if application coverage is added in the future
-
-      # Step 4: Upload Combined Coverage Report to Codacy
+      # Step 2: Upload Combined Coverage Report to Codacy
       - name: Upload Combined Coverage to Codacy
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         run: |
           bash <(curl -Ls https://coverage.codacy.com/get.sh) report \
           -r coverage/backend/jacocoTestReport.xml
-#          -r coverage/merged/combined-coverage.xml

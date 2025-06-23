@@ -45,7 +45,9 @@ dependencies {
 kotlin { compilerOptions { freeCompilerArgs.addAll("-Xjsr305=strict") } }
 
 tasks.withType<Test> {
-  useJUnitPlatform()
+  useJUnitPlatform {
+    excludeTags("integration")
+  }
   jvmArgs("--add-opens", "java.base/java.util=ALL-UNNAMED")
   jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
 }
@@ -78,3 +80,24 @@ tasks.check {
   dependsOn(
       tasks.jacocoTestCoverageVerification) // Fail the build if coverage is below the threshold
 }
+
+tasks.register<Test>("integrationTest") {
+  description = "Runs the integration tests."
+  group = "verification"
+
+  useJUnitPlatform {
+    includeTags("integration")
+  }
+
+  shouldRunAfter(tasks.test)
+
+  environment("SPRING_DATA_MONGODB_URI", "mongodb://localhost:27017/testdb")
+  environment("SPRING_DATA_MONGODB_DATABASE", "testdb")
+  environment("JWT_SECRET", "NyQGY9Q9WfRbyuPaLd1ut08WOdFKDpJOasb7PXECMKE=")
+}
+
+
+tasks.named("check") {
+  dependsOn("integrationTest")
+}
+

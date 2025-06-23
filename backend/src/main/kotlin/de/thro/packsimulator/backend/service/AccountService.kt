@@ -9,7 +9,6 @@ import de.thro.packsimulator.backend.exception.UserNotFoundException
 import de.thro.packsimulator.backend.exception.UsernameAlreadyTakenException
 import de.thro.packsimulator.backend.repository.AccountRepository
 import de.thro.packsimulator.backend.util.JwtUtil
-import java.net.URLDecoder
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -67,7 +66,7 @@ class AccountService(
             }
 
     // Compare the SHA-512 hash received from the frontend with the stored hash
-    val decodedPassword = URLDecoder.decode(clientHashedPassword, "UTF-8")
+    val decodedPassword = clientHashedPassword
     logger.debug("Stored password: ${account.password}, Received password: $decodedPassword")
     if (account.password != decodedPassword) {
       logger.warn("Login failed: Incorrect password for username: $normalizedUsername")
