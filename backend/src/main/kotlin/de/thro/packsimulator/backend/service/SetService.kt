@@ -26,6 +26,7 @@ class SetService(private val setRepository: SetRepository) {
     const val RESOURCE_DIRECTORY = "resources"
     const val IMAGE_DIRECTORY = "images" // Directory to save images
     const val BASE_URL = "http://localhost:8080" // API base URL
+    val LIMITED_SET_LIST = listOf("A1") // Limited Set list
   }
 
   private val logger: Logger = LoggerFactory.getLogger(SetService::class.java)
@@ -64,8 +65,6 @@ class SetService(private val setRepository: SetRepository) {
   fun fetchAndSaveSetsFromAPI() {
     logger.info("Fetching sets from the external API...")
 
-    val testSets = listOf("A1")
-
     val briefSets =
         webClient
             .get()
@@ -75,7 +74,7 @@ class SetService(private val setRepository: SetRepository) {
             .collectList()
             .block() ?: emptyList()
 
-    val filteredBriefSets = briefSets.filter { it.id in testSets }
+    val filteredBriefSets = briefSets.filter { it.id in LIMITED_SET_LIST }
 
     val detailedSets = filteredBriefSets.mapNotNull { fetchSetDetails(it.id) }
 
